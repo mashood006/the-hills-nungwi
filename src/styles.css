@@ -353,12 +353,20 @@ form{display:grid;gap:15px}
 /* ═══ DOCK ═══ */
 .dock{position:fixed;left:0;right:0;bottom:0;z-index:85;display:flex;gap:8px;justify-content:center;
   padding:10px var(--pad) calc(10px + var(--safe-b));background:rgba(23,38,63,.95);backdrop-filter:blur(16px);border-top:1px solid var(--line-d)}
-.dock .btn{flex:1 1 0;max-width:250px;min-width:0;padding-inline:16px;letter-spacing:.12em;gap:10px}
+.dock .btn{flex:1 1 auto;max-width:none;min-width:0;padding-inline:18px;letter-spacing:.1em;gap:10px;white-space:nowrap}
 .btn--brochure{background:var(--cream);color:var(--navy);border-color:var(--cream)}
 .btn--brochure:hover{background:#fff;color:var(--navy)}
-.btn--wa{background:#25D366;color:#fff;border-color:#25D366}
+.btn--wa{background:#25D366;color:#fff;border-color:#25D366;flex:0 0 auto;min-width:7.5rem}
 .btn--wa:hover{background:#1ebe57;color:#fff;border-color:#1ebe57}
-@media(min-width:820px){.dock{left:auto;right:max(22px,var(--safe-r));bottom:max(22px,var(--safe-b));border:1px solid var(--line-d);padding:8px;width:auto}}
+@media(min-width:820px){
+  .dock{left:auto;right:max(22px,var(--safe-r));bottom:max(22px,var(--safe-b));border:1px solid var(--line-d);padding:8px;width:auto;max-width:calc(100vw - 40px)}
+  .dock .btn{flex:0 0 auto}
+}
+@media(max-width:819px){
+  .dock .btn{font-size:.62rem;letter-spacing:.08em;padding-inline:12px}
+  .btn--brochure{flex:1 1 58%}
+  .btn--wa{flex:0 0 auto}
+}
 
 /* ═══════════ SCROLL ANIMATION SYSTEM ═══════════ */
 .js .a{opacity:0;transition:opacity 1s var(--e),transform 1s var(--e),clip-path 1.2s var(--e);
