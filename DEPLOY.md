@@ -1,70 +1,37 @@
 # Deploy to cPanel — https://demo.majestic.tz/
 
-## Automatic deploy (GitHub → live site)
+## Status
 
-Every push to **`main`** builds the React app and uploads `dist/` to:
+- SSH key authorized on the server (`authorized_keys`)
+- Uploads work via **SFTP/SCP** (cPanel shell/Terminal is disabled on this host)
+- Live site document root: `/home/majestic/public_html/demo.majestic.tz`
 
-`/home/majestic/public_html/demo.majestic.tz`
+## Automatic deploy (GitHub Actions)
 
-### One-time setup (required)
+Workflow file: `.github/workflows/deploy.yml`
 
-Authorize this **GitHub Actions** public key on the server so deploy can SSH in.
+On every push to **`main`**, GitHub builds the app and uploads `dist/` over SFTP.
 
-**Public key:**
+### If the workflow file is not on GitHub yet
 
-```
-ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAINoTjacC/fpwQiz3hIEAiigOeJoFuw1EioKyZwfwWJBP github-actions-demo-majestic
-```
+1. Log into GitHub as **mashood006** (check Settings → profile username).
+2. Open: https://github.com/mashood006/the-hills-nungwi/new/main?filename=.github/workflows/deploy.yml
+3. Paste contents of local `.github/workflows/deploy.yml` → Commit.
 
-**In cPanel:**
+Secrets already configured: `SSH_HOST`, `SSH_USER`, `SSH_PATH`, `SSH_PRIVATE_KEY`.
 
-1. **SSH Access** → **Manage SSH Keys** → **Import Key**
-2. Paste the public key above (name it e.g. `github-actions`)
-3. Click **Import**, then **Authorize** / **Manage** → **Authorize** for that key  
-   (it must appear under **Authorized Keys**)
-
-**Or in cPanel Terminal:**
+## Deploy from your Mac
 
 ```bash
-mkdir -p ~/.ssh
-chmod 700 ~/.ssh
-echo 'ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAINoTjacC/fpwQiz3hIEAiigOeJoFuw1EioKyZwfwWJBP github-actions-demo-majestic' >> ~/.ssh/authorized_keys
-chmod 600 ~/.ssh/authorized_keys
+npm run deploy
 ```
 
-### After that
+Uses `~/.ssh/gha-the-hills-deploy` to upload `dist/` to the live site.
 
-```bash
-git add .
-git commit -m "your change"
-git push origin main
+## Authorized public key (on server)
+
+```
+ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIFqZBoSmMwT0ayK6DP6+vvpNE23qWoJ15ojno5hLhQz4 github-actions-demo-majestic
 ```
 
-Watch progress: GitHub repo → **Actions** → **Deploy to demo.majestic.tz**
-
-You can also run it manually: **Actions** → **Deploy to demo.majestic.tz** → **Run workflow**
-
-### Secrets (already set on the repo)
-
-| Secret | Value |
-|--------|--------|
-| `SSH_HOST` | `62.238.31.147` |
-| `SSH_USER` | `majestic` |
-| `SSH_PATH` | `/home/majestic/public_html/demo.majestic.tz` |
-| `SSH_PRIVATE_KEY` | (GitHub Actions deploy key) |
-
----
-
-## Manual upload (backup)
-
-```bash
-npm run build
-```
-
-Upload **contents of** `dist/` into `public_html/demo.majestic.tz`.
-
----
-
-## SSL
-
-cPanel → **SSL/TLS Status** / AutoSSL → enable for `demo.majestic.tz`.
+Must be the only/active line in `/home/majestic/.ssh/authorized_keys`.
