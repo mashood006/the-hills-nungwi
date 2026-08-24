@@ -16,6 +16,12 @@ npm run build
 npm run preview
 ```
 
+## Deploy (cPanel / demo.majestic.tz)
+
+See **[DEPLOY.md](./DEPLOY.md)** for SSH key notes and upload / Git pull steps.
+
+Quick path: `npm run build`, then upload the contents of `dist/` to the subdomain document root for https://demo.majestic.tz/
+
 ## Notes
 
 - Images live in `public/images`
