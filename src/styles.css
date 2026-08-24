@@ -450,13 +450,14 @@ form{display:grid;gap:15px}
 .feat-card p{margin:0;font-size:.92rem;line-height:1.55;color:rgba(255,255,255,.62);max-width:38ch}
 
 /* ═══ EXCELLENCE ═══ */
-.excellence{text-align:center}
-.excellence-inner{max-width:920px;margin-inline:auto;display:flex;flex-direction:column;align-items:center}
-.excellence-copy{display:flex;flex-direction:column;align-items:center;width:100%}
-.excellence-inner h2{max-width:16ch;margin-bottom:18px}
-.excellence-inner>p,.excellence-copy>p{max-width:58ch;margin:0 0 clamp(28px,4vw,40px);color:rgba(255,255,255,.68);font-size:clamp(1rem,1.4vw,1.12rem);line-height:1.65;text-align:center}
-.excellence-media{width:100%;overflow:hidden;background:var(--navy-2);margin-bottom:clamp(26px,3.5vw,40px);aspect-ratio:16/9}
+.excellence{text-align:center;overflow:hidden}
+.excellence-copy{display:flex;flex-direction:column;align-items:center;width:100%;max-width:920px;margin-inline:auto;margin-bottom:clamp(28px,4vw,48px)}
+.excellence-copy h2{max-width:16ch;margin-bottom:18px}
+.excellence-copy>p{max-width:58ch;margin:0;color:rgba(255,255,255,.68);font-size:clamp(1rem,1.4vw,1.12rem);line-height:1.65;text-align:center}
+.excellence-media{width:100%;max-width:none;overflow:hidden;background:var(--navy-2);aspect-ratio:21/9;margin:0}
+@media(max-width:899px){.excellence-media{aspect-ratio:16/9}}
 .excellence-media img{width:100%;height:100%;object-fit:cover;object-position:center;display:block}
+.excellence-cta{display:flex;justify-content:center;margin-top:clamp(26px,3.5vw,40px)}
 
 @media(max-width:819px){
   .carousel-slide{flex-basis:min(90vw,640px)}

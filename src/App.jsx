@@ -512,18 +512,20 @@ export default function App() {
 {/* ══ EXCELLENCE ══ */}
 <section className="sec on-dark excellence" id="Excellence">
   <div className="wrap">
-    <div className="excellence-inner a a-up">
-      <div className="excellence-copy">
-        <span className="pill pill--dark">Luxury property</span>
-        <h2>A new standard of <em className="g">excellence</em></h2>
-        <p>The Hills Nungwi brings titled beachfront living to Zanzibar’s northern tip — contemporary residences, a full hotel operation, and the calm of a non-tidal shore, crafted by Majestic for owners who want both a home and a working asset.</p>
-        <a className="btn btn--cream" href="#Contact">Speak to sales team
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" aria-hidden="true"><path d="M4 6h16v10H8l-4 4V6z"/></svg>
-        </a>
-      </div>
-      <div className="excellence-media">
-        <img src="/images/aerial2.jpg" alt="The Hills beachfront development at Nungwi" width="1600" height="900" loading="lazy" decoding="async" />
-      </div>
+    <div className="excellence-copy a a-up">
+      <span className="pill pill--dark">Luxury property</span>
+      <h2>A new standard of <em className="g">excellence</em></h2>
+      <p>The Hills Nungwi brings titled beachfront living to Zanzibar’s northern tip — contemporary residences, a full hotel operation, and the calm of a non-tidal shore, crafted by Majestic for owners who want both a home and a working asset.</p>
+    </div>
+  </div>
+  <div className="excellence-media a a-up">
+    <img src="/images/aerial2.jpg" alt="The Hills beachfront development at Nungwi" width="1920" height="1080" loading="lazy" decoding="async" />
+  </div>
+  <div className="wrap">
+    <div className="excellence-cta a a-up">
+      <a className="btn btn--cream" href="#Contact">Speak to sales team
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" aria-hidden="true"><path d="M4 6h16v10H8l-4 4V6z"/></svg>
+      </a>
     </div>
   </div>
 </section>
