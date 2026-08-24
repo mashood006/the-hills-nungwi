@@ -369,21 +369,22 @@ form{display:grid;gap:15px}
 }
 
 /* ═══════════ SCROLL ANIMATION SYSTEM ═══════════ */
-.js .a{opacity:0;transition:opacity 1s var(--e),transform 1s var(--e),clip-path 1.2s var(--e);
+.js .a{opacity:0;transition:opacity .85s var(--e),transform .85s var(--e),clip-path 1s var(--e);
    transition-delay:var(--d,0s);will-change:opacity,transform}
+.js .a:not(.in){transition-delay:0s}
 .a-up{transform:translateY(38px)}
 .a-dn{transform:translateY(-28px)}
 .a-l{transform:translateX(-46px)}
 .a-r{transform:translateX(46px)}
 .a-sc{transform:scale(.94)}
 .js .a-clip{opacity:0;transform:translateY(28px);clip-path:none}
-.a-clip .ph{transform:scale(1.08)}
-.a-clip.in .ph{transform:scale(1);transition:transform 1.8s var(--e)}
+.a-clip .ph{transform:scale(1.08);transition:transform 1.2s var(--e)}
+.a-clip.in .ph{transform:scale(1)}
 .js .a-wipe{opacity:0;transform:translateX(28px);clip-path:none}
 .a-line{transform:scaleX(0);transform-origin:left}
 .a.in{opacity:1;transform:none;clip-path:none}
-/* stagger helper: children animate in sequence */
-.js .stg>*{opacity:0;transform:translateY(32px);transition:opacity .9s var(--e),transform .9s var(--e)}
+/* stagger helper: children animate in sequence; reverse on leave */
+.js .stg>*{opacity:0;transform:translateY(32px);transition:opacity .75s var(--e),transform .75s var(--e)}
 .stg.in>*{opacity:1;transform:none}
 .stg.in>*:nth-child(1){transition-delay:.05s}
 .stg.in>*:nth-child(2){transition-delay:.13s}
@@ -394,6 +395,16 @@ form{display:grid;gap:15px}
 .stg.in>*:nth-child(7){transition-delay:.53s}
 .stg.in>*:nth-child(8){transition-delay:.61s}
 .stg.in>*:nth-child(9){transition-delay:.69s}
+/* reverse stagger when scrolling away */
+.stg:not(.in)>*:nth-child(1){transition-delay:.69s}
+.stg:not(.in)>*:nth-child(2){transition-delay:.61s}
+.stg:not(.in)>*:nth-child(3){transition-delay:.53s}
+.stg:not(.in)>*:nth-child(4){transition-delay:.45s}
+.stg:not(.in)>*:nth-child(5){transition-delay:.37s}
+.stg:not(.in)>*:nth-child(6){transition-delay:.29s}
+.stg:not(.in)>*:nth-child(7){transition-delay:.21s}
+.stg:not(.in)>*:nth-child(8){transition-delay:.13s}
+.stg:not(.in)>*:nth-child(9){transition-delay:.05s}
 /* hero load sequence */
 .js .hl{opacity:0;transform:translateY(30px);animation:heroIn 1.15s var(--e) forwards}
 .hl1{animation-delay:.35s}.hl2{animation-delay:.5s}.hl3{animation-delay:.68s}.hl4{animation-delay:.84s}.hl5{animation-delay:1s}

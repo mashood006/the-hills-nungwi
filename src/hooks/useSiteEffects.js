@@ -93,25 +93,39 @@ export function useSiteEffects() {
       const io = new IntersectionObserver(
         (entries) => {
           entries.forEach((x) => {
-            if (!x.isIntersecting) return
-            x.target.classList.add('in')
-            if (x.target.dataset.count) countUp(x.target)
-            io.unobserve(x.target)
+            const el = x.target
+            if (x.isIntersecting) {
+              el.classList.add('in')
+              if (el.dataset.count) countUp(el)
+            } else {
+              el.classList.remove('in')
+              if (el.dataset.count) {
+                const dec = parseInt(el.dataset.dec || '0', 10)
+                el.textContent = (0).toFixed(dec) + (el.dataset.suffix || '')
+              }
+            }
           })
         },
-        { rootMargin: '0px 0px -8% 0px', threshold: 0.01 },
+        { rootMargin: '-8% 0px -12% 0px', threshold: [0, 0.08, 0.18] },
       )
       targets.forEach((el) => io.observe(el))
 
       function sweep() {
         targets.forEach((el) => {
-          if (el.classList.contains('in')) return
           const r = el.getBoundingClientRect()
           if (r.height < 1 && r.width < 1) return
-          if (r.top < innerHeight * 1.15 && r.bottom > -200) {
-            el.classList.add('in')
-            if (el.dataset.count) countUp(el)
-            io.unobserve(el)
+          const visible = r.top < innerHeight * 0.88 && r.bottom > innerHeight * 0.12
+          if (visible) {
+            if (!el.classList.contains('in')) {
+              el.classList.add('in')
+              if (el.dataset.count) countUp(el)
+            }
+          } else if (el.classList.contains('in')) {
+            el.classList.remove('in')
+            if (el.dataset.count) {
+              const dec = parseInt(el.dataset.dec || '0', 10)
+              el.textContent = (0).toFixed(dec) + (el.dataset.suffix || '')
+            }
           }
         })
       }
