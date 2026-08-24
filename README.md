@@ -18,9 +18,11 @@ npm run preview
 
 ## Deploy (cPanel / demo.majestic.tz)
 
-See **[DEPLOY.md](./DEPLOY.md)** for SSH key notes and upload / Git pull steps.
+**Auto-deploy is set up:** push to `main` → GitHub Actions builds and uploads to the live site.
 
-Quick path: `npm run build`, then upload the contents of `dist/` to the subdomain document root for https://demo.majestic.tz/
+**One-time:** authorize the GitHub Actions SSH key on the server (see [DEPLOY.md](./DEPLOY.md)).
+
+Manual backup: `npm run build`, then upload `dist/` contents to the subdomain folder.
 
 ## Notes
 
