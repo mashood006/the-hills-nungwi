@@ -190,7 +190,7 @@ export default function App() {
     <div className="priv-b" style={{paddingLeft: '0', paddingRight: '0'}}>
       <span className="kick a a-up">Ownership privileges</span>
       <h2 className="a a-up" style={{'--d': '.08s'}}>Stay in <em className="g">your hotel.</em></h2>
-      <p className="lead a a-up" style={{'--d': '.16s', marginTop: '18px'}}>Real ownership perks for the owner of a titled unit.</p>
+      <p className="lead lead--hl a a-up" style={{'--d': '.16s', marginTop: '18px'}}>Real ownership perks for the owner of a titled unit.</p>
       <div className="days a a-l" style={{'--d': '.24s'}}>
         <b data-count="60">0</b>
         <div>usage days per year<span>For owners</span></div>
@@ -607,8 +607,19 @@ export default function App() {
 </footer>
 
 <div className="dock">
-  <a className="btn btn--glass" href="#Residences">Residences</a>
-  <a className="btn btn--gold" href="#Contact">Register</a>
+  <a className="btn btn--brochure" href="#Contact">
+    Download brochure
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" aria-hidden="true"><path d="M12 3v12"/><path d="M7 10l5 5 5-5"/><path d="M5 19h14"/></svg>
+  </a>
+  <a
+    className="btn btn--wa"
+    href="https://wa.me/255670004400?text=Hello%2C%20I%20am%20interested%20in%20The%20Hills%2C%20Nungwi."
+    target="_blank"
+    rel="noopener noreferrer"
+  >
+    Chat
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15L2 22l5.2-1.4A10 10 0 1 0 12 2zm5.4 14c-.2.6-1.3 1.2-1.8 1.2-.5.1-1 .1-1.7-.1a12 12 0 0 1-6.4-5.6c-.5-.8-.8-1.7-.8-2.5 0-.9.4-1.6.9-2 .2-.2.4-.3.6-.3h.5c.2 0 .4 0 .6.4l.8 2c.1.2 0 .4-.1.6l-.4.5c-.1.2-.3.3-.1.6a8.7 8.7 0 0 0 3.8 3.3c.3.1.5.1.6-.1l.8-1c.2-.2.3-.2.6-.1l2 1c.2.1.4.2.4.4s0 .8-.2 1.3z"/></svg>
+  </a>
 </div>
 
 
