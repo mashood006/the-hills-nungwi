@@ -1,4 +1,5 @@
 import { useEffect } from 'react'
+import { getLenis } from './useSmoothScroll'
 
 function countUp(el) {
   const end = parseFloat(el.dataset.count)
@@ -56,15 +57,42 @@ export function useSiteEffects() {
 
     function onScroll() {
       hdr.classList.toggle('stuck', window.scrollY > window.innerHeight * 0.7)
+      const totop = document.getElementById('totop')
+      if (totop) totop.classList.toggle('on', window.scrollY > window.innerHeight * 0.55)
     }
     onScroll()
     window.addEventListener('scroll', onScroll, { passive: true })
     cleanups.push(() => window.removeEventListener('scroll', onScroll))
 
+    const totopBtn = document.getElementById('totop')
+    if (totopBtn) {
+      const onTop = () => {
+        const lenis = getLenis()
+        if (reduce) {
+          if (lenis) lenis.scrollTo(0, { immediate: true })
+          else window.scrollTo(0, 0)
+          return
+        }
+        if (lenis) lenis.scrollTo(0, { duration: 1.2 })
+        else {
+          const top = document.getElementById('top')
+          if (top) top.scrollIntoView({ behavior: 'smooth' })
+          else window.scrollTo({ top: 0, behavior: 'smooth' })
+        }
+      }
+      totopBtn.addEventListener('click', onTop)
+      cleanups.push(() => totopBtn.removeEventListener('click', onTop))
+    }
+
     function onBurg() {
       const on = sheet.classList.toggle('on')
       burg.setAttribute('aria-expanded', on)
       document.body.style.overflow = on ? 'hidden' : ''
+      const lenis = getLenis()
+      if (lenis) {
+        if (on) lenis.stop()
+        else lenis.start()
+      }
     }
     burg.addEventListener('click', onBurg)
     cleanups.push(() => burg.removeEventListener('click', onBurg))
@@ -74,6 +102,8 @@ export function useSiteEffects() {
         sheet.classList.remove('on')
         burg.setAttribute('aria-expanded', 'false')
         document.body.style.overflow = ''
+        const lenis = getLenis()
+        if (lenis) lenis.start()
       }
     }
     sheet.addEventListener('click', onSheetClick)
@@ -174,6 +204,44 @@ export function useSiteEffects() {
         : null
       cleanups.push(bindCarousel(el, featNav, reduce))
     })
+
+    const cine = document.querySelector('.cine')
+    const cineVid = cine?.querySelector('.cine-video')
+    if (cine && cineVid) {
+      const markPlaying = () => cine.classList.add('is-playing')
+      const tryPlay = () => {
+        const p = cineVid.play()
+        if (p && typeof p.then === 'function') {
+          p.then(markPlaying).catch(() => {})
+        }
+      }
+      cineVid.addEventListener('loadeddata', tryPlay)
+      cineVid.addEventListener('playing', markPlaying)
+      tryPlay()
+      cleanups.push(() => {
+        cineVid.removeEventListener('loadeddata', tryPlay)
+        cineVid.removeEventListener('playing', markPlaying)
+      })
+    }
+
+    const hero = document.querySelector('.hero')
+    const heroVid = hero?.querySelector('.hero-video')
+    if (hero && heroVid) {
+      const markPlaying = () => hero.classList.add('is-playing')
+      const tryPlay = () => {
+        const p = heroVid.play()
+        if (p && typeof p.then === 'function') {
+          p.then(markPlaying).catch(() => {})
+        }
+      }
+      heroVid.addEventListener('loadeddata', tryPlay)
+      heroVid.addEventListener('playing', markPlaying)
+      tryPlay()
+      cleanups.push(() => {
+        heroVid.removeEventListener('loadeddata', tryPlay)
+        heroVid.removeEventListener('playing', markPlaying)
+      })
+    }
 
     return () => {
       cleanups.forEach((fn) => fn && fn())

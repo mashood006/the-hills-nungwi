@@ -1,65 +1,92 @@
+import { useEffect } from 'react'
+import { BrowserRouter, Link, Route, Routes, useLocation } from 'react-router-dom'
 import { useSiteEffects } from './hooks/useSiteEffects'
+import { getLenis, smoothScrollTo, useSmoothScroll } from './hooks/useSmoothScroll'
+import { BlogSlider } from './components/BlogSlider'
 import { LeadForm } from './components/LeadForm'
+import { SiteFooter } from './components/SiteFooter'
+import { SiteHeader } from './components/SiteHeader'
+import BlogPost from './pages/BlogPost'
+import TeamPage from './pages/TeamPage'
 
-export default function App() {
+const WA_URL =
+  'https://wa.me/255670004400?text=Hello%2C%20I%20am%20interested%20in%20The%20Hills%2C%20Nungwi.'
+
+function Home() {
   useSiteEffects()
+  const { hash } = useLocation()
+
+  useEffect(() => {
+    if (!hash) return
+    const id = hash.replace('#', '')
+
+    let cancelled = false
+
+    function scrollToTarget() {
+      if (cancelled) return
+      const el = document.getElementById(id)
+      if (!el) return false
+
+      const lenis = getLenis()
+      if (lenis) {
+        lenis.scrollTo(el, { offset: -84, immediate: true })
+      } else {
+        el.scrollIntoView({ behavior: 'auto', block: 'start' })
+        window.scrollBy(0, -84)
+      }
+      return true
+    }
+
+    let attempts = 0
+    function poll() {
+      if (cancelled) return
+      if (scrollToTarget()) {
+        window.setTimeout(() => { if (!cancelled) scrollToTarget() }, 400)
+        return
+      }
+      if (++attempts < 40) window.setTimeout(poll, 80)
+    }
+
+    window.setTimeout(poll, 50)
+    return () => { cancelled = true }
+  }, [hash])
 
   return (
     <>
 
 
-<header className="hdr" id="hdr">
-  <div className="wrap">
-    <a className="mark" href="#top"><i></i>Majestic</a>
-    <nav className="nav">
-      <a href="#Overview">Overview</a>
-      <a href="#Property">The property</a>
-      <a href="#Gallery">Gallery</a>
-      <a href="#Features">Features</a>
-      <a href="#Residences">Residences</a>
-      <a href="#Location">Location</a>
-      <a href="#FAQ">FAQ</a>
-      <a href="#Contact">Contact</a>
-    </nav>
-    <a className="btn btn--gold hcta" href="#Contact">Register interest</a>
-    <button className="burg" id="burg" aria-label="Open menu" aria-expanded="false" aria-controls="sheet"><span></span></button>
-  </div>
-</header>
-
-<div className="sheet" id="sheet">
-  <a href="#Overview">Overview <span>01</span></a>
-  <a href="#Zanzibar">Zanzibar <span>02</span></a>
-  <a href="#Property">The property <span>03</span></a>
-  <a href="#Gallery">Gallery <span>04</span></a>
-  <a href="#Features">Key features <span>05</span></a>
-  <a href="#Ownership">Ownership <span>06</span></a>
-  <a href="#Amenities">Amenities <span>07</span></a>
-  <a href="#Residences">Residences <span>08</span></a>
-  <a href="#Returns">Returns <span>09</span></a>
-  <a href="#Finance">Finance <span>10</span></a>
-  <a href="#Location">Location <span>11</span></a>
-  <a href="#Excellence">Excellence <span>12</span></a>
-  <a href="#Contact">Register interest <span>13</span></a>
-</div>
+<SiteHeader />
 
 <main id="top">
 
 {/* ══ HERO ══ */}
 <section className="hero">
-  <div className="hero-img"><div className="ph par bg-hero" role="img" aria-label="The Hills, Nungwi — sunset over the Indian Ocean"></div></div>
+  <div className="hero-img">
+    <video
+      className="hero-video"
+      autoPlay
+      muted
+      loop
+      playsInline
+      preload="auto"
+      poster="/images/hero.jpg"
+      aria-label="The Hills, Nungwi — aerial view"
+    >
+      <source src="/videos/hero.mp4" type="video/mp4" />
+    </video>
+    <img className="hero-fallback" src="/images/hero.jpg" alt="" width="1920" height="1080" decoding="async" />
+  </div>
   <div className="scroll-cue" aria-hidden="true"></div>
   <div className="wrap">
     <div className="chips hl hl1">
       <span className="chip">Nungwi, Zanzibar</span>
-      <span className="chip">A project by Majestic</span>
-      <span className="chip chip--g">Final pre-sale</span>
     </div>
-    <h1 className="hl hl2">Built for the discerning <em className="g">traveler.</em></h1>
+    <h1 className="hl hl2">Crafting the spaces that will define <em className="g">Tanzania’s tomorrow.</em></h1>
     <div className="hero-row">
-      <p className="hl hl3">Seven floors of titled beachfront residences on the northern tip of Zanzibar — one minute's walk from a beach the tide never takes away.</p>
+      <p className="hl hl3">At Majestic, we design and construct landmark developments that elevate communities, spark economic growth, and shape the future of Tanzania. From iconic commercial hubs to destination-defining hospitality, we build enduring spaces that set a new standard for excellence across the region.</p>
       <div className="hero-btns hl hl4">
         <a className="btn btn--gold" href="#Contact">Register interest</a>
-        <a className="btn btn--glass" href="#Residences">View residences</a>
+        <a className="btn btn--glass" href="/the-hills-brochure.pdf" target="_blank" rel="noopener noreferrer">Download brochure</a>
       </div>
     </div>
   </div>
@@ -73,75 +100,145 @@ export default function App() {
 
 <div className="mq" aria-hidden="true">
   <div className="mq-in">
-    <span>The first branded four-star condo-hotel in Zanzibar</span><span>96 titled units</span><span>60 owner usage days a year</span><span>Operated by Paragon &amp; Sonesta</span><span>Opening Q4 2027</span>
-    <span>The first branded four-star condo-hotel in Zanzibar</span><span>96 titled units</span><span>60 owner usage days a year</span><span>Operated by Paragon &amp; Sonesta</span><span>Opening Q4 2027</span>
+    <span>The first branded four-star condo-hotel in Zanzibar</span><span>96 titled units</span><span>60 owner usage days a year</span><span>The Hills, Nungwi</span><span>Opening Q4 2027</span>
+    <span>The first branded four-star condo-hotel in Zanzibar</span><span>96 titled units</span><span>60 owner usage days a year</span><span>The Hills, Nungwi</span><span>Opening Q4 2027</span>
   </div>
 </div>
 
-{/* ══ OVERVIEW ══ */}
-<section className="sec" id="Overview">
+{/* ══ OUR VISION ══ */}
+<section className="sec" id="Vision">
   <div className="wrap">
-    <div className="overview a a-up">
-      <div className="overview-copy">
-        <span className="pill">Overview</span>
-        <h2>The Hills, <em className="g">Nungwi</em></h2>
-        <p className="body">The first branded four-star condo-hotel on the northern tip of Zanzibar — ninety-six titled residences above a full hotel operation run by Paragon and Sonesta.</p>
-        <p className="body">Buyers hold the deed, use the unit sixty days a year, and collect contractual returns from the hotel around it. Opening Q4 2027, with remaining inventory now in final pre-sale.</p>
-        <a className="btn btn--navy" href="#Contact">Talk to an advisor
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" aria-hidden="true"><path d="M4 6h16v10H8l-4 4V6z"/></svg>
-        </a>
+    <div className="duo">
+      <div>
+        <span className="kick a a-up">Our Vision</span>
+        <h2 className="a a-up" style={{'--d': '.08s'}}>Redefining <em className="g">PREMIUM</em> Real Estate</h2>
+        <p className="body a a-up" style={{'--d': '.16s', marginTop: '24px'}}>We envision a Zanzibar where world-class architecture meets timeless natural beauty, creating spaces that inspire, endure, and appreciate in value.</p>
+        <p className="body a a-up" style={{'--d': '.22s'}}>Our mission is to develop properties that serve as benchmarks for quality, sustainability, and investor confidence in the region. Each project reflects our commitment to excellence and our deep respect for Zanzibar&apos;s unique heritage.</p>
+        <a className="arrow a a-up" href="#Contact" style={{'--d': '.28s', marginTop: '16px'}}>Talk to an advisor →</a>
       </div>
-      <aside className="overview-side" aria-label="Project highlights">
-        <div>
-          <span>Starting from</span>
-          <b>$140,000 <small>USD</small></b>
-        </div>
-        <div>
-          <span>Opening</span>
-          <b>Q4 2027</b>
-        </div>
-        <div>
-          <span>Titled units</span>
-          <b className="badge-n">96</b>
-        </div>
-      </aside>
+      <div className="frame wide a a-clip" style={{'--d': '.1s'}}>
+        <img className="ph par" src="/images/vision-facade.jpg" alt="The Hills illuminated facade at dusk" width="2752" height="1536" loading="lazy" decoding="async" />
+      </div>
     </div>
+  </div>
+</section>
+
+{/* ══ DEVELOPER ══ */}
+<section className="devband" id="Developer">
+  <div className="wrap devband-inner">
+    <div className="devband-grid">
+      <div className="devband-left a a-l">
+        <figure className="devband-photo">
+          <img src="/images/developer-portrait.png" alt="Majestic leadership" width="764" height="1024" loading="lazy" decoding="async" />
+          <figcaption>
+            <strong>Majestic</strong>
+            <span>Developer · The Hills, Nungwi</span>
+          </figcaption>
+        </figure>
+        <div className="devband-actions">
+          <a className="devband-btn" href="https://www.linkedin.com/" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+          <a className="devband-btn" href="https://majestic.tz/" target="_blank" rel="noopener noreferrer">majestic.tz</a>
+        </div>
+      </div>
+      <div className="devband-copy a a-r">
+        <span className="devband-quote" aria-hidden="true">“</span>
+        <span className="devband-eyebrow">Managing Director | Majestic Luxury Suites Ltd</span>
+        <h2 className="devband-headline">Mohammed Munir Omar</h2>
+        <div className="devband-text">
+          <p>
+            Mohammed Munir Omar is an entrepreneur and business leader with more than a decade of experience across hospitality, real estate, trading, and investment. As Managing Director of Majestic Luxury Suites Ltd, he leads with a clear philosophy: to build with purpose, grow with discipline, and create assets with enduring value.
+          </p>
+          <p>
+            Under his leadership, Majestic has built a distinctive hospitality portfolio that includes{" "}
+            <em>Ocean Breeze Hotel</em>, <em>Double A Hotel</em>, <em>The Roundabout Hotel</em>, and <em>Ocean Breeze BnB</em>, collectively representing more than <strong>100 rooms under management</strong>.
+          </p>
+          <p>
+            Today, Mohammed is guiding the Group into its next chapter through real estate development. At the forefront is{" "}
+            <em>The Hills Nungwi</em>, an exclusive collection of <strong>88 residences</strong>, with a further{" "}
+            <strong>150 units in the development pipeline</strong>.
+          </p>
+          <p>
+            His vision extends beyond buildings and hospitality assets. It is about creating places with identity, investments with longevity, and experiences that remain meaningful long after the first impression.
+          </p>
+          <p>
+            Rooted in Zanzibar and shaped by a long-term perspective, Mohammed continues to position Majestic as a distinguished hospitality and real estate platform defined by thoughtful growth, refined execution, and legacy.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+{/* ══ ZANZIBAR INTRO + CINEMATIC ══ */}
+<section className="znintro">
+  <div className="wrap znintro-in">
+    <h2 className="znintro-title a a-up">Redefining development in Zanzibar as a harmonious blend of place, design and permanence.</h2>
+    <p className="znintro-desc a a-up" style={{'--d': '.12s'}}>Majestic conceives and delivers branded residences and hospitality assets across Zanzibar. At The Hills, Nungwi, that means titled beachfront living above a full hotel operation — architecture, hospitality and long-term value working as one, for owners who want a home and a working asset on Africa’s leading island destination.</p>
+  </div>
+</section>
+
+<section className="cine" aria-label="Zanzibar">
+  <div className="cine-media">
+    <video
+      className="cine-video"
+      autoPlay
+      muted
+      loop
+      playsInline
+      preload="metadata"
+      poster="/images/aerial2.jpg"
+      aria-hidden="true"
+    >
+      <source src="/videos/zanzibar.mp4" type="video/mp4" />
+    </video>
+    <img className="cine-fallback" src="/images/aerial2.jpg" alt="" width="1920" height="1080" decoding="async" />
+  </div>
+  <div className="cine-scrim" aria-hidden="true" />
+  <div className="cine-grad" aria-hidden="true" />
+  <div className="cine-pin">
+    <svg width="17" height="20" viewBox="0 0 16 18" fill="none" aria-hidden="true"><path d="M8 1.1C4.6 1.1 1.9 3.8 1.9 7.2c0 4.35 6.1 9.4 6.1 9.4s6.1-5.05 6.1-9.4C14.1 3.8 11.4 1.1 8 1.1z" stroke="#fff" strokeWidth="1.1"/><circle cx="8" cy="7.1" r="2.1" stroke="#fff" strokeWidth="1.1"/></svg>
+    <span>Zanzibar</span>
   </div>
 </section>
 
 {/* ══ ZANZIBAR ══ */}
-<section className="sec on-dark" id="Zanzibar">
-  <div className="wrap">
-    <div style={{maxWidth: '720px'}}>
-      <span className="kick a a-up">Why invest here</span>
-      <h2 className="a a-up" style={{'--d': '.08s'}}>Tanzania in Africa, Zanzibar <em className="g">at the heart of opportunity.</em></h2>
-      <p className="lead a a-up" style={{'--d': '.16s', marginTop: '22px'}}>The leading beach destination in Africa — and a market that has run at high occupancy for five straight years.</p>
+<section className="why-invest" id="Zanzibar">
+  <div className="why-invest-bg" aria-hidden="true">
+    <img src="/images/why-invest.jpg" alt="" width="1920" height="1080" decoding="async" />
+    <div className="why-invest-scrim" />
+  </div>
+  <div className="wrap why-invest-in">
+    <div className="why-invest-copy a a-up">
+      <span className="kick">Why invest in The Hills Nungwi</span>
+      <h2>Tanzania in Africa, Zanzibar <em className="g">at the Heart of Opportunity</em></h2>
+      <p>The leading Beach destination in Africa</p>
     </div>
-    <div className="stats stg">
-      <div><b data-count="80" data-suffix="%+">0</b><span>Average occupancy<br />Zanzibar, last 5 years</span></div>
-      <div><b data-count="5.6" data-dec="1" data-suffix="M">0</b><span>Tourists in 2025<br />Record year</span></div>
-      <div><b data-count="7" data-suffix="%">0</b><span>Economic<br />growth</span></div>
-      <div><b data-count="15" data-suffix="%">0</b><span>Tourism<br />growth</span></div>
-      <div><b data-count="20" data-suffix="+">0</b><span>International direct<br />flight destinations</span></div>
-      <div><b data-count="50" data-suffix="%">0</b><span>Population growth<br />last 10 years</span></div>
+    <div className="why-stats stg">
+      <div><b data-count="7" data-suffix="%">0</b><span>Economic growth</span></div>
+      <div><b data-count="15" data-suffix="%">0</b><span>Tourism growth</span></div>
+      <div><b>15–20%</b><span>Return on Investment</span></div>
+      <div><b data-count="20" data-suffix="+">0</b><span>International direct flight destinations</span></div>
+      <div><b data-count="1.9" data-dec="1">0</b><span>Million residents</span></div>
+      <div><b data-count="50" data-suffix="%">0</b><span>Population growth in the last 10 years</span></div>
     </div>
-    <p className="a a-up" style={{marginTop: '26px', fontSize: '.8rem', color: 'rgba(255,255,255,.42)'}}>Figures as published by the developer. Past performance is not a guide to future returns.</p>
+    <p className="why-invest-note a a-up">Figures as published by the developer. Past performance is not a guide to future returns.</p>
   </div>
 </section>
 
-{/* ══ PROPERTY ══ */}
-<section className="sec" id="Property">
+{/* ══ ABOUT US ══ */}
+<section className="sec" id="About">
   <div className="wrap">
     <div className="duo duo--top">
       <div>
-        <span className="kick a a-up">The property</span>
-        <h2 className="a a-up" style={{'--d': '.08s'}}>The first branded four-star <em className="g">condo-hotel</em> in Zanzibar.</h2>
-        <p className="lead a a-up" style={{'--d': '.16s', marginTop: '24px'}}>Seven floors. Private balconies. Contemporary architecture wrapped in tropical green.</p>
-        <p className="body a a-up" style={{'--d': '.22s', marginTop: '1.3em'}}>Ninety-six titled units sit above a full hotel operation — lobby, restaurant, pool deck, gym, coworking and a rooftop bar. You hold the deed to your unit; Paragon Hotel &amp; Condo Operations and Sonesta run the hotel around it.</p>
-        <p className="body a a-up" style={{'--d': '.28s'}}>That structure is what makes it unusual here. Nungwi has no shortage of resorts, but almost none of them let an individual buyer own a titled unit inside a branded four-star operation and still use it themselves.</p>
-        <a className="arrow a a-up" href="#Ownership" style={{'--d': '.34s', marginTop: '16px'}}>How ownership works →</a>
+        <span className="kick a a-up">About Us</span>
+        <h2 className="a a-up" style={{'--d': '.08s'}}>Building Trust Through <em className="g">Excellence</em></h2>
+        <p className="body a a-up" style={{'--d': '.16s', marginTop: '24px'}}>Majestic Development stands as Zanzibar&apos;s premier PREMIUM real estate developer, committed to creating properties that define new standards of excellence in East Africa&apos;s most captivating destination.</p>
+        <span className="kick about-subkick a a-up" style={{'--d': '.2s'}}>Committed to Zanzibar</span>
+        <p className="body a a-up" style={{'--d': '.24s'}}>We are not simply building properties; we are investing in Zanzibar&apos;s future. Our developments create employment opportunities, support local craftsmen, and contribute to the island&apos;s growing reputation as a world-class destination.</p>
+        <p className="body a a-up" style={{'--d': '.28s'}}>Through responsible development practices and community engagement, we ensure that our growth contributes positively to the economic and social fabric of this extraordinary island.</p>
+        <a className="arrow a a-up" href="#Contact" style={{'--d': '.34s', marginTop: '16px'}}>Talk to an advisor →</a>
       </div>
-      <div className="frame tall a a-clip" style={{'--d': '.1s'}}><img className="ph par" src="/images/terrace.jpg" alt="View from a balcony across the beach club to the ocean" width="1200" height="1500" decoding="async" /></div>
+      <div className="frame tall a a-clip" style={{'--d': '.1s'}}><img className="ph par" src="/images/property-lagoon.jpg" alt="Boats in a turquoise mangrove lagoon near Zanzibar" width="2752" height="1536" decoding="async" /></div>
     </div>
   </div>
 </section>
@@ -183,162 +280,133 @@ export default function App() {
   </div>
 </section>
 
-{/* ══ OWNERSHIP ══ */}
-<section className="priv" id="Ownership">
-  <div className="ph par bg-night" role="img" aria-label="The development lit at night from above"></div>
-  <div className="wrap" style={{position: 'relative', zIndex: '2'}}>
-    <div className="priv-b" style={{paddingLeft: '0', paddingRight: '0'}}>
-      <span className="kick a a-up">Ownership privileges</span>
-      <h2 className="a a-up" style={{'--d': '.08s'}}>Stay in <em className="g">your hotel.</em></h2>
-      <p className="lead lead--hl a a-up" style={{'--d': '.16s', marginTop: '18px'}}>Real ownership perks for the owner of a titled unit.</p>
-      <div className="days a a-l" style={{'--d': '.24s'}}>
-        <b data-count="60">0</b>
-        <div>usage days per year<span>For owners</span></div>
-      </div>
-      <ul className="plist stg">
-        <li>No blackout dates, subject to availability</li>
-        <li>Beach club and golf access from delivery</li>
-        <li>Friends &amp; family — 30% off the published rate, subject to availability</li>
-        <li>You hold the deed; Paragon Operations / Sonesta run the operation</li>
-      </ul>
-    </div>
-  </div>
-</section>
-
 {/* ══ AMENITIES ══ */}
 <section className="sec cream2" id="Amenities">
   <div className="wrap">
-    <span className="kick a a-up">Amenities</span>
-    <h2 className="head a a-up" style={{'--d': '.08s'}}>Everything <em className="g">on site.</em></h2>
+    <span className="kick a a-up">Why Zanzibar</span>
+    <h2 className="head a a-up" style={{'--d': '.08s'}}>A destination that <em className="g">endures.</em></h2>
     <div className="amen stg">
-      <div><h4>The pool</h4><p>A terraced pool with water features at the centre of the site, wrapped by the two blocks.</p></div>
-      <div><h4>Balconies with sea view</h4><p>Private balconies on most units, angled to hold the water and the sunset in frame.</p></div>
-      <div><h4>Rooftop &amp; bar</h4><p>A circular bar under a lit canopy, open through the evening above the courtyard.</p></div>
-      <div><h4>Restaurant</h4><p>Covered dining on the seaward edge of the site, looking out over the beach.</p></div>
-      <div><h4>Supermarket</h4><p>An on-site store, so the basics don't need a drive into the village.</p></div>
-      <div><h4>Gym</h4><p>Free weights, racks, cardio and a turf lane, glazed on two sides and open to the terrace.</p></div>
-      <div><h4>Coworking</h4><p>A glazed meeting room and desks for the days that aren't a holiday.</p></div>
-      <div><h4>Lounge &amp; art</h4><p>A double-height arrival lounge with concierge, seating and commissioned pieces.</p></div>
-      <div><h4>Cabanas &amp; daybeds</h4><p>Timber pergolas at the water's edge, lit from within after dark.</p></div>
+      <div>
+        <span className="amen-ico" aria-hidden="true">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5"><path d="M4 16l6-6 4 4 6-8"/><path d="M14 6h6v6"/></svg>
+        </span>
+        <h4>Year-Round Paradise</h4>
+        <p>Tropical climate with consistent sunshine and pristine beaches throughout the year.</p>
+      </div>
+      <div>
+        <span className="amen-ico" aria-hidden="true">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5"><circle cx="12" cy="12" r="9"/><path d="M3 12h18"/><path d="M12 3a14 14 0 0 1 0 18"/><path d="M12 3a14 14 0 0 0 0 18"/></svg>
+        </span>
+        <h4>Global Connectivity</h4>
+        <p>Direct flights from major hubs in Europe, Middle East, and Africa.</p>
+      </div>
+      <div>
+        <span className="amen-ico" aria-hidden="true">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5"><circle cx="12" cy="12" r="9"/><path d="M12 7v10"/><path d="M15.2 9.2A2.4 2.4 0 0 0 12 8.2c-1.5 0-2.6.8-2.6 2s1.1 1.8 2.6 2.2 2.6.8 2.6 2-1.1 2-2.6 2a2.5 2.5 0 0 1-3.1-1.2"/></svg>
+        </span>
+        <h4>Growing Economy</h4>
+        <p>Double-digit tourism growth and expanding premium real estate market.</p>
+      </div>
+      <div>
+        <span className="amen-ico" aria-hidden="true">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5"><path d="M12 4c1.8 2.2 3 4.2 3 6a3 3 0 1 1-6 0c0-1.8 1.2-3.8 3-6z"/><path d="M7.5 14c1.2 1.4 2 2.6 2 3.6a2.5 2.5 0 1 1-5 0c0-1 .8-2.2 2-3.6z"/><path d="M16.5 14c1.2 1.4 2 2.6 2 3.6a2.5 2.5 0 1 1-5 0c0-1 .8-2.2 2-3.6z"/></svg>
+        </span>
+        <h4>Natural Beauty</h4>
+        <p>UNESCO sites, marine reserves, and untouched natural landscapes.</p>
+      </div>
+      <div>
+        <span className="amen-ico" aria-hidden="true">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5"><path d="M4 20V9l8-5 8 5v11"/><path d="M9 20v-6h6v6"/></svg>
+        </span>
+        <h4>Modern Infrastructure</h4>
+        <p>Rapidly developing facilities with world-class hospitality standards.</p>
+      </div>
+      <div>
+        <span className="amen-ico" aria-hidden="true">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5"><path d="M8 7V5a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/><rect x="4" y="7" width="16" height="14"/><path d="M4 12h16"/></svg>
+        </span>
+        <h4>Investment Friendly</h4>
+        <p>Favorable policies for international investors and property ownership.</p>
+      </div>
     </div>
-    <div className="bento stg" style={{marginTop: '14px'}}>
-      <div className="frame frame--cap g1"><div className="ph bg-pool" role="img" aria-label="Pool deck with parasols and loungers"></div><span className="cap"><i>01</i>Pool deck</span></div>
-      <div className="frame frame--cap g2"><div className="ph bg-cabana" role="img" aria-label="Lit poolside cabana with daybed"></div><span className="cap"><i>02</i>Cabanas</span></div>
-      <div className="frame frame--cap g3"><div className="ph bg-gym" role="img" aria-label="Fitness centre"></div><span className="cap"><i>03</i>Gym</span></div>
-      <div className="frame frame--cap g4"><div className="ph bg-board" role="img" aria-label="Coworking and meeting room"></div><span className="cap"><i>04</i>Coworking</span></div>
-      <div className="frame frame--cap g5"><div className="ph bg-top" role="img" aria-label="The buildings and the beach from above"></div><span className="cap"><i>05</i>The site</span></div>
-      <div className="frame frame--cap g6"><div className="ph bg-couple" role="img" aria-label="A couple on a terrace at sunset"></div><span className="cap"><i>06</i>Terraces</span></div>
+    <div className="bento bento--split stg" style={{marginTop: '14px'}}>
+      <div className="bento-stack">
+        <div className="frame bento-pool">
+          <div className="ph bg-pool" role="img" aria-label="Pool deck with parasols and loungers"></div>
+        </div>
+        <div className="frame">
+          <div className="ph bg-beach-girl" role="img" aria-label="Looking out over the beach and dhows at Nungwi"></div>
+        </div>
+      </div>
+      <div className="frame bento-feature">
+        <div className="ph bg-cabanas-hand" role="img" aria-label="Hand holding shells on the Nungwi shore at sunset"></div>
+      </div>
     </div>
   </div>
 </section>
 
-{/* ══ KEY FEATURES ══ */}
-<section className="sec on-dark" id="Features">
-  <div className="wrap">
-    <div className="feat-head a a-up">
-      <div>
-        <span className="pill pill--dark">Features</span>
-        <h2>Key <em className="g">features</em></h2>
-      </div>
-      <div className="carousel-nav" data-feat-nav role="group" aria-label="Feature controls">
-        <button type="button" className="circ" data-prev aria-label="Previous features">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8"><path d="M15 6l-6 6 6 6"/></svg>
-        </button>
-        <button type="button" className="circ" data-next aria-label="Next features">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8"><path d="M9 6l6 6-6 6"/></svg>
-        </button>
-      </div>
-    </div>
-  </div>
-  <div className="carousel feat-carousel" data-carousel>
-    <div className="carousel-track" data-track tabIndex="0" aria-label="Key features">
-      <article className="feat-card">
-        <div className="feat-media"><img src="/images/facade.jpg" alt="Illuminated facade of The Hills" width="960" height="600" loading="lazy" decoding="async" /></div>
-        <h3>Branded four-star operation</h3>
-        <p>Paragon Hotel &amp; Condo Operations and Sonesta run the hotel — you own a titled unit inside it.</p>
-      </article>
-      <article className="feat-card">
-        <div className="feat-media"><img src="/images/aerial1.jpg" alt="Aerial view of Nungwi beachfront" width="960" height="600" loading="lazy" decoding="async" /></div>
-        <h3>Prime Nungwi beachfront</h3>
-        <p>One minute’s walk to a non-tidal beach on the northern tip of Zanzibar — swimmable from sunrise to sunset.</p>
-      </article>
-      <article className="feat-card">
-        <div className="feat-media"><img src="/images/pool.jpg" alt="Pool deck at The Hills" width="960" height="600" loading="lazy" decoding="async" /></div>
-        <h3>60 owner usage days</h3>
-        <p>Stay in your own hotel each year with no blackout dates, subject to availability, plus friends &amp; family rates.</p>
-      </article>
-      <article className="feat-card">
-        <div className="feat-media"><img src="/images/court.jpg" alt="Courtyard and pool" width="960" height="600" loading="lazy" decoding="async" /></div>
-        <h3>Contractual net returns</h3>
-        <p>10% net in years 1–2, 12% in years 3–5, and 8–15% from year 6 — as set out in the purchase contract.</p>
-      </article>
-      <article className="feat-card">
-        <div className="feat-media"><img src="/images/living.jpg" alt="Residence living space" width="960" height="600" loading="lazy" decoding="async" /></div>
-        <h3>Titled ownership</h3>
-        <p>You hold the deed to your apartment. Ninety-six units across seven floors, from one-bed suites to penthouses.</p>
-      </article>
-      <article className="feat-card">
-        <div className="feat-media"><img src="/images/terrace.jpg" alt="Sea-view terrace" width="960" height="600" loading="lazy" decoding="async" /></div>
-        <h3>Developer-backed finance</h3>
-        <p>USD lending at 50% LTV, 5–6.5% fixed over 15 years — open to local and international buyers.</p>
-      </article>
+{/* ══ OWNERSHIP ══ */}
+<section className="priv" id="Ownership">
+  <div className="ph par bg-ownership-sea" role="img" aria-label="Traditional outrigger boat on clear turquoise water in Zanzibar"></div>
+  <div className="wrap" style={{position: 'relative', zIndex: '2'}}>
+    <div className="priv-b" style={{paddingLeft: '0', paddingRight: '0'}}>
+      <span className="kick a a-up">Ownership privileges</span>
+      <h2 className="a a-up" style={{'--d': '.08s'}}>Imagine your <em className="g">life here.</em></h2>
+      <p className="lead lead--hl a a-up" style={{'--d': '.16s', marginTop: '18px'}}>Wake to turquoise water, spend sixty days a year in your own titled residence, and let the hotel earn when you are away.</p>
     </div>
   </div>
 </section>
 
 {/* ══ RESIDENCES ══ */}
-<section className="sec" id="Residences">
+<section className="sec cream2" id="Residences">
   <div className="wrap">
     <span className="kick a a-up">Unit types</span>
     <h2 className="head a a-up" style={{'--d': '.08s'}}>Three ways to <em className="g">own here.</em></h2>
     <p className="lead a a-up" style={{'--d': '.16s', marginTop: '20px'}}>All remaining inventory is now in final pre-sale. Each floor runs 1,113.52 m².</p>
     <div className="res stg">
       <article className="unit">
-        <div className="frame"><div className="ph bg-living" role="img" aria-label="One bedroom living space"></div></div>
+        <div className="unit-plan">
+          <img src="/images/plan-1bed.png" alt="One bedroom floor plan" width="900" height="520" loading="lazy" decoding="async" />
+        </div>
         <div className="unit-b">
-          <div className="t">One bedroom suite</div>
-          <h3>Starting from</h3>
-          <div className="pr">135,000 USD</div>
-          <p>The smart investment — suited to the solo traveller or digital nomad, and optimised for high-occupancy short-term letting.</p>
-          <ul className="spec">
-            <li><span>Living room</span><b>13.3 m²</b></li>
-            <li><span>Bedroom</span><b>14.5 m²</b></li>
-            <li><span>Bathroom</span><b>5.8 m²</b></li>
-            <li><span>Balcony</span><b>12.6 m²</b></li>
-            <li><span>Total area</span><b>89.7 m²</b></li>
+          <h3>One Bedroom</h3>
+          <div className="unit-area">77 m²</div>
+          <ul className="unit-feats">
+            <li>Shared Amenities</li>
+            <li>Ocean views</li>
+            <li>Open-plan living</li>
           </ul>
+          <div className="pr">From $135,000</div>
         </div>
       </article>
       <article className="unit">
-        <div className="frame"><div className="ph bg-kitchen" role="img" aria-label="Two bedroom living and dining"></div></div>
+        <div className="unit-plan">
+          <img src="/images/plan-2bed.png" alt="Two bedroom floor plan" width="900" height="520" loading="lazy" decoding="async" />
+        </div>
         <div className="unit-b">
-          <div className="t">Two bedroom sanctuary</div>
-          <h3>Starting from</h3>
-          <div className="pr">150,000 USD</div>
-          <p>Space to breathe. Balanced between privacy and shared space, with an en-suite master, a generous lounge and a large terrace.</p>
-          <ul className="spec">
-            <li><span>Living room</span><b>12.8 m²</b></li>
-            <li><span>Bedroom 1</span><b>15.7 m²</b></li>
-            <li><span>Bedroom 2</span><b>13.4 m²</b></li>
-            <li><span>Balconies</span><b>15.8 m²</b></li>
-            <li><span>Total area</span><b>103.7 m²</b></li>
+          <h3>Two Bedroom</h3>
+          <div className="unit-area">88 m²</div>
+          <ul className="unit-feats">
+            <li>Shared Amenities</li>
+            <li>Master suite</li>
+            <li>Dual terraces</li>
           </ul>
+          <div className="pr">From $150,000</div>
         </div>
       </article>
       <article className="unit">
-        <div className="frame"><div className="ph bg-penthouse" role="img" aria-label="Penthouse terrace with private pool"></div></div>
+        <div className="unit-plan">
+          <img src="/images/plan-3bed.png" alt="Three bedroom penthouse floor plan" width="900" height="520" loading="lazy" decoding="async" />
+        </div>
         <div className="unit-b">
-          <div className="t">Three bedroom penthouse</div>
-          <h3>Starting from</h3>
-          <div className="pr">499,000 USD</div>
-          <p>Perched at the top, with a private pool, expansive entertainment decks and panoramic views over the ocean and the Nungwi skyline.</p>
-          <ul className="spec">
-            <li><span>Reception</span><b>49.3 m²</b></li>
-            <li><span>Master bedroom</span><b>23.3 m²</b></li>
-            <li><span>Bedrooms 2 &amp; 3</span><b>13.8 / 12.7 m²</b></li>
-            <li><span>Terrace</span><b>27.5 m²</b></li>
-            <li><span>Total area</span><b>317.5 m²</b></li>
+          <h3>3 Bedroom Penthouse</h3>
+          <div className="unit-area">328 m²</div>
+          <ul className="unit-feats">
+            <li>Private pool</li>
+            <li>Garden</li>
+            <li>Premium finishes</li>
           </ul>
+          <div className="pr">From $499,000</div>
         </div>
       </article>
     </div>
@@ -406,7 +474,7 @@ export default function App() {
 <section className="sec cream2" id="Finance">
   <div className="wrap">
     <div className="duo duo--top">
-      <div className="frame tall a a-clip"><img className="ph par" src="/images/pool.jpg" alt="Poolside loungers under a thatched parasol" width="1200" height="1500" decoding="async" /></div>
+      <div className="frame tall a a-clip"><img className="ph par" src="/images/finance.jpg" alt="The Hills, Nungwi — illuminated residences at twilight" width="764" height="1024" decoding="async" /></div>
       <div>
         <span className="kick a a-up">Finance</span>
         <h2 className="a a-up" style={{'--d': '.08s'}}>Finance <em className="g">your unit.</em></h2>
@@ -445,23 +513,7 @@ export default function App() {
           <li><b>Nungwi Airport</b><span>5 km</span></li>
         </ul>
       </div>
-      <div className="frame tall a a-clip" style={{'--d': '.1s'}}><img className="ph par" src="/images/aerial1.jpg" alt="Aerial view of The Hills within Nungwi" width="1200" height="1500" decoding="async" /></div>
-    </div>
-  </div>
-</section>
-
-{/* ══ DEVELOPER ══ */}
-<section className="sec" id="Developer">
-  <div className="wrap">
-    <div className="duo">
-      <div className="frame wide a a-clip"><img className="ph par" src="/images/facade.jpg" alt="The illuminated facade of The Hills" width="1600" height="900" decoding="async" /></div>
-      <div>
-        <span className="kick a a-up">The developer</span>
-        <h2 className="a a-up" style={{'--d': '.08s'}}>A project by <em className="g">Majestic.</em></h2>
-        <p className="body a a-up" style={{'--d': '.16s', marginTop: '22px'}}>The Hills Nungwi is presented by Majestic, a Zanzibar developer with decades of experience across hospitality and residential projects, and a portfolio that includes the Ocean Breeze hotel.</p>
-        <p className="body a a-up" style={{'--d': '.22s'}}>Their work has shaped communities on the island through careful planning and craftsmanship, on the belief that a home or a hotel is more than a building — it's a space for memories, for a way of living, and for the beauty of Zanzibar itself.</p>
-        <p className="body a a-up" style={{'--d': '.28s'}}>With The Hills, Majestic blends modern luxury with natural serenity: residences built for elegance, comfort and a lifestyle made with precision.</p>
-      </div>
+      <div className="frame tall a a-clip" style={{'--d': '.1s'}}><img className="ph par" src="/images/location-turtles.jpg" alt="Snorkeling with sea turtles in clear turquoise water near Nungwi" width="1200" height="1600" decoding="async" /></div>
     </div>
   </div>
 </section>
@@ -478,7 +530,7 @@ export default function App() {
       <div className="faq stg">
         <details open>
           <summary>What exactly am I buying?</summary>
-          <div className="qa"><p>A titled unit inside the hotel. You hold the deed to the apartment; Paragon Hotel &amp; Condo Operations and Sonesta run the hotel operation around it. You collect returns from that operation and you use the unit yourself.</p></div>
+          <div className="qa"><p>A titled unit inside the hotel. You hold the deed to the apartment; a professional hotel operator runs the hotel operation around it. You collect returns from that operation and you use the unit yourself.</p></div>
         </details>
         <details>
           <summary>How many days a year can I use it?</summary>
@@ -519,7 +571,7 @@ export default function App() {
     </div>
   </div>
   <div className="excellence-media a a-up">
-    <img src="/images/aerial2.jpg" alt="The Hills beachfront development at Nungwi" width="1920" height="1080" loading="lazy" decoding="async" />
+    <img src="/images/excellence.jpg" alt="The Hills beachfront development at Nungwi at dusk" width="2752" height="1536" loading="lazy" decoding="async" />
   </div>
   <div className="wrap">
     <div className="excellence-cta a a-up">
@@ -530,100 +582,92 @@ export default function App() {
   </div>
 </section>
 
-{/* ══ CONTACT ══ */}
-<section className="sec on-dark" id="Contact">
+{/* ══ INSIGHTS / BLOG ══ */}
+<section className="sec blog" id="Insights">
   <div className="wrap">
-    <div className="formgrid">
-      <div>
-        <span className="kick a a-up">Register interest</span>
-        <h2 className="a a-up" style={{'--d': '.08s'}}>Imagine your <em className="g">life here.</em></h2>
-        <p className="lead a a-up" style={{'--d': '.16s', marginTop: '20px'}}>Leave your details and the Majestic sales team will come back to you with the brochure, live availability and the current price list.</p>
-        <div className="stg" style={{marginTop: '26px'}}>
-          <div className="rowline">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.4"><path d="M4 6h16v12H4z"/><path d="M4 7l8 6 8-6"/></svg>
-            <div><b>sales@majestic.tz</b><span>Email the sales team</span></div>
+    <div className="blog-head a a-up">
+      <span className="kick">Nungwi living</span>
+      <h2>Zanzibar <em className="g">property</em> &amp; investment insights.</h2>
+      <p>Expert guidance on luxury real estate, investment opportunities, and premium living at The Hills Nungwi.</p>
+    </div>
+  </div>
+  <BlogSlider />
+</section>
+
+{/* ══ CONTACT ══ */}
+<section className="contact-band" id="Contact">
+  <div className="contact-band-bg" aria-hidden="true">
+    <img src="/images/contact-beach.jpg" alt="" width="2752" height="1536" decoding="async" />
+    <div className="contact-band-scrim" />
+  </div>
+  <div className="wrap">
+    <div className="contact-panel a a-up">
+      <div className="contact-panel-copy">
+        <h2>Let&apos;s shape the future of<br /><em className="g">Zanzibar&apos;s coastlines.</em></h2>
+        <p>
+          Whether you are a developer, a luxury hotel operator, or a media representative, our team provides the insight, vision, and local expertise needed to turn high-value opportunities into iconic destinations.
+        </p>
+        <div className="contact-panel-meta">
+          <div>
+            <h3>Contact</h3>
+            <a className="contact-meta-line" href="mailto:sales@majestic.tz">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" aria-hidden="true"><rect x="3" y="5" width="18" height="14"/><path d="m3 7 9 7 9-7"/></svg>
+              sales@majestic.tz
+            </a>
+            <a className="contact-meta-line" href={WA_URL} target="_blank" rel="noopener noreferrer">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" aria-hidden="true"><path d="M4.5 3.5h4l2 5-2.5 1.5a12 12 0 0 0 6 6L15.5 13.5l5 2v4a1 1 0 0 1-1.1 1A16.5 16.5 0 0 1 3.5 4.6a1 1 0 0 1 1-1.1z"/></svg>
+              +255 670 004 400
+            </a>
           </div>
-          <div className="rowline">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.4"><path d="M4.5 3.5h4l2 5-2.5 1.5a12 12 0 0 0 6 6L15.5 13.5l5 2v4a1 1 0 0 1-1.1 1A16.5 16.5 0 0 1 3.5 4.6a1 1 0 0 1 1-1.1z"/></svg>
-            <div><b>+255 670 004 400</b><span>Call or WhatsApp</span></div>
+          <div>
+            <h3>Address</h3>
+            <p className="contact-meta-line">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" aria-hidden="true"><path d="M12 21s7-5.2 7-11a7 7 0 1 0-14 0c0 5.8 7 11 7 11z"/><circle cx="12" cy="10" r="2.5"/></svg>
+              Malindi, Stone Town, Zanzibar
+            </p>
           </div>
-          <div className="rowline" style={{borderBottom: '0'}}>
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.4"><path d="M12 2l8 3.5v6c0 5-3.4 9.2-8 10.5-4.6-1.3-8-5.5-8-10.5v-6L12 2z"/><path d="M8.6 11.9l2.4 2.4 4.4-4.6"/></svg>
-            <div><b>Titled ownership</b><span>You hold the deed to the unit</span></div>
-          </div>
-        </div>
-        <div style={{display: 'flex', flexWrap: 'wrap', gap: '10px', marginTop: '28px'}} className="a a-up" >
-          <a className="btn btn--gold" href="https://wa.me/255670004400?text=Hello%2C%20I%20am%20interested%20in%20The%20Hills%2C%20Nungwi." target="_blank" rel="noopener">Chat on WhatsApp</a>
-          <a className="btn btn--glass" href="mailto:sales@majestic.tz">Email us</a>
         </div>
       </div>
-
-      <div className="a a-r">
-        <LeadForm />
+      <div className="contact-panel-form">
+        <LeadForm variant="inquiry" />
       </div>
     </div>
   </div>
 </section>
 </main>
 
-<footer className="ft">
-  <div className="wrap">
-    <div className="ft-top">
-      <div>
-        <a className="mark" href="#top"><i></i>Majestic</a>
-        <p style={{color: 'rgba(255,255,255,.66)', maxWidth: '36ch', fontFamily: "'Cormorant Garamond', serif", fontStyle: 'italic', fontSize: '1.14rem'}}>The Hills Nungwi — beachfront residences on the northern tip of Zanzibar.</p>
-        <div className="soc">
-          <a href="#" aria-label="Instagram"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7"><rect x="3" y="3" width="18" height="18"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r=".9" fill="currentColor"/></svg></a>
-          <a href="#" aria-label="Facebook"><svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M14 8.5V6.8c0-.8.2-1.2 1.4-1.2H17V2.6h-2.6c-3.2 0-4.3 1.5-4.3 4v1.9H8V12h2.1v9.4h3.9V12h2.6l.4-3.5H14z"/></svg></a>
-          <a href="#" aria-label="LinkedIn"><svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M6.9 21.4H3V8.9h3.9v12.5zM4.9 7.2a2.3 2.3 0 1 1 0-4.6 2.3 2.3 0 0 1 0 4.6zM21.4 21.4h-3.9v-6.1c0-1.5 0-3.3-2-3.3s-2.3 1.6-2.3 3.2v6.2H9.3V8.9H13v1.7h.1a4 4 0 0 1 3.6-2c3.9 0 4.6 2.6 4.6 5.9v6.9z"/></svg></a>
-          <a href="https://wa.me/255670004400" aria-label="WhatsApp"><svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 0 0-8.6 15L2 22l5.2-1.4A10 10 0 1 0 12 2zm5.4 14c-.2.6-1.3 1.2-1.8 1.2-.5.1-1 .1-1.7-.1a12 12 0 0 1-6.4-5.6c-.5-.8-.8-1.7-.8-2.5 0-.9.4-1.6.9-2 .2-.2.4-.3.6-.3h.5c.2 0 .4 0 .6.4l.8 2c.1.2 0 .4-.1.6l-.4.5c-.1.2-.3.3-.1.6a8.7 8.7 0 0 0 3.8 3.3c.3.1.5.1.6-.1l.8-1c.2-.2.3-.2.6-.1l2 1c.2.1.4.2.4.4s0 .8-.2 1.3z"/></svg></a>
-        </div>
-      </div>
-      <div>
-        <h5>The project</h5>
-        <ul>
-          <li><a href="#Property">The property</a></li>
-          <li><a href="#Gallery">Gallery</a></li>
-          <li><a href="#Ownership">Ownership</a></li>
-          <li><a href="#Amenities">Amenities</a></li>
-          <li><a href="#Residences">Residences</a></li>
-          <li><a href="#Location">Location</a></li>
-        </ul>
-      </div>
-      <div>
-        <h5>Invest</h5>
-        <ul>
-          <li><a href="#Zanzibar">Why Zanzibar</a></li>
-          <li><a href="#Returns">Returns</a></li>
-          <li><a href="#Payment">Payment</a></li>
-          <li><a href="#Finance">Finance</a></li>
-          <li><a href="#Developer">Developer</a></li>
-          <li><a href="#Contact">Register interest</a></li>
-        </ul>
-      </div>
-    </div>
-    <p className="small">Important notice. This page and all related marketing material are provided for information and promotion only. They do not constitute an offer to sell securities, an investment solicitation, a financial product, a guarantee of performance, or a legally binding commitment of any kind. All projections, estimates, occupancy assumptions, rental income projections, return projections and appreciation estimates are provided by the project's developer and are inherently uncertain, being subject to market conditions, operating performance, construction timelines, regulatory change and other factors outside anyone's control. Ownership of a unit does not constitute ownership of, participation in, or equity investment in the developer, the hotel operator, Sonesta or any affiliated entity, unless expressly stated in a separately executed agreement. All imagery is computer-generated and indicative only; finishes, landscaping and views may differ from the completed development. Prospective purchasers should rely on their own independent investigation and professional advice, and are strongly encouraged to consult their own attorney, accountant, tax adviser and real estate professional before making any purchase decision. Where this page conflicts with the definitive purchase agreements and disclosure documents, the executed documents prevail.</p>
-  </div>
-</footer>
+<SiteFooter />
 
-<div className="dock">
-  <a className="btn btn--brochure" href="#Contact">
-    Download brochure
-    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" aria-hidden="true"><path d="M12 3v12"/><path d="M7 10l5 5 5-5"/><path d="M5 19h14"/></svg>
-  </a>
-  <a
-    className="btn btn--wa"
-    href="https://wa.me/255670004400?text=Hello%2C%20I%20am%20interested%20in%20The%20Hills%2C%20Nungwi."
-    target="_blank"
-    rel="noopener noreferrer"
-  >
-    Chat
-    <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15L2 22l5.2-1.4A10 10 0 1 0 12 2zm5.4 14c-.2.6-1.3 1.2-1.8 1.2-.5.1-1 .1-1.7-.1a12 12 0 0 1-6.4-5.6c-.5-.8-.8-1.7-.8-2.5 0-.9.4-1.6.9-2 .2-.2.4-.3.6-.3h.5c.2 0 .4 0 .6.4l.8 2c.1.2 0 .4-.1.6l-.4.5c-.1.2-.3.3-.1.6a8.7 8.7 0 0 0 3.8 3.3c.3.1.5.1.6-.1l.8-1c.2-.2.3-.2.6-.1l2 1c.2.1.4.2.4.4s0 .8-.2 1.3z"/></svg>
-  </a>
-</div>
+<a
+  className="wa-fab"
+  href={WA_URL}
+  target="_blank"
+  rel="noopener noreferrer"
+  aria-label="Chat on WhatsApp"
+>
+  <svg width="28" height="28" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+    <path d="M12 2a10 10 0 0 0-8.6 15L2 22l5.2-1.4A10 10 0 1 0 12 2zm5.4 14c-.2.6-1.3 1.2-1.8 1.2-.5.1-1 .1-1.7-.1a12 12 0 0 1-6.4-5.6c-.5-.8-.8-1.7-.8-2.5 0-.9.4-1.6.9-2 .2-.2.4-.3.6-.3h.5c.2 0 .4 0 .6.4l.8 2c.1.2 0 .4-.1.6l-.4.5c-.1.2-.3.3-.1.6a8.7 8.7 0 0 0 3.8 3.3c.3.1.5.1.6-.1l.8-1c.2-.2.3-.2.6-.1l2 1c.2.1.4.2.4.4s0 .8-.2 1.3z" />
+  </svg>
+</a>
 
-
+<button type="button" className="totop" id="totop" aria-label="Back to top">
+  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" aria-hidden="true"><path d="M12 19V5"/><path d="M6 11l6-6 6 6"/></svg>
+</button>
 
     </>
+  )
+}
+
+export default function App() {
+  useSmoothScroll()
+
+  return (
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/team" element={<TeamPage />} />
+        <Route path="/insights/:slug" element={<BlogPost />} />
+      </Routes>
+    </BrowserRouter>
   )
 }

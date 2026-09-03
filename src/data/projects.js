@@ -1,0 +1,35 @@
+export const PROJECTS = [
+  {
+    id: 'hills-nungwi',
+    location: 'Nungwi',
+    name: 'The Hills',
+    tagline: 'Branded four-star condo-hotel residences',
+    img: '/images/vision-facade.jpg',
+    href: 'https://www.bakepixel.com/majestic/',
+    external: true,
+  },
+  {
+    id: 'ocean-breeze',
+    location: 'Zanzibar',
+    name: 'Ocean Breeze',
+    tagline: 'Celebrated beachfront hospitality',
+    img: '/images/contact-beach.jpg',
+    href: '#Developer',
+  },
+  {
+    id: 'owner-residences',
+    location: 'Nungwi',
+    name: 'Owner Residences',
+    tagline: 'Titled units from one-bed to penthouse',
+    img: '/images/living.jpg',
+    href: '#Residences',
+  },
+  {
+    id: 'nungwi-shore',
+    location: 'Northern tip',
+    name: 'Beachfront Living',
+    tagline: 'One minute to swimmable shore',
+    img: '/images/pool.jpg',
+    href: '#Location',
+  },
+]

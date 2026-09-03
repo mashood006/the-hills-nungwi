@@ -1,0 +1,140 @@
+export const BLOG_POSTS = [
+  {
+    slug: 'how-to-buy-titled-beachfront-property-in-zanzibar',
+    img: '/images/blog/blog-01-coast.jpg',
+    alt: 'Aerial view of Zanzibar coastline with turquoise water and beach resorts',
+    cat: 'Buying guide',
+    date: '9 May, 2026',
+    dateIso: '2026-05-09',
+    readTime: '8 min read',
+    title: 'How to buy titled beachfront property in Zanzibar',
+    excerpt:
+      'What foreign buyers need to know about deeds, usage days, and closing timelines at The Hills.',
+    author: 'majestic_admin',
+    initials: 'MA',
+    body: [
+      'Buying titled beachfront property in Zanzibar is different from a standard hotel booking — and different again from buying a villa with no hotel operator behind it. At The Hills, Nungwi, you purchase a titled unit inside a branded four-star condo-hotel: you hold the deed, use the residence for part of the year, and participate in the hotel operation around it.',
+      'For international buyers, the first step is clarity on ownership structure. A titled unit means you own the apartment itself. The hotel operator runs lobby, F&B, housekeeping and the rental pool. Your purchase documents should spell out usage days, friends-and-family rates, and how net returns are calculated under the contract.',
+      'Due diligence typically includes reviewing the developer’s disclosure pack, the draft purchase agreement, payment schedule, and any buyback or exit language. Independent legal advice in Tanzania is strongly recommended before you sign.',
+      'At The Hills, remaining inventory is in final pre-sale with opening planned for Q4 2027. Speak with the Majestic sales team for live availability, the current price list, and a walkthrough of the ownership model tailored to your residency and tax situation.',
+    ],
+  },
+  {
+    slug: 'why-nungwi-leads-zanzibars-hospitality-market',
+    img: '/images/blog/blog-07-sail.jpg',
+    alt: 'Traditional dhow sailing along a white-sand Zanzibar beach',
+    cat: 'Investment',
+    date: '22 Apr, 2026',
+    dateIso: '2026-04-22',
+    readTime: '5 min read',
+    title: 'Why Nungwi leads Zanzibar’s hospitality market',
+    excerpt:
+      'Non-tidal beaches, year-round demand, and what branded condo-hotels change for owner returns.',
+    author: 'Market Desk',
+    initials: 'MD',
+    body: [
+      'Nungwi sits on the northern tip of Zanzibar, where the shore stays swimmable through much of the day — a practical advantage for guests who want beach access without planning around extreme tides.',
+      'Tourism to the island has grown strongly over recent years, with high average occupancy reported across leading beach destinations. That demand supports hotel operations and, in a condo-hotel model, the rental performance that owners care about.',
+      'Branded four-star operations add distribution, standards and a professional management layer that pure holiday homes rarely match. For investors, that combination — titled ownership plus hotel operations — is what makes Nungwi’s new generation of condo-hotels distinctive.',
+    ],
+  },
+  {
+    slug: 'living-sixty-days-a-year-in-your-own-hotel',
+    img: '/images/blog/blog-04-boat-party.jpg',
+    alt: 'Friends enjoying a boat trip on clear turquoise water in Zanzibar',
+    cat: 'Lifestyle',
+    date: '18 Mar, 2026',
+    dateIso: '2026-03-18',
+    readTime: '4 min read',
+    title: 'Living sixty days a year in your own hotel',
+    excerpt:
+      'How owner usage works with hotel operations — privacy, friends & family rates, and peak season.',
+    author: 'Owner Care',
+    initials: 'OC',
+    body: [
+      'Owners at The Hills receive sixty usage days a year, with no blackout dates subject to availability. That means you can plan stays around school holidays, remote-work stretches, or quiet shoulder seasons — while the unit earns in the rental pool when you are away.',
+      'Friends and family typically receive preferential rates off the published tariff, again subject to availability. Beach club and golf access from delivery round out the lifestyle side of ownership.',
+      'The key is coordination: hotel systems manage bookings, so early notice for peak weeks helps you lock preferred dates. Your sales advisor can walk through how reservations interact with the rental pool in practice.',
+    ],
+  },
+  {
+    slug: 'inside-the-amenities-that-sell-themselves',
+    img: '/images/blog/blog-03-cliffs.jpg',
+    alt: 'Turquoise cove and coral cliffs along the Zanzibar coast',
+    cat: 'Design',
+    date: '2 Mar, 2026',
+    dateIso: '2026-03-02',
+    readTime: '5 min read',
+    title: 'Inside the amenities that sell themselves',
+    excerpt:
+      'Pool deck, rooftop bar, gym and coworking — the shared spaces that support hotel occupancy.',
+    author: 'Design Studio',
+    initials: 'DS',
+    body: [
+      'Amenities are not decoration — they are what guests book and what owners enjoy on their sixty days. The Hills centres on a terraced pool wrapped by the residential blocks, with cabanas and daybeds at the water’s edge.',
+      'Above that, a rooftop bar, restaurant, gym and coworking extend the day from sunrise swims to evening drinks. A double-height lounge and on-site supermarket keep the property self-contained for longer stays.',
+      'For operators, those spaces drive ancillary revenue and guest satisfaction. For owners, they turn a titled unit into a true home-from-home inside a working hotel.',
+    ],
+  },
+  {
+    slug: 'understanding-contractual-net-returns',
+    img: '/images/blog/blog-05-rock.jpg',
+    alt: 'The Rock Restaurant perched on coral rock in Zanzibar',
+    cat: 'Returns',
+    date: '14 Feb, 2026',
+    dateIso: '2026-02-14',
+    readTime: '6 min read',
+    title: 'Understanding contractual net returns',
+    excerpt:
+      'A clear look at years 1–2, 3–5 and beyond — what the purchase contract actually sets out.',
+    author: 'Finance Team',
+    initials: 'FT',
+    body: [
+      'Return figures on marketing pages are projections tied to the purchase contract — not guarantees. At The Hills, the developer sets out net annual returns on invested principal for defined periods: typically 10% in years 1–2, 12% in years 3–5, and a range from year 6 onward.',
+      '“Net” and “on invested principal” matter. Read the definitions carefully, including what costs sit above the line and how occupancy assumptions feed the model. Market conditions and operating performance can change outcomes.',
+      'A contractual buyback option from the developer at the end of the term can provide an exit path. Always take independent financial and legal advice before committing capital.',
+    ],
+  },
+  {
+    slug: 'from-pre-sale-to-q4-2027-delivery',
+    img: '/images/blog/blog-06-stonetown.jpg',
+    alt: 'Aerial view of Stone Town, Zanzibar along the waterfront',
+    cat: 'Development',
+    date: '28 Jan, 2026',
+    dateIso: '2026-01-28',
+    readTime: '5 min read',
+    title: 'From pre-sale to Q4 2027 delivery',
+    excerpt:
+      'Construction milestones, payment schedules, and what buyers should watch before closing.',
+    author: 'Project Office',
+    initials: 'PO',
+    body: [
+      'The Hills is scheduled to open in Q4 2027, with remaining inventory now in final pre-sale. Payment options include cash structures that may earn a construction-period yield, and deferred schedules staged through signing and delivery.',
+      'Buyers should track construction updates, inspect specimen finishes where available, and confirm that floor plans and unit allocations match what they signed for. CGI imagery is indicative — final landscaping and views can differ.',
+      'Before closing, your advisor and counsel will help verify title documentation, operator arrangements, and any outstanding conditions in the purchase agreement.',
+    ],
+  },
+  {
+    slug: 'choosing-between-one-bed-two-bed-and-penthouse',
+    img: '/images/blog/blog-08-market.jpg',
+    alt: 'Colourful market street in Stone Town, Zanzibar',
+    cat: 'Residences',
+    date: '5 Dec, 2025',
+    dateIso: '2025-12-05',
+    readTime: '6 min read',
+    title: 'Choosing between one-bed, two-bed and penthouse',
+    excerpt:
+      'Floor areas, terraces and pricing — a practical guide to the three ways to own at The Hills.',
+    author: 'Sales Advisory',
+    initials: 'SA',
+    body: [
+      'One-bedroom residences (from about 77 m², starting from $135,000) suit investors focused on occupancy and shorter stays — open-plan living with ocean-oriented balconies.',
+      'Two-bedroom homes (from about 88 m², starting from $150,000) balance privacy and shared space: master suite, dual terraces, and room for family or friends on owner weeks.',
+      'Three-bedroom penthouses (from about 328 m², starting from $499,000) sit at the top of the offer — private pool, garden, premium finishes and expansive entertaining decks. Request full floor plans from sales to compare stacks and views before you reserve.',
+    ],
+  },
+]
+
+export function getPostBySlug(slug) {
+  return BLOG_POSTS.find((p) => p.slug === slug)
+}

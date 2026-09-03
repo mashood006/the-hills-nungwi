@@ -19,5 +19,10 @@ fi
 echo "Uploading dist/ → ${USER}@${HOST}:${REMOTE}"
 scp -i "$KEY" -o BatchMode=yes -o StrictHostKeyChecking=accept-new -r \
   dist/.htaccess dist/index.html dist/assets dist/images \
+  dist/the-hills-brochure.pdf \
   "${USER}@${HOST}:${REMOTE}/"
+if [[ -d dist/videos ]]; then
+  scp -i "$KEY" -o BatchMode=yes -o StrictHostKeyChecking=accept-new -r \
+    dist/videos "${USER}@${HOST}:${REMOTE}/"
+fi
 echo "Done. https://demo.majestic.tz/"

@@ -10,12 +10,13 @@ function isBad(type, value) {
   return false
 }
 
-export function LeadForm() {
-  const [fields, setFields] = useState({ name: '', email: '', phone: '', message: '' })
+export function LeadForm({ variant = 'card' }) {
+  const [fields, setFields] = useState({ name: '', email: '', phone: '', interest: '', message: '' })
   const [bad, setBad] = useState({})
   const [done, setDone] = useState(false)
   const [sending, setSending] = useState(false)
-  const [btnLabel, setBtnLabel] = useState('Send my details')
+  const [btnLabel, setBtnLabel] = useState(variant === 'inquiry' ? 'Send inquiry' : 'Send my details')
+  const isInquiry = variant === 'inquiry'
 
   function update(e) {
     const { name, value } = e.target
@@ -47,18 +48,61 @@ export function LeadForm() {
       setDone(true)
     } catch {
       setSending(false)
-      setBtnLabel('Try again')
+      setBtnLabel(isInquiry ? 'Try again' : 'Try again')
     }
   }
 
   if (done) {
     return (
-      <div className="thanks" style={{ display: 'block' }}>
+      <div className={isInquiry ? 'inquiry-thanks' : 'thanks'} style={isInquiry ? undefined : { display: 'block' }}>
         <h3>Thank you</h3>
-        <p style={{ marginTop: '14px', opacity: 0.72 }}>
+        <p>
           The Majestic sales team will be in touch shortly with the brochure and the current price list.
         </p>
       </div>
+    )
+  }
+
+  if (isInquiry) {
+    return (
+      <form className="inquiry-form" id="leadForm" noValidate onSubmit={onSubmit}>
+        <div className={`f${bad.name ? ' bad' : ''}`}>
+          <label htmlFor="n">Full name</label>
+          <input id="n" name="name" type="text" placeholder="Your name" required value={fields.name} onChange={update} />
+          <span className="e">Enter your name.</span>
+        </div>
+        <div className={`f${bad.email ? ' bad' : ''}`}>
+          <label htmlFor="e">Email</label>
+          <input id="e" name="email" type="email" placeholder="you@email.com" required value={fields.email} onChange={update} />
+          <span className="e">Enter a valid email address.</span>
+        </div>
+        <div className="inquiry-form-row">
+          <div className={`f${bad.phone ? ' bad' : ''}`}>
+            <label htmlFor="p">Phone</label>
+            <input id="p" name="phone" type="tel" placeholder="+255 000 000 000" required value={fields.phone} onChange={update} />
+            <span className="e">Enter a valid phone number.</span>
+          </div>
+          <div className="f">
+            <label htmlFor="i">I am a</label>
+            <select id="i" name="interest" value={fields.interest} onChange={update}>
+              <option value="">Select one</option>
+              <option value="investor">Investor</option>
+              <option value="buyer">Prospective buyer</option>
+              <option value="realtor">Realtor</option>
+              <option value="press">Press</option>
+              <option value="other">Other</option>
+            </select>
+          </div>
+        </div>
+        <div className="f">
+          <label htmlFor="m">Message</label>
+          <textarea id="m" name="message" placeholder="Which unit type interests you?" value={fields.message} onChange={update} rows={3} />
+        </div>
+        <button className="btn inquiry-submit" type="submit" disabled={sending}>
+          {btnLabel}
+          <span aria-hidden="true">→</span>
+        </button>
+      </form>
     )
   }
 
