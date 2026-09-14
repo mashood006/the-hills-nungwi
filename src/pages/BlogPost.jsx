@@ -18,7 +18,7 @@ export default function BlogPost() {
     else window.scrollTo(0, 0)
   }, [slug])
 
-  if (!post) return <Navigate to="/#Insights" replace />
+  if (!post) return <Navigate to="/insights" replace />
 
   const related = BLOG_POSTS.filter((p) => p.slug !== post.slug).slice(0, 3)
 
@@ -31,7 +31,7 @@ export default function BlogPost() {
         <div className="blog-hero-fade" aria-hidden="true" />
         <div className="wrap blog-hero-copy">
           <p className="blog-crumbs">
-            <Link to="/">Blog</Link>
+            <Link to="/insights">Insights</Link>
             <span aria-hidden="true"> › </span>
             <span>{post.cat}</span>
             <span aria-hidden="true"> › </span>
@@ -81,7 +81,7 @@ export default function BlogPost() {
               ))}
             </div>
             <p className="blog-back">
-              <Link to="/#Insights">← Back to all insights</Link>
+              <Link to="/insights">← Back to all insights</Link>
             </p>
           </div>
         </section>

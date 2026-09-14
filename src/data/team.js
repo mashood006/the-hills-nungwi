@@ -3,7 +3,13 @@ export const TEAM = [
     name: 'Mohammed Munir Omar',
     role: 'Managing Director',
     img: '/images/team/mohammed-munir.jpg',
-    featured: true,
+    focus: 'top',
+  },
+  {
+    name: 'Jai Jind',
+    role: 'Creative Director',
+    img: '/images/team/jai-jind.jpg',
+    focus: 'top',
   },
   {
     name: 'Queen Laizer',

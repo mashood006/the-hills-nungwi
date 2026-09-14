@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { PROJECTS } from '../data/projects'
+import { getLenis } from '../hooks/useSmoothScroll'
 
 const SHEET_BEFORE = [
   { href: '#Vision', label: 'Our Vision', num: '01' },
@@ -10,22 +11,26 @@ const SHEET_BEFORE = [
 
 const SHEET_AFTER = [
   { href: '#Gallery', label: 'Gallery', num: '04' },
-  { href: '#Amenities', label: 'Amenities', num: '05' },
-  { href: '#Ownership', label: 'Ownership', num: '06' },
-  { href: '#Residences', label: 'Residences', num: '07' },
-  { href: '#Returns', label: 'Returns', num: '08' },
-  { href: '#Finance', label: 'Finance', num: '09' },
-  { href: '#Location', label: 'Location', num: '10' },
-  { href: '#Excellence', label: 'Excellence', num: '11' },
-  { href: '/team', label: 'Our Team', num: '12', route: true },
-  { href: '#Contact', label: 'Register interest', num: '13' },
+  { href: '/insights', label: 'Insights', num: '05', route: true },
+  { href: '/media', label: 'Media', num: '06', route: true },
+  { href: '#Amenities', label: 'Amenities', num: '07' },
+  { href: '#Ownership', label: 'Ownership', num: '08' },
+  { href: '#Residences', label: 'Residences', num: '09' },
+  { href: '#Returns', label: 'Returns', num: '10' },
+  { href: '#Finance', label: 'Finance', num: '11' },
+  { href: '#Location', label: 'Location', num: '12' },
+  { href: '#Excellence', label: 'Excellence', num: '13' },
+  { href: '/team', label: 'Our Team', num: '14', route: true },
+  { href: '/careers', label: 'Careers', num: '15', route: true },
+  { href: '#Contact', label: 'Register interest', num: '16' },
 ]
 
 const NAV_LINKS = [
   { href: '#Vision', label: 'Our Vision' },
   { href: '#About', label: 'About Us' },
   { href: '#Gallery', label: 'Gallery' },
-  { href: '#Insights', label: 'Insights' },
+  { href: '/insights', label: 'Insights', route: true },
+  { href: '/media', label: 'Media', route: true },
   { href: '#Residences', label: 'Residences' },
   { href: '#Location', label: 'Location' },
   { href: '#FAQ', label: 'FAQ' },
@@ -33,12 +38,18 @@ const NAV_LINKS = [
   { href: '#Contact', label: 'Contact' },
 ]
 
-function ProjectCard({ project, onNavigate, compact = false }) {
+function hashHref(href, blog) {
+  if (!href.startsWith('#')) return href
+  return blog ? `/${href}` : href
+}
+
+function ProjectCard({ project, onNavigate, compact = false, blog = false }) {
   const external = project.external || /^https?:\/\//.test(project.href)
+  const href = external ? project.href : hashHref(project.href, blog)
   return (
     <a
       className="mega-card"
-      href={project.href}
+      href={href}
       onClick={onNavigate}
       {...(external ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
     >
@@ -52,17 +63,25 @@ function ProjectCard({ project, onNavigate, compact = false }) {
   )
 }
 
-function SheetLink({ href, label, num, route }) {
+function SheetLink({ href, label, num, route, blog, onNavigate }) {
   if (route) {
     return (
-      <Link to={href}>
+      <Link to={href} onClick={onNavigate}>
+        {label}
+        <span>{num}</span>
+      </Link>
+    )
+  }
+  if (blog) {
+    return (
+      <Link to={hashHref(href, true)} onClick={onNavigate}>
         {label}
         <span>{num}</span>
       </Link>
     )
   }
   return (
-    <a href={href}>
+    <a href={href} onClick={onNavigate}>
       {label}
       <span>{num}</span>
     </a>
@@ -71,6 +90,7 @@ function SheetLink({ href, label, num, route }) {
 
 export function SiteHeader({ blog = false }) {
   const [megaOpen, setMegaOpen] = useState(false)
+  const [sheetOpen, setSheetOpen] = useState(false)
   const [mobileProjectsOpen, setMobileProjectsOpen] = useState(false)
   const wrapRef = useRef(null)
 
@@ -95,9 +115,41 @@ export function SiteHeader({ blog = false }) {
     }
   }, [megaOpen])
 
+  useEffect(() => {
+    document.body.style.overflow = sheetOpen ? 'hidden' : ''
+    const lenis = getLenis()
+    if (lenis) {
+      if (sheetOpen) lenis.stop()
+      else lenis.start()
+    }
+    return () => {
+      document.body.style.overflow = ''
+      if (lenis) lenis.start()
+    }
+  }, [sheetOpen])
+
+  useEffect(() => {
+    if (!sheetOpen) return undefined
+    function onKey(e) {
+      if (e.key === 'Escape') closeSheet()
+    }
+    document.addEventListener('keydown', onKey)
+    return () => document.removeEventListener('keydown', onKey)
+  }, [sheetOpen])
+
   function closeMega() {
     setMegaOpen(false)
     setMobileProjectsOpen(false)
+  }
+
+  function closeSheet() {
+    setSheetOpen(false)
+    setMobileProjectsOpen(false)
+  }
+
+  function toggleSheet() {
+    setSheetOpen((open) => !open)
+    setMegaOpen(false)
   }
 
   const logo = blog ? (
@@ -138,7 +190,7 @@ export function SiteHeader({ blog = false }) {
                     {item.label}
                   </Link>
                 ) : blog ? (
-                  <Link key={item.href} to={`/${item.href}`}>
+                  <Link key={item.href} to={hashHref(item.href, true)}>
                     {item.label}
                   </Link>
                 ) : (
@@ -170,7 +222,7 @@ export function SiteHeader({ blog = false }) {
                     {item.label}
                   </Link>
                 ) : blog ? (
-                  <Link key={item.href} to={`/${item.href}`}>
+                  <Link key={item.href} to={hashHref(item.href, true)}>
                     {item.label}
                   </Link>
                 ) : (
@@ -183,7 +235,15 @@ export function SiteHeader({ blog = false }) {
 
             {cta}
 
-            <button className="burg" id="burg" aria-label="Open menu" aria-expanded="false" aria-controls="sheet">
+            <button
+              type="button"
+              className="burg"
+              id="burg"
+              aria-label={sheetOpen ? 'Close menu' : 'Open menu'}
+              aria-expanded={sheetOpen}
+              aria-controls="sheet"
+              onClick={toggleSheet}
+            >
               <span></span>
             </button>
           </div>
@@ -197,16 +257,22 @@ export function SiteHeader({ blog = false }) {
                 <div className="mega-intro">
                   <h3>The Collection</h3>
                   <p>Branded residences, resorts and hotels across Zanzibar.</p>
-                  <a className="btn btn--line mega-all" href="#Gallery" onClick={closeMega}>
+                  <a className="btn btn--line mega-all" href={hashHref('#Gallery', blog)} onClick={closeMega}>
                     View all projects
                   </a>
                 </div>
 
                 <div className="mega-grid">
                   {PROJECTS.map((project) => (
-                    <ProjectCard key={project.id} project={project} onNavigate={closeMega} compact />
+                    <ProjectCard
+                      key={project.id}
+                      project={project}
+                      onNavigate={closeMega}
+                      compact
+                      blog={blog}
+                    />
                   ))}
-                  <a className="mega-card mega-card-term" href="#Gallery" onClick={closeMega}>
+                  <a className="mega-card mega-card-term" href={hashHref('#Gallery', blog)} onClick={closeMega}>
                     <span>View the full collection →</span>
                   </a>
                 </div>
@@ -216,53 +282,46 @@ export function SiteHeader({ blog = false }) {
         )}
       </div>
 
-      <div className="sheet" id="sheet">
-        {!blog && (
-          <>
-            {SHEET_BEFORE.map((item) => (
-              <SheetLink key={item.href} {...item} />
-            ))}
+      <div className={`sheet${sheetOpen ? ' on' : ''}`} id="sheet" data-lenis-prevent>
+        {SHEET_BEFORE.map((item) => (
+          <SheetLink key={item.href} {...item} blog={blog} onNavigate={closeSheet} />
+        ))}
 
-            <div className="sheet-projects">
-              <button
-                type="button"
-                className={`sheet-projects-toggle${mobileProjectsOpen ? ' is-open' : ''}`}
-                aria-expanded={mobileProjectsOpen}
-                onClick={() => setMobileProjectsOpen((open) => !open)}
-              >
-                <span>Projects</span>
-                <span className="sheet-projects-num">—</span>
-                <svg width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true">
-                  <path d="M2.5 4.5 6 8l3.5-3.5" stroke="currentColor" strokeWidth="1.2" />
-                </svg>
-              </button>
+        <div className="sheet-projects">
+          <button
+            type="button"
+            className={`sheet-projects-toggle${mobileProjectsOpen ? ' is-open' : ''}`}
+            aria-expanded={mobileProjectsOpen}
+            onClick={() => setMobileProjectsOpen((open) => !open)}
+          >
+            <span>Projects</span>
+            <span className="sheet-projects-num">—</span>
+            <svg width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true">
+              <path d="M2.5 4.5 6 8l3.5-3.5" stroke="currentColor" strokeWidth="1.2" />
+            </svg>
+          </button>
 
-              <div className={`sheet-projects-panel${mobileProjectsOpen ? ' is-open' : ''}`}>
-                <p className="sheet-projects-lead">Branded residences, resorts and hotels across Zanzibar.</p>
-                <div className="sheet-projects-grid">
-                  {PROJECTS.map((project) => (
-                    <ProjectCard key={project.id} project={project} onNavigate={closeMega} />
-                  ))}
-                </div>
-                <a className="sheet-projects-all" href="#Gallery" onClick={closeMega}>
-                  View the full collection →
-                </a>
-              </div>
+          <div className={`sheet-projects-panel${mobileProjectsOpen ? ' is-open' : ''}`}>
+            <p className="sheet-projects-lead">Branded residences, resorts and hotels across Zanzibar.</p>
+            <div className="sheet-projects-grid">
+              {PROJECTS.map((project) => (
+                <ProjectCard
+                  key={project.id}
+                  project={project}
+                  onNavigate={closeSheet}
+                  blog={blog}
+                />
+              ))}
             </div>
+            <a className="sheet-projects-all" href={hashHref('#Gallery', blog)} onClick={closeSheet}>
+              View the full collection →
+            </a>
+          </div>
+        </div>
 
-            {SHEET_AFTER.map((item) => (
-              <SheetLink key={item.href} {...item} />
-            ))}
-          </>
-        )}
-
-        {blog && (
-          <>
-            <Link to="/#Insights">Insights</Link>
-            <Link to="/#Residences">Residences</Link>
-            <Link to="/#Contact">Contact</Link>
-          </>
-        )}
+        {SHEET_AFTER.map((item) => (
+          <SheetLink key={item.href} {...item} blog={blog} onNavigate={closeSheet} />
+        ))}
       </div>
     </>
   )

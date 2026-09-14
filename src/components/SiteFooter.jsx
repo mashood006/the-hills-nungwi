@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom'
+import { FindUsMap } from './FindUsMap'
 
 const WA_URL =
   'https://wa.me/255670004400?text=Hello%2C%20I%20am%20interested%20in%20The%20Hills%2C%20Nungwi.'
@@ -28,6 +29,12 @@ export function SiteFooter() {
               </li>
               <li>
                 <Link to="/#Ownership">Why Invest</Link>
+              </li>
+              <li>
+                <Link to="/careers">Careers at Majestic</Link>
+              </li>
+              <li>
+                <Link to="/media">Media</Link>
               </li>
               <li>
                 <Link to="/#Contact">Contact Us</Link>
@@ -107,42 +114,35 @@ export function SiteFooter() {
           </div>
         </div>
 
-        <div className="ft-map">
-          <h5>Find us</h5>
-          <div className="ft-map-frame">
-            <iframe
-              title="Majestic office — Malindi, Stone Town, Zanzibar"
-              src="https://www.google.com/maps?q=-5.7273008134411825,39.30948859612401&z=16&output=embed"
-              loading="lazy"
-              referrerPolicy="no-referrer-when-downgrade"
-              allowFullScreen
-            />
-          </div>
-        </div>
+        <FindUsMap />
 
         <div className="ft-affil">
           <div className="ft-affil-left">
             <p className="ft-affil-label">In affiliation with</p>
             <div className="ft-affil-logos">
-              <img src="/images/logo-metropolis.png" alt="Metropolis" width="100" height="51" />
-              <img src="/images/logo-mmg-group.png" alt="Metropolis Management Group" width="180" height="58" />
+              <a href="https://metropolishotel.ca/" target="_blank" rel="noopener noreferrer">
+                <img src="/images/logo-metropolis.png" alt="Metropolis" width="100" height="51" />
+              </a>
+              <a href="https://metropolisgroup.ca/" target="_blank" rel="noopener noreferrer">
+                <img src="/images/logo-mmg-group.png" alt="Metropolis Management Group" width="180" height="58" />
+              </a>
             </div>
           </div>
           <div className="ft-affil-partners">
-            <div className="ft-affil-right">
+            <a className="ft-affil-right" href="https://www.crdbbank.co.tz/en" target="_blank" rel="noopener noreferrer">
               <img src="/images/logo-crdb.png" alt="CRDB Bank" width="140" height="63" />
               <div>
                 <strong>Financing Partner</strong>
                 <span>Financing available through CRDB</span>
               </div>
-            </div>
-            <div className="ft-affil-right">
+            </a>
+            <a className="ft-affil-right" href="https://www.zipa.go.tz/" target="_blank" rel="noopener noreferrer">
               <img src="/images/logo-zipa.png" alt="ZIPA" width="72" height="54" />
               <div>
                 <strong>ZIPA Approved</strong>
                 <span>Zanzibar Investment Promotion Authority</span>
               </div>
-            </div>
+            </a>
           </div>
         </div>
 

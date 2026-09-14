@@ -4,9 +4,14 @@ import { useSiteEffects } from './hooks/useSiteEffects'
 import { getLenis, smoothScrollTo, useSmoothScroll } from './hooks/useSmoothScroll'
 import { BlogSlider } from './components/BlogSlider'
 import { LeadForm } from './components/LeadForm'
+import { ResidenceUnits } from './components/ResidenceUnits'
+import { BackToTop } from './components/BackToTop'
 import { SiteFooter } from './components/SiteFooter'
 import { SiteHeader } from './components/SiteHeader'
 import BlogPost from './pages/BlogPost'
+import CareersPage from './pages/CareersPage'
+import InsightsPage from './pages/InsightsPage'
+import MediaPage from './pages/MediaPage'
 import TeamPage from './pages/TeamPage'
 
 const WA_URL =
@@ -363,53 +368,7 @@ function Home() {
     <span className="kick a a-up">Unit types</span>
     <h2 className="head a a-up" style={{'--d': '.08s'}}>Three ways to <em className="g">own here.</em></h2>
     <p className="lead a a-up" style={{'--d': '.16s', marginTop: '20px'}}>All remaining inventory is now in final pre-sale. Each floor runs 1,113.52 m².</p>
-    <div className="res stg">
-      <article className="unit">
-        <div className="unit-plan">
-          <img src="/images/plan-1bed.png" alt="One bedroom floor plan" width="900" height="520" loading="lazy" decoding="async" />
-        </div>
-        <div className="unit-b">
-          <h3>One Bedroom</h3>
-          <div className="unit-area">77 m²</div>
-          <ul className="unit-feats">
-            <li>Shared Amenities</li>
-            <li>Ocean views</li>
-            <li>Open-plan living</li>
-          </ul>
-          <div className="pr">From $135,000</div>
-        </div>
-      </article>
-      <article className="unit">
-        <div className="unit-plan">
-          <img src="/images/plan-2bed.png" alt="Two bedroom floor plan" width="900" height="520" loading="lazy" decoding="async" />
-        </div>
-        <div className="unit-b">
-          <h3>Two Bedroom</h3>
-          <div className="unit-area">88 m²</div>
-          <ul className="unit-feats">
-            <li>Shared Amenities</li>
-            <li>Master suite</li>
-            <li>Dual terraces</li>
-          </ul>
-          <div className="pr">From $150,000</div>
-        </div>
-      </article>
-      <article className="unit">
-        <div className="unit-plan">
-          <img src="/images/plan-3bed.png" alt="Three bedroom penthouse floor plan" width="900" height="520" loading="lazy" decoding="async" />
-        </div>
-        <div className="unit-b">
-          <h3>3 Bedroom Penthouse</h3>
-          <div className="unit-area">328 m²</div>
-          <ul className="unit-feats">
-            <li>Private pool</li>
-            <li>Garden</li>
-            <li>Premium finishes</li>
-          </ul>
-          <div className="pr">From $499,000</div>
-        </div>
-      </article>
-    </div>
+    <ResidenceUnits />
     <div className="a a-up" style={{marginTop: '30px'}}><a className="arrow" href="#Contact">Request full floor plans →</a></div>
   </div>
 </section>
@@ -471,7 +430,7 @@ function Home() {
 </section>
 
 {/* ══ FINANCE ══ */}
-<section className="sec cream2" id="Finance">
+<section className="sec finance" id="Finance">
   <div className="wrap">
     <div className="duo duo--top">
       <div className="frame tall a a-clip"><img className="ph par" src="/images/finance.jpg" alt="The Hills, Nungwi — illuminated residences at twilight" width="764" height="1024" decoding="async" /></div>
@@ -589,6 +548,9 @@ function Home() {
       <span className="kick">Nungwi living</span>
       <h2>Zanzibar <em className="g">property</em> &amp; investment insights.</h2>
       <p>Expert guidance on luxury real estate, investment opportunities, and premium living at The Hills Nungwi.</p>
+      <Link className="arrow" to="/insights" style={{ marginTop: '18px' }}>
+        View all insights →
+      </Link>
     </div>
   </div>
   <BlogSlider />
@@ -650,10 +612,6 @@ function Home() {
   </svg>
 </a>
 
-<button type="button" className="totop" id="totop" aria-label="Back to top">
-  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" aria-hidden="true"><path d="M12 19V5"/><path d="M6 11l6-6 6 6"/></svg>
-</button>
-
     </>
   )
 }
@@ -666,8 +624,12 @@ export default function App() {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/team" element={<TeamPage />} />
+        <Route path="/careers" element={<CareersPage />} />
+        <Route path="/media" element={<MediaPage />} />
+        <Route path="/insights" element={<InsightsPage />} />
         <Route path="/insights/:slug" element={<BlogPost />} />
       </Routes>
+      <BackToTop />
     </BrowserRouter>
   )
 }
