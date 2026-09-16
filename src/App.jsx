@@ -501,7 +501,7 @@ function Home() {
         </details>
         <details>
           <summary>What does it cost?</summary>
-          <div className="qa"><p>Units start at $140,000 USD. One-bedroom suites start from $135,000, two-bedroom apartments from $150,000, and three-bedroom penthouses from $499,000. Prices are confirmed at reservation — ask for the live availability list.</p></div>
+          <div className="qa"><p>Units start at $140,000 USD. One-bedroom suites start from $140,000, two-bedroom apartments from $157,000, and three-bedroom penthouses from $499,000. Prices are confirmed at reservation — ask for the live availability list.</p></div>
         </details>
         <details>
           <summary>Is finance available?</summary>
