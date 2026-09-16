@@ -1,7 +1,8 @@
 import { useState } from 'react'
 
-/** Branded mail API on cPanel (PHP). www is static S3 — no FormSubmit. */
-const ENDPOINT = 'https://demo.majestic.tz/contact.php'
+/** Branded PHP mailer (cPanel). Falls back if demo SSL / host fails. */
+const PHP_ENDPOINT = 'https://demo.majestic.tz/contact.php'
+const FORMSUBMIT = 'https://formsubmit.co/ajax/39b3ff885a7b6607f436a215bfc49694'
 
 function isBad(type, value) {
   const v = value.trim()
@@ -9,6 +10,30 @@ function isBad(type, value) {
   if (type === 'email') return !/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(v)
   if (type === 'tel') return v.replace(/\D/g, '').length < 7
   return false
+}
+
+function interestLabel(value) {
+  const map = {
+    investor: 'Investor',
+    buyer: 'Prospective buyer',
+    realtor: 'Realtor',
+    press: 'Press',
+    other: 'Other',
+  }
+  return map[value] || value || 'Not specified'
+}
+
+async function postJson(url, payload) {
+  const res = await fetch(url, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      Accept: 'application/json',
+    },
+    body: JSON.stringify(payload),
+  })
+  const data = await res.json().catch(() => ({}))
+  return { res, data }
 }
 
 export function LeadForm({ variant = 'card' }) {
@@ -45,26 +70,37 @@ export function LeadForm({ variant = 'card' }) {
     setError('')
     setBtnLabel('Sending…')
 
-    try {
-      const res = await fetch(ENDPOINT, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          Accept: 'application/json',
-        },
-        body: JSON.stringify({
-          name: fields.name.trim(),
-          email: fields.email.trim(),
-          phone: fields.phone.trim(),
-          interest: fields.interest || 'Not specified',
-          message: fields.message.trim() || '—',
-          website: fields.website,
-        }),
-      })
+    const base = {
+      name: fields.name.trim(),
+      email: fields.email.trim(),
+      phone: fields.phone.trim(),
+      interest: fields.interest || 'Not specified',
+      message: fields.message.trim() || '—',
+      website: fields.website,
+    }
 
-      const data = await res.json().catch(() => ({}))
-      if (!res.ok || !data.ok) {
-        throw new Error(data.error || 'Request failed')
+    try {
+      // 1) Prefer branded Majestic HTML email via PHP
+      let sent = false
+      try {
+        const { res, data } = await postJson(PHP_ENDPOINT, base)
+        if (res.ok && data.ok) sent = true
+      } catch {
+        // SSL / network failure on demo.majestic.tz — use fallback
+      }
+
+      // 2) Fallback so the form never soft-fails on www
+      if (!sent) {
+        const { res, data } = await postJson(FORMSUBMIT, {
+          ...base,
+          'I am a': interestLabel(fields.interest),
+          _subject: `New inquiry — ${fields.name.trim()} | Majestic`,
+          _template: 'table',
+          _replyto: fields.email.trim(),
+          _captcha: 'false',
+        })
+        const ok = res.ok && (data.success === true || data.success === 'true')
+        if (!ok) throw new Error(data.message || 'Request failed')
       }
 
       setDone(true)
