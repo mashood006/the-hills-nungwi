@@ -1,8 +1,10 @@
 import { useState } from 'react'
 
-/** Branded PHP mailer (cPanel). Falls back if demo SSL / host fails. */
-const PHP_ENDPOINT = 'https://demo.majestic.tz/contact.php'
-const FORMSUBMIT = 'https://formsubmit.co/ajax/39b3ff885a7b6607f436a215bfc49694'
+/**
+ * www.majestic.tz is static (S3). FormSubmit is the reliable path from the browser.
+ * Hash is activated for https://www.majestic.tz/
+ */
+const ENDPOINT = 'https://formsubmit.co/ajax/39b3ff885a7b6607f436a215bfc49694'
 
 function isBad(type, value) {
   const v = value.trim()
@@ -21,19 +23,6 @@ function interestLabel(value) {
     other: 'Other',
   }
   return map[value] || value || 'Not specified'
-}
-
-async function postJson(url, payload) {
-  const res = await fetch(url, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-      Accept: 'application/json',
-    },
-    body: JSON.stringify(payload),
-  })
-  const data = await res.json().catch(() => ({}))
-  return { res, data }
 }
 
 export function LeadForm({ variant = 'card' }) {
@@ -70,44 +59,45 @@ export function LeadForm({ variant = 'card' }) {
     setError('')
     setBtnLabel('Sending…')
 
-    const base = {
-      name: fields.name.trim(),
-      email: fields.email.trim(),
-      phone: fields.phone.trim(),
-      interest: fields.interest || 'Not specified',
-      message: fields.message.trim() || '—',
-      website: fields.website,
-    }
-
     try {
-      // 1) Prefer branded Majestic HTML email via PHP
-      let sent = false
-      try {
-        const { res, data } = await postJson(PHP_ENDPOINT, base)
-        if (res.ok && data.ok) sent = true
-      } catch {
-        // SSL / network failure on demo.majestic.tz — use fallback
-      }
-
-      // 2) Fallback so the form never soft-fails on www
-      if (!sent) {
-        const { res, data } = await postJson(FORMSUBMIT, {
-          ...base,
+      const res = await fetch(ENDPOINT, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Accept: 'application/json',
+        },
+        body: JSON.stringify({
+          name: fields.name.trim(),
+          email: fields.email.trim(),
+          phone: fields.phone.trim(),
           'I am a': interestLabel(fields.interest),
+          message: fields.message.trim() || '—',
           _subject: `New inquiry — ${fields.name.trim()} | Majestic`,
           _template: 'table',
           _replyto: fields.email.trim(),
           _captcha: 'false',
-        })
-        const ok = res.ok && (data.success === true || data.success === 'true')
-        if (!ok) throw new Error(data.message || 'Request failed')
+        }),
+      })
+
+      const data = await res.json().catch(() => ({}))
+      const ok = res.ok && (data.success === true || data.success === 'true')
+      if (!ok) {
+        const msg = typeof data.message === 'string' ? data.message : ''
+        if (/activat/i.test(msg)) {
+          throw new Error('Activation email sent to mashood@sourcingsquare.com — open it, click Activate, then try again.')
+        }
+        throw new Error(msg || 'Request failed')
       }
 
       setDone(true)
-    } catch {
+    } catch (err) {
       setSending(false)
       setBtnLabel('Try again')
-      setError('Something went wrong. Please try again or email mashood@sourcingsquare.com.')
+      setError(
+        err instanceof Error && err.message
+          ? err.message
+          : 'Something went wrong. Please try again or email mashood@sourcingsquare.com.',
+      )
     }
   }
 
