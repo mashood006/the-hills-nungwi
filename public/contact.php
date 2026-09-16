@@ -72,7 +72,7 @@ $interestLabels = [
 ];
 $interestLabel = $interestLabels[$interest] ?? $interest;
 
-$logo = 'https://www.majestic.tz/images/logo-majestic.png';
+$logo = 'https://www.majestic.tz/images/logo-majestic-dark.png';
 $site = 'https://www.majestic.tz/';
 $to = 'mashood@sourcingsquare.com';
 $subject = 'New inquiry — ' . $name . ' | Majestic';

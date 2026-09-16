@@ -14,7 +14,7 @@
  */
 
 var TO_EMAIL = 'mashood@sourcingsquare.com';
-var LOGO_URL = 'https://www.majestic.tz/images/logo-majestic.png';
+var LOGO_URL = 'https://www.majestic.tz/images/logo-majestic-dark.png';
 var SITE_URL = 'https://www.majestic.tz/';
 
 function doGet() {
