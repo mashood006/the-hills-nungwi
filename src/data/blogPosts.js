@@ -128,8 +128,8 @@ export const BLOG_POSTS = [
     author: 'Sales Advisory',
     initials: 'SA',
     body: [
-      'One-bedroom residences (from about 77 m², starting from $140,000) suit investors focused on occupancy and shorter stays — open-plan living with a private balcony.',
-      'Two-bedroom homes (from about 89 m², starting from $157,000) are premium family and investment residences with room for longer stays and owner weeks.',
+      'One-bedroom residences (from about 77 m², starting from $148,800) suit investors focused on occupancy and shorter stays — open-plan living with a private balcony.',
+      'Two-bedroom homes (from about 89 m², starting from $165,300) are premium family and investment residences with room for longer stays and owner weeks.',
       'Three-bedroom penthouses (from about 328 m², starting from $499,000) are limited top-floor residences A43–A44 and B43–B44. Request full floor plans from sales to compare stacks and views before you reserve.',
     ],
   },

@@ -96,7 +96,7 @@ function Home() {
     </div>
   </div>
   <dl className="glass hl hl5">
-    <div><dt>Starting from</dt><dd>$140,000 <span style={{fontSize: '.5em', letterSpacing: '.1em'}}>USD</span></dd></div>
+    <div><dt>Starting from</dt><dd>$148,800 <span style={{fontSize: '.5em', letterSpacing: '.1em'}}>USD</span></dd></div>
     <div><dt>Titled units</dt><dd>96</dd></div>
     <div><dt>Opening</dt><dd>Q4 2027</dd></div>
     <div><dt>To the beach</dt><dd>1 min walk</dd></div>
@@ -501,7 +501,7 @@ function Home() {
         </details>
         <details>
           <summary>What does it cost?</summary>
-          <div className="qa"><p>Units start at $140,000 USD. One-bedroom suites start from $140,000, two-bedroom apartments from $157,000, and three-bedroom penthouses from $499,000. Prices are confirmed at reservation — ask for the live availability list.</p></div>
+          <div className="qa"><p>Units start at $148,800 USD. One-bedroom suites start from $148,800, two-bedroom apartments from $165,300, and three-bedroom penthouses from $499,000. Prices are confirmed at reservation — ask for the live availability list.</p></div>
         </details>
         <details>
           <summary>Is finance available?</summary>

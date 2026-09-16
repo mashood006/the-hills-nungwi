@@ -8,7 +8,7 @@ const UNITS = [
     img: '/images/plan-1bed.png',
     alt: 'One bedroom floor plan',
     feats: ['Open-plan living', 'Private balcony'],
-    price: 'From $140,000',
+    price: 'From $148,800',
   },
   {
     id: '2bed',
@@ -17,7 +17,7 @@ const UNITS = [
     img: '/images/plan-2bed.png',
     alt: 'Two bedroom floor plan',
     feats: ['Premium family residence', 'Investment ready'],
-    price: 'From $157,000',
+    price: 'From $165,300',
   },
   {
     id: '3bed',
