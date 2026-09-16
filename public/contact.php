@@ -1,13 +1,26 @@
 <?php
 /**
- * Majestic inquiry form handler — branded HTML email to mashood@sourcingsquare.com
+ * Majestic inquiry form — branded HTML email (no FormSubmit).
+ * Hosted on cPanel; called from www.majestic.tz via CORS.
  */
 header('Content-Type: application/json; charset=utf-8');
 header('X-Content-Type-Options: nosniff');
 
-if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
+$allowedOrigins = [
+  'https://www.majestic.tz',
+  'https://majestic.tz',
+  'http://localhost:5173',
+  'http://127.0.0.1:5173',
+];
+$origin = isset($_SERVER['HTTP_ORIGIN']) ? $_SERVER['HTTP_ORIGIN'] : '';
+if (in_array($origin, $allowedOrigins, true)) {
+  header('Access-Control-Allow-Origin: ' . $origin);
+  header('Vary: Origin');
   header('Access-Control-Allow-Methods: POST, OPTIONS');
-  header('Access-Control-Allow-Headers: Content-Type');
+  header('Access-Control-Allow-Headers: Content-Type, Accept');
+}
+
+if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
   http_response_code(204);
   exit;
 }
@@ -25,8 +38,7 @@ if (!is_array($data)) {
 }
 
 function field($data, $key) {
-  $v = isset($data[$key]) ? trim((string) $data[$key]) : '';
-  return $v;
+  return isset($data[$key]) ? trim((string) $data[$key]) : '';
 }
 
 function clean_header($v) {
@@ -36,7 +48,7 @@ function clean_header($v) {
 $name = field($data, 'name');
 $email = field($data, 'email');
 $phone = field($data, 'phone');
-$interest = field($data, 'interest') ?: 'Not specified';
+$interest = field($data, 'interest') ?: field($data, 'I am a') ?: 'Not specified';
 $message = field($data, 'message') ?: '—';
 $honeypot = field($data, 'website');
 
@@ -60,20 +72,35 @@ $interestLabels = [
 ];
 $interestLabel = $interestLabels[$interest] ?? $interest;
 
-$host = isset($_SERVER['HTTP_HOST']) ? $_SERVER['HTTP_HOST'] : 'www.majestic.tz';
-$scheme = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off') ? 'https' : 'https';
-$base = $scheme . '://' . $host;
-$logo = $base . '/images/logo-majestic.png';
-$site = $base . '/';
+// Always use production assets so logo loads in email clients
+$logo = 'https://www.majestic.tz/images/logo-majestic.png';
+$site = 'https://www.majestic.tz/';
 
 $to = 'mashood@sourcingsquare.com';
-$subject = 'New inquiry — Majestic / The Hills';
+$subject = 'New inquiry — ' . $name . ' | Majestic';
 $safeName = htmlspecialchars($name, ENT_QUOTES, 'UTF-8');
 $safeEmail = htmlspecialchars($email, ENT_QUOTES, 'UTF-8');
 $safePhone = htmlspecialchars($phone, ENT_QUOTES, 'UTF-8');
 $safeInterest = htmlspecialchars($interestLabel, ENT_QUOTES, 'UTF-8');
 $safeMessage = nl2br(htmlspecialchars($message, ENT_QUOTES, 'UTF-8'));
-$when = date('d M Y · H:i') . ' UTC';
+$when = gmdate('D, d M Y · H:i') . ' UTC';
+
+$rows = [
+  ['Full name', $safeName],
+  ['Email', '<a href="mailto:' . $safeEmail . '" style="color:#1a1a1a;text-decoration:underline;">' . $safeEmail . '</a>'],
+  ['Phone', $safePhone],
+  ['I am a', $safeInterest],
+  ['Message', $safeMessage],
+];
+
+$rowsHtml = '';
+foreach ($rows as $i => $row) {
+  $bg = $i % 2 === 0 ? '#faf8f4' : '#ffffff';
+  $rowsHtml .= '<tr>'
+    . '<td style="padding:14px 18px;width:34%;font-family:Arial,Helvetica,sans-serif;font-size:11px;letter-spacing:0.14em;text-transform:uppercase;color:#9a7b4f;vertical-align:top;border-bottom:1px solid #ebe4d8;background:' . $bg . ';">' . $row[0] . '</td>'
+    . '<td style="padding:14px 18px;font-family:Georgia,\'Times New Roman\',serif;font-size:16px;line-height:1.5;color:#1a1a1a;vertical-align:top;border-bottom:1px solid #ebe4d8;background:' . $bg . ';">' . $row[1] . '</td>'
+    . '</tr>';
+}
 
 $html = <<<HTML
 <!DOCTYPE html>
@@ -83,73 +110,52 @@ $html = <<<HTML
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>{$subject}</title>
 </head>
-<body style="margin:0;padding:0;background:#0b1220;font-family:Georgia,'Times New Roman',serif;">
-  <table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="background:#0b1220;padding:32px 16px;">
+<body style="margin:0;padding:0;background:#e8e2d6;">
+  <table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="background:#e8e2d6;padding:36px 14px;">
     <tr>
       <td align="center">
-        <table role="presentation" width="560" cellspacing="0" cellpadding="0" style="max-width:560px;width:100%;background:#111827;border:1px solid #243044;border-radius:4px;overflow:hidden;">
+        <table role="presentation" width="600" cellspacing="0" cellpadding="0" style="max-width:600px;width:100%;background:#ffffff;border-radius:2px;overflow:hidden;box-shadow:0 8px 28px rgba(26,26,26,0.08);">
+          <!-- Header -->
           <tr>
-            <td style="background:#0a0a0a;padding:28px 32px;border-bottom:1px solid #c4a574;text-align:center;">
-              <img src="{$logo}" alt="Majestic" width="200" style="display:inline-block;max-width:200px;height:auto;border:0;" />
+            <td style="background:#0a0a0a;padding:30px 36px;text-align:center;border-bottom:2px solid #c4a574;">
+              <img src="{$logo}" alt="Majestic" width="190" style="display:inline-block;max-width:190px;height:auto;border:0;" />
             </td>
           </tr>
+          <!-- Intro -->
           <tr>
-            <td style="padding:28px 32px 8px;text-align:center;">
-              <p style="margin:0 0 6px;font-family:Arial,Helvetica,sans-serif;font-size:11px;letter-spacing:0.22em;text-transform:uppercase;color:#c4a574;">New website inquiry</p>
-              <h1 style="margin:0;font-size:26px;font-weight:normal;line-height:1.25;color:#f5ebe0;">Lead from majestic.tz</h1>
+            <td style="padding:32px 36px 10px;text-align:center;background:#ffffff;">
+              <p style="margin:0 0 8px;font-family:Arial,Helvetica,sans-serif;font-size:11px;letter-spacing:0.22em;text-transform:uppercase;color:#9a7b4f;">Website inquiry</p>
+              <h1 style="margin:0;font-family:Georgia,'Times New Roman',serif;font-size:28px;font-weight:normal;line-height:1.25;color:#1a1a1a;">New lead received</h1>
+              <p style="margin:12px 0 0;font-family:Arial,Helvetica,sans-serif;font-size:13px;color:#6b7280;">{$when}</p>
             </td>
           </tr>
+          <!-- Form layout -->
           <tr>
-            <td style="padding:8px 32px 24px;text-align:center;">
-              <p style="margin:0;font-family:Arial,Helvetica,sans-serif;font-size:13px;color:#9aa3b2;">{$when}</p>
-            </td>
-          </tr>
-          <tr>
-            <td style="padding:0 32px 28px;">
-              <table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="background:#0b1220;border:1px solid #243044;border-radius:4px;">
+            <td style="padding:22px 28px 8px;">
+              <table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="border:1px solid #ebe4d8;border-radius:2px;overflow:hidden;">
                 <tr>
-                  <td style="padding:18px 20px;border-bottom:1px solid #243044;">
-                    <p style="margin:0 0 4px;font-family:Arial,Helvetica,sans-serif;font-size:10px;letter-spacing:0.18em;text-transform:uppercase;color:#c4a574;">Full name</p>
-                    <p style="margin:0;font-size:17px;color:#f5ebe0;">{$safeName}</p>
+                  <td colspan="2" style="padding:12px 18px;background:#1a1a1a;font-family:Arial,Helvetica,sans-serif;font-size:11px;letter-spacing:0.18em;text-transform:uppercase;color:#c4a574;">
+                    Inquiry details
                   </td>
                 </tr>
-                <tr>
-                  <td style="padding:18px 20px;border-bottom:1px solid #243044;">
-                    <p style="margin:0 0 4px;font-family:Arial,Helvetica,sans-serif;font-size:10px;letter-spacing:0.18em;text-transform:uppercase;color:#c4a574;">Email</p>
-                    <p style="margin:0;font-size:17px;"><a href="mailto:{$safeEmail}" style="color:#f5ebe0;text-decoration:underline;">{$safeEmail}</a></p>
-                  </td>
-                </tr>
-                <tr>
-                  <td style="padding:18px 20px;border-bottom:1px solid #243044;">
-                    <p style="margin:0 0 4px;font-family:Arial,Helvetica,sans-serif;font-size:10px;letter-spacing:0.18em;text-transform:uppercase;color:#c4a574;">Phone</p>
-                    <p style="margin:0;font-size:17px;color:#f5ebe0;">{$safePhone}</p>
-                  </td>
-                </tr>
-                <tr>
-                  <td style="padding:18px 20px;border-bottom:1px solid #243044;">
-                    <p style="margin:0 0 4px;font-family:Arial,Helvetica,sans-serif;font-size:10px;letter-spacing:0.18em;text-transform:uppercase;color:#c4a574;">I am a</p>
-                    <p style="margin:0;font-size:17px;color:#f5ebe0;">{$safeInterest}</p>
-                  </td>
-                </tr>
-                <tr>
-                  <td style="padding:18px 20px;">
-                    <p style="margin:0 0 4px;font-family:Arial,Helvetica,sans-serif;font-size:10px;letter-spacing:0.18em;text-transform:uppercase;color:#c4a574;">Message</p>
-                    <p style="margin:0;font-size:16px;line-height:1.55;color:#f5ebe0;">{$safeMessage}</p>
-                  </td>
-                </tr>
+                {$rowsHtml}
               </table>
             </td>
           </tr>
+          <!-- CTA -->
           <tr>
-            <td style="padding:0 32px 32px;text-align:center;">
-              <a href="mailto:{$safeEmail}?subject=Re:%20Your%20inquiry%20to%20Majestic" style="display:inline-block;padding:14px 28px;border:1px solid #c4a574;color:#c4a574;text-decoration:none;font-family:Arial,Helvetica,sans-serif;font-size:12px;letter-spacing:0.16em;text-transform:uppercase;">Reply to lead</a>
+            <td style="padding:28px 36px 34px;text-align:center;">
+              <a href="mailto:{$safeEmail}?subject=Re:%20Your%20inquiry%20to%20Majestic" style="display:inline-block;padding:14px 26px;background:#1a1a1a;color:#f5ebe0;text-decoration:none;font-family:Arial,Helvetica,sans-serif;font-size:12px;letter-spacing:0.16em;text-transform:uppercase;">Reply to this lead</a>
             </td>
           </tr>
+          <!-- Footer — Majestic only -->
           <tr>
-            <td style="background:#0a0a0a;padding:18px 32px;border-top:1px solid #243044;text-align:center;">
-              <p style="margin:0;font-family:Arial,Helvetica,sans-serif;font-size:11px;letter-spacing:0.12em;text-transform:uppercase;color:#6b7280;">
+            <td style="background:#0a0a0a;padding:22px 36px;text-align:center;">
+              <p style="margin:0 0 6px;font-family:Arial,Helvetica,sans-serif;font-size:11px;letter-spacing:0.14em;text-transform:uppercase;color:#c4a574;">
                 <a href="{$site}" style="color:#c4a574;text-decoration:none;">www.majestic.tz</a>
-                &nbsp;·&nbsp; Leading real estate developer in Zanzibar
+              </p>
+              <p style="margin:0;font-family:Arial,Helvetica,sans-serif;font-size:12px;color:#8a8f98;line-height:1.5;">
+                Leading real estate property developer in Zanzibar, Tanzania
               </p>
             </td>
           </tr>
@@ -167,10 +173,10 @@ $headers = [
   'Content-Type: text/html; charset=UTF-8',
   'From: ' . $from,
   'Reply-To: ' . clean_header($name) . ' <' . clean_header($email) . '>',
-  'X-Mailer: Majestic-ContactForm',
+  'X-Mailer: Majestic',
 ];
 
-$ok = @mail($to, $subject, $html, implode("\r\n", $headers));
+$ok = @mail($to, '=?UTF-8?B?' . base64_encode($subject) . '?=', $html, implode("\r\n", $headers));
 
 if (!$ok) {
   http_response_code(500);

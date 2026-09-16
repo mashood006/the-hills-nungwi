@@ -1,8 +1,7 @@
 import { useState } from 'react'
 
-/** FormSubmit form hash (activated for https://www.majestic.tz/) */
-const FORM_ID = '39b3ff885a7b6607f436a215bfc49694'
-const ENDPOINT = `https://formsubmit.co/ajax/${FORM_ID}`
+/** Branded mail API on cPanel (PHP). www is static S3 — no FormSubmit. */
+const ENDPOINT = 'https://demo.majestic.tz/contact.php'
 
 function isBad(type, value) {
   const v = value.trim()
@@ -10,17 +9,6 @@ function isBad(type, value) {
   if (type === 'email') return !/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(v)
   if (type === 'tel') return v.replace(/\D/g, '').length < 7
   return false
-}
-
-function interestLabel(value) {
-  const map = {
-    investor: 'Investor',
-    buyer: 'Prospective buyer',
-    realtor: 'Realtor',
-    press: 'Press',
-    other: 'Other',
-  }
-  return map[value] || value || 'Not specified'
 }
 
 export function LeadForm({ variant = 'card' }) {
@@ -48,7 +36,6 @@ export function LeadForm({ variant = 'card' }) {
     }
     setBad(next)
     if (next.name || next.email || next.phone) return
-    // Honeypot filled → pretend success (bots)
     if (fields.website.trim()) {
       setDone(true)
       return
@@ -69,33 +56,22 @@ export function LeadForm({ variant = 'card' }) {
           name: fields.name.trim(),
           email: fields.email.trim(),
           phone: fields.phone.trim(),
-          'I am a': interestLabel(fields.interest),
+          interest: fields.interest || 'Not specified',
           message: fields.message.trim() || '—',
-          _subject: `New inquiry — ${fields.name.trim()} | Majestic`,
-          _template: 'table',
-          _replyto: fields.email.trim(),
-          _captcha: 'false',
-          _honey: '',
+          website: fields.website,
         }),
       })
 
       const data = await res.json().catch(() => ({}))
-      const ok = res.ok && (data.success === true || data.success === 'true')
-      if (!ok) {
-        const msg = typeof data.message === 'string' ? data.message : ''
-        if (/activat/i.test(msg)) {
-          throw new Error('Form needs activation — check mashood@sourcingsquare.com for the FormSubmit activate link, then try again.')
-        }
-        throw new Error(msg || 'Request failed')
+      if (!res.ok || !data.ok) {
+        throw new Error(data.error || 'Request failed')
       }
 
       setDone(true)
-    } catch (err) {
+    } catch {
       setSending(false)
       setBtnLabel('Try again')
-      setError(err instanceof Error && err.message
-        ? err.message
-        : 'Something went wrong. Please try again or email mashood@sourcingsquare.com.')
+      setError('Something went wrong. Please try again or email mashood@sourcingsquare.com.')
     }
   }
 
