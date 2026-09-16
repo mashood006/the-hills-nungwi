@@ -1,13 +1,8 @@
 import { useState } from 'react'
 
+/** FormSubmit form hash (activated for https://www.majestic.tz/) */
 const FORM_ID = '39b3ff885a7b6607f436a215bfc49694'
-const FORMSUBMIT = `https://formsubmit.co/ajax/${FORM_ID}`
-
-function isLocalHost() {
-  if (typeof window === 'undefined') return false
-  const h = window.location.hostname
-  return h === 'localhost' || h === '127.0.0.1'
-}
+const ENDPOINT = `https://formsubmit.co/ajax/${FORM_ID}`
 
 function isBad(type, value) {
   const v = value.trim()
@@ -17,17 +12,15 @@ function isBad(type, value) {
   return false
 }
 
-async function postJson(url, payload) {
-  const res = await fetch(url, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-      Accept: 'application/json',
-    },
-    body: JSON.stringify(payload),
-  })
-  if (!res.ok) throw new Error('Request failed')
-  return res
+function interestLabel(value) {
+  const map = {
+    investor: 'Investor',
+    buyer: 'Prospective buyer',
+    realtor: 'Realtor',
+    press: 'Press',
+    other: 'Other',
+  }
+  return map[value] || value || 'Not specified'
 }
 
 export function LeadForm({ variant = 'card' }) {
@@ -55,39 +48,54 @@ export function LeadForm({ variant = 'card' }) {
     }
     setBad(next)
     if (next.name || next.email || next.phone) return
+    // Honeypot filled → pretend success (bots)
+    if (fields.website.trim()) {
+      setDone(true)
+      return
+    }
 
     setSending(true)
     setError('')
     setBtnLabel('Sending…')
 
-    const payload = {
-      name: fields.name.trim(),
-      email: fields.email.trim(),
-      phone: fields.phone.trim(),
-      interest: fields.interest || 'Not specified',
-      message: fields.message.trim() || '—',
-      website: fields.website,
-      _subject: 'New inquiry — Majestic / The Hills',
-      _template: 'table',
-      _replyto: fields.email.trim(),
-    }
-
     try {
-      if (isLocalHost()) {
-        await postJson(FORMSUBMIT, payload)
-      } else {
-        try {
-          await postJson('/contact.php', payload)
-        } catch {
-          // Fallback if PHP mail is unavailable on the host
-          await postJson(FORMSUBMIT, payload)
+      const res = await fetch(ENDPOINT, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Accept: 'application/json',
+        },
+        body: JSON.stringify({
+          name: fields.name.trim(),
+          email: fields.email.trim(),
+          phone: fields.phone.trim(),
+          'I am a': interestLabel(fields.interest),
+          message: fields.message.trim() || '—',
+          _subject: `New inquiry — ${fields.name.trim()} | Majestic`,
+          _template: 'table',
+          _replyto: fields.email.trim(),
+          _captcha: 'false',
+          _honey: '',
+        }),
+      })
+
+      const data = await res.json().catch(() => ({}))
+      const ok = res.ok && (data.success === true || data.success === 'true')
+      if (!ok) {
+        const msg = typeof data.message === 'string' ? data.message : ''
+        if (/activat/i.test(msg)) {
+          throw new Error('Form needs activation — check mashood@sourcingsquare.com for the FormSubmit activate link, then try again.')
         }
+        throw new Error(msg || 'Request failed')
       }
+
       setDone(true)
-    } catch {
+    } catch (err) {
       setSending(false)
       setBtnLabel('Try again')
-      setError('Something went wrong. Please try again or email mashood@sourcingsquare.com.')
+      setError(err instanceof Error && err.message
+        ? err.message
+        : 'Something went wrong. Please try again or email mashood@sourcingsquare.com.')
     }
   }
 
