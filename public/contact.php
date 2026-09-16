@@ -74,7 +74,7 @@ $interestLabel = $interestLabels[$interest] ?? $interest;
 
 $logo = 'https://www.majestic.tz/images/logo-majestic-dark.png';
 $site = 'https://www.majestic.tz/';
-$to = 'mashood@sourcingsquare.com';
+$to = 'mashood@sourcingsquare.com, sales@majestic.tz';
 $subject = 'New inquiry — ' . $name . ' | Majestic';
 $safeName = htmlspecialchars($name, ENT_QUOTES, 'UTF-8');
 $safeEmail = htmlspecialchars($email, ENT_QUOTES, 'UTF-8');
