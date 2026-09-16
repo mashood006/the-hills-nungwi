@@ -1,10 +1,14 @@
 import { useState } from 'react'
 
 /**
- * www.majestic.tz is static (S3). FormSubmit is the reliable path from the browser.
- * Hash is activated for https://www.majestic.tz/
+ * Majestic Apps Script web app (branded HTML email, From: Majestic).
+ * text/plain avoids CORS preflight; Apps Script still parses JSON body.
+ * FormSubmit kept as fallback.
  */
-const ENDPOINT = 'https://formsubmit.co/ajax/39b3ff885a7b6607f436a215bfc49694'
+const MAIL_API =
+  (import.meta.env.VITE_INQUIRY_MAIL_URL || '').trim() ||
+  'https://script.google.com/macros/s/AKfycbyJWwsYtdCDMh3gvcEJQfd8ouoUVKHlMNzZ4cpzgx5N7QYFtjn5RwFN9I92KI2f7PyM/exec'
+const FORMSUBMIT = 'https://formsubmit.co/ajax/39b3ff885a7b6607f436a215bfc49694'
 
 function isBad(type, value) {
   const v = value.trim()
@@ -23,6 +27,37 @@ function interestLabel(value) {
     other: 'Other',
   }
   return map[value] || value || 'Not specified'
+}
+
+async function postMailApi(url, payload) {
+  // Apps Script: text/plain skips preflight; redirect returns JSON from echo URL
+  const res = await fetch(url, {
+    method: 'POST',
+    headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+    body: JSON.stringify(payload),
+    redirect: 'follow',
+  })
+  const text = await res.text()
+  let data = {}
+  try {
+    data = JSON.parse(text)
+  } catch {
+    data = {}
+  }
+  return { res, data, text }
+}
+
+async function postFormSubmit(payload) {
+  const res = await fetch(FORMSUBMIT, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      Accept: 'application/json',
+    },
+    body: JSON.stringify(payload),
+  })
+  const data = await res.json().catch(() => ({}))
+  return { res, data }
 }
 
 export function LeadForm({ variant = 'card' }) {
@@ -59,34 +94,40 @@ export function LeadForm({ variant = 'card' }) {
     setError('')
     setBtnLabel('Sending…')
 
+    const base = {
+      name: fields.name.trim(),
+      email: fields.email.trim(),
+      phone: fields.phone.trim(),
+      interest: fields.interest || 'Not specified',
+      message: fields.message.trim() || '—',
+      website: fields.website,
+    }
+
     try {
-      const res = await fetch(ENDPOINT, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          Accept: 'application/json',
-        },
-        body: JSON.stringify({
-          name: fields.name.trim(),
-          email: fields.email.trim(),
-          phone: fields.phone.trim(),
+      let sent = false
+
+      // 1) Majestic-branded Apps Script email
+      if (MAIL_API) {
+        try {
+          const { res, data } = await postMailApi(MAIL_API, base)
+          if (res.ok && (data.ok === true || data.ok === 'true')) sent = true
+        } catch {
+          // fall through
+        }
+      }
+
+      // 2) FormSubmit fallback
+      if (!sent) {
+        const { res, data } = await postFormSubmit({
+          ...base,
           'I am a': interestLabel(fields.interest),
-          message: fields.message.trim() || '—',
           _subject: `New inquiry — ${fields.name.trim()} | Majestic`,
           _template: 'table',
           _replyto: fields.email.trim(),
           _captcha: 'false',
-        }),
-      })
-
-      const data = await res.json().catch(() => ({}))
-      const ok = res.ok && (data.success === true || data.success === 'true')
-      if (!ok) {
-        const msg = typeof data.message === 'string' ? data.message : ''
-        if (/activat/i.test(msg)) {
-          throw new Error('Activation email sent to mashood@sourcingsquare.com — open it, click Activate, then try again.')
-        }
-        throw new Error(msg || 'Request failed')
+        })
+        const ok = res.ok && (data.success === true || data.success === 'true')
+        if (!ok) throw new Error(data.message || 'Request failed')
       }
 
       setDone(true)

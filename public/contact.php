@@ -1,7 +1,7 @@
 <?php
 /**
- * Majestic inquiry form — branded HTML email (no FormSubmit).
- * Hosted on cPanel; called from www.majestic.tz via CORS.
+ * Majestic inquiry form — branded HTML email (SendLayer-style card).
+ * Prefer Google Apps Script endpoint for www (valid SSL + From: Majestic).
  */
 header('Content-Type: application/json; charset=utf-8');
 header('X-Content-Type-Options: nosniff');
@@ -72,10 +72,8 @@ $interestLabels = [
 ];
 $interestLabel = $interestLabels[$interest] ?? $interest;
 
-// Always use production assets so logo loads in email clients
 $logo = 'https://www.majestic.tz/images/logo-majestic.png';
 $site = 'https://www.majestic.tz/';
-
 $to = 'mashood@sourcingsquare.com';
 $subject = 'New inquiry — ' . $name . ' | Majestic';
 $safeName = htmlspecialchars($name, ENT_QUOTES, 'UTF-8');
@@ -87,18 +85,18 @@ $when = gmdate('D, d M Y · H:i') . ' UTC';
 
 $rows = [
   ['Full name', $safeName],
-  ['Email', '<a href="mailto:' . $safeEmail . '" style="color:#1a1a1a;text-decoration:underline;">' . $safeEmail . '</a>'],
-  ['Phone', $safePhone],
+  ['Email', '<a href="mailto:' . $safeEmail . '" style="color:#1a3a8f;text-decoration:underline;">' . $safeEmail . '</a>'],
+  ['Phone', '<a href="tel:' . $safePhone . '" style="color:#1a3a8f;text-decoration:underline;">' . $safePhone . '</a>'],
   ['I am a', $safeInterest],
   ['Message', $safeMessage],
 ];
 
 $rowsHtml = '';
 foreach ($rows as $i => $row) {
-  $bg = $i % 2 === 0 ? '#faf8f4' : '#ffffff';
+  $bg = $i % 2 === 0 ? '#ffffff' : '#f7f8fb';
   $rowsHtml .= '<tr>'
-    . '<td style="padding:14px 18px;width:34%;font-family:Arial,Helvetica,sans-serif;font-size:11px;letter-spacing:0.14em;text-transform:uppercase;color:#9a7b4f;vertical-align:top;border-bottom:1px solid #ebe4d8;background:' . $bg . ';">' . $row[0] . '</td>'
-    . '<td style="padding:14px 18px;font-family:Georgia,\'Times New Roman\',serif;font-size:16px;line-height:1.5;color:#1a1a1a;vertical-align:top;border-bottom:1px solid #ebe4d8;background:' . $bg . ';">' . $row[1] . '</td>'
+    . '<td style="padding:14px 16px;width:32%;font-family:Arial,Helvetica,sans-serif;font-size:13px;font-weight:700;color:#334155;border-bottom:1px solid #e8ecf2;background:' . $bg . ';">' . $row[0] . '</td>'
+    . '<td style="padding:14px 16px;font-family:Arial,Helvetica,sans-serif;font-size:14px;color:#0f172a;border-bottom:1px solid #e8ecf2;background:' . $bg . ';">' . $row[1] . '</td>'
     . '</tr>';
 }
 
@@ -110,56 +108,51 @@ $html = <<<HTML
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>{$subject}</title>
 </head>
-<body style="margin:0;padding:0;background:#e8e2d6;">
-  <table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="background:#e8e2d6;padding:36px 14px;">
+<body style="margin:0;padding:0;background:#f4f4f6;">
+  <table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="background:#f4f4f6;padding:32px 12px;">
     <tr>
       <td align="center">
-        <table role="presentation" width="600" cellspacing="0" cellpadding="0" style="max-width:600px;width:100%;background:#ffffff;border-radius:2px;overflow:hidden;box-shadow:0 8px 28px rgba(26,26,26,0.08);">
-          <!-- Header -->
+        <img src="{$logo}" alt="Majestic" width="160" style="display:block;margin:0 auto 18px;max-width:160px;border:0;" />
+        <table role="presentation" width="560" cellspacing="0" cellpadding="0" style="max-width:560px;width:100%;background:#ffffff;border:1px solid #e5e7eb;border-radius:4px;overflow:hidden;">
           <tr>
-            <td style="background:#0a0a0a;padding:30px 36px;text-align:center;border-bottom:2px solid #c4a574;">
-              <img src="{$logo}" alt="Majestic" width="190" style="display:inline-block;max-width:190px;height:auto;border:0;" />
+            <td style="background:#0b1f5b;padding:22px 28px;">
+              <h1 style="margin:0;font-family:Arial,Helvetica,sans-serif;font-size:22px;line-height:1.35;color:#ffffff;font-weight:700;">New inquiry received</h1>
             </td>
           </tr>
-          <!-- Intro -->
           <tr>
-            <td style="padding:32px 36px 10px;text-align:center;background:#ffffff;">
-              <p style="margin:0 0 8px;font-family:Arial,Helvetica,sans-serif;font-size:11px;letter-spacing:0.22em;text-transform:uppercase;color:#9a7b4f;">Website inquiry</p>
-              <h1 style="margin:0;font-family:Georgia,'Times New Roman',serif;font-size:28px;font-weight:normal;line-height:1.25;color:#1a1a1a;">New lead received</h1>
-              <p style="margin:12px 0 0;font-family:Arial,Helvetica,sans-serif;font-size:13px;color:#6b7280;">{$when}</p>
+            <td style="padding:24px 28px 8px;font-family:Arial,Helvetica,sans-serif;font-size:15px;line-height:1.6;color:#334155;">
+              Someone just submitted your form on <a href="{$site}" style="color:#1a3a8f;">www.majestic.tz</a>. Here are the details:
             </td>
           </tr>
-          <!-- Form layout -->
           <tr>
-            <td style="padding:22px 28px 8px;">
-              <table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="border:1px solid #ebe4d8;border-radius:2px;overflow:hidden;">
+            <td style="padding:8px 28px 6px;font-family:Arial,Helvetica,sans-serif;font-size:12px;color:#94a3b8;">{$when}</td>
+          </tr>
+          <tr>
+            <td style="padding:12px 28px 8px;">
+              <table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="border:1px solid #e8ecf2;border-radius:4px;overflow:hidden;">
                 <tr>
-                  <td colspan="2" style="padding:12px 18px;background:#1a1a1a;font-family:Arial,Helvetica,sans-serif;font-size:11px;letter-spacing:0.18em;text-transform:uppercase;color:#c4a574;">
-                    Inquiry details
-                  </td>
+                  <th align="left" style="padding:12px 16px;background:#0b1f5b;color:#ffffff;font-family:Arial,Helvetica,sans-serif;font-size:12px;letter-spacing:0.04em;text-transform:uppercase;">Name</th>
+                  <th align="left" style="padding:12px 16px;background:#0b1f5b;color:#ffffff;font-family:Arial,Helvetica,sans-serif;font-size:12px;letter-spacing:0.04em;text-transform:uppercase;">Value</th>
                 </tr>
                 {$rowsHtml}
               </table>
             </td>
           </tr>
-          <!-- CTA -->
           <tr>
-            <td style="padding:28px 36px 34px;text-align:center;">
-              <a href="mailto:{$safeEmail}?subject=Re:%20Your%20inquiry%20to%20Majestic" style="display:inline-block;padding:14px 26px;background:#1a1a1a;color:#f5ebe0;text-decoration:none;font-family:Arial,Helvetica,sans-serif;font-size:12px;letter-spacing:0.16em;text-transform:uppercase;">Reply to this lead</a>
+            <td style="padding:28px;text-align:center;">
+              <a href="mailto:{$safeEmail}?subject=Re:%20Your%20inquiry%20to%20Majestic" style="display:inline-block;padding:14px 28px;background:#0b1f5b;color:#ffffff;text-decoration:none;font-family:Arial,Helvetica,sans-serif;font-size:14px;font-weight:700;border-radius:4px;">Reply to lead</a>
             </td>
           </tr>
-          <!-- Footer — Majestic only -->
           <tr>
-            <td style="background:#0a0a0a;padding:22px 36px;text-align:center;">
-              <p style="margin:0 0 6px;font-family:Arial,Helvetica,sans-serif;font-size:11px;letter-spacing:0.14em;text-transform:uppercase;color:#c4a574;">
-                <a href="{$site}" style="color:#c4a574;text-decoration:none;">www.majestic.tz</a>
-              </p>
-              <p style="margin:0;font-family:Arial,Helvetica,sans-serif;font-size:12px;color:#8a8f98;line-height:1.5;">
-                Leading real estate property developer in Zanzibar, Tanzania
-              </p>
+            <td style="padding:0 28px 28px;font-family:Arial,Helvetica,sans-serif;font-size:14px;color:#0f172a;">
+              <strong>— Majestic</strong><br />
+              <span style="color:#64748b;font-size:12px;">Leading real estate property developer in Zanzibar, Tanzania</span>
             </td>
           </tr>
         </table>
+        <p style="margin:16px 0 0;font-family:Arial,Helvetica,sans-serif;font-size:11px;color:#94a3b8;">
+          <a href="{$site}" style="color:#64748b;text-decoration:none;">www.majestic.tz</a>
+        </p>
       </td>
     </tr>
   </table>
