@@ -1,6 +1,7 @@
 import { useState } from 'react'
 
-const ENDPOINT = '' // put your form endpoint here
+const TO_EMAIL = 'mashood@sourcingsquare.com'
+const ENDPOINT = `https://formsubmit.co/ajax/${TO_EMAIL}`
 
 function isBad(type, value) {
   const v = value.trim()
@@ -15,6 +16,7 @@ export function LeadForm({ variant = 'card' }) {
   const [bad, setBad] = useState({})
   const [done, setDone] = useState(false)
   const [sending, setSending] = useState(false)
+  const [error, setError] = useState('')
   const [btnLabel, setBtnLabel] = useState(variant === 'inquiry' ? 'Send inquiry' : 'Send my details')
   const isInquiry = variant === 'inquiry'
 
@@ -22,6 +24,7 @@ export function LeadForm({ variant = 'card' }) {
     const { name, value } = e.target
     setFields((f) => ({ ...f, [name]: value }))
     setBad((b) => ({ ...b, [name]: false }))
+    setError('')
   }
 
   async function onSubmit(e) {
@@ -34,21 +37,35 @@ export function LeadForm({ variant = 'card' }) {
     setBad(next)
     if (next.name || next.email || next.phone) return
 
-    if (!ENDPOINT) {
-      setDone(true)
-      return
-    }
-
     setSending(true)
+    setError('')
     setBtnLabel('Sending…')
+
     try {
-      const body = new FormData()
-      Object.entries(fields).forEach(([k, v]) => body.append(k, v))
-      await fetch(ENDPOINT, { method: 'POST', body })
+      const res = await fetch(ENDPOINT, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Accept: 'application/json',
+        },
+        body: JSON.stringify({
+          name: fields.name.trim(),
+          email: fields.email.trim(),
+          phone: fields.phone.trim(),
+          interest: fields.interest || 'Not specified',
+          message: fields.message.trim() || '—',
+          _subject: 'New inquiry — Majestic / The Hills',
+          _template: 'table',
+          _replyto: fields.email.trim(),
+        }),
+      })
+
+      if (!res.ok) throw new Error('Request failed')
       setDone(true)
     } catch {
       setSending(false)
       setBtnLabel(isInquiry ? 'Try again' : 'Try again')
+      setError('Something went wrong. Please try again or email mashood@sourcingsquare.com.')
     }
   }
 
@@ -98,6 +115,7 @@ export function LeadForm({ variant = 'card' }) {
           <label htmlFor="m">Message</label>
           <textarea id="m" name="message" placeholder="Which unit type interests you?" value={fields.message} onChange={update} rows={3} />
         </div>
+        {error ? <p className="inquiry-form-error">{error}</p> : null}
         <button className="btn inquiry-submit" type="submit" disabled={sending}>
           {btnLabel}
           <span aria-hidden="true">→</span>
@@ -131,6 +149,7 @@ export function LeadForm({ variant = 'card' }) {
         <p className="legal">
           By sending this form you agree to be contacted by Majestic about The Hills, Nungwi. Your details are not sold or shared.
         </p>
+        {error ? <p className="form-error">{error}</p> : null}
         <button className="btn btn--navy" type="submit" style={{ width: '100%' }} disabled={sending}>
           {btnLabel}
         </button>

@@ -506,6 +506,8 @@ a.contact-meta-line:hover{color:var(--gold-lt)}
 .inquiry-form .f .e{color:#E08A7A}
 .inquiry-form-row{display:grid;gap:18px;grid-template-columns:1fr}
 @media(min-width:560px){.inquiry-form-row{grid-template-columns:1fr 1fr}}
+.inquiry-form-error,.form-error{margin:0;font-family:'Jost',sans-serif;font-size:.82rem;line-height:1.45;color:#E08A7A}
+.inquiry-form-error{color:#E08A7A}
 .inquiry-submit{justify-self:start;margin-top:8px;background:transparent;color:#fff;border:1px solid rgba(255,255,255,.45);
   padding:12px 22px;gap:10px;font-family:'Jost',sans-serif;font-size:.72rem;font-weight:500;letter-spacing:.14em;text-transform:uppercase}
 .inquiry-submit:hover{background:rgba(255,255,255,.08);border-color:#fff;color:#fff}
