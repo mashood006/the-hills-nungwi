@@ -21,6 +21,7 @@ scp -i "$KEY" -o BatchMode=yes -o StrictHostKeyChecking=accept-new -r \
   dist/.htaccess dist/index.html dist/assets dist/images \
   dist/the-hills-brochure.pdf \
   dist/favicon.ico dist/favicon.png dist/favicon-32.png dist/apple-touch-icon.png \
+  dist/contact.php \
   "${USER}@${HOST}:${REMOTE}/"
 if [[ -d dist/videos ]]; then
   scp -i "$KEY" -o BatchMode=yes -o StrictHostKeyChecking=accept-new -r \

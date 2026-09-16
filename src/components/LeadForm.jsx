@@ -1,7 +1,13 @@
 import { useState } from 'react'
 
-const TO_EMAIL = 'mashood@sourcingsquare.com'
-const ENDPOINT = `https://formsubmit.co/ajax/${TO_EMAIL}`
+const FORM_ID = '39b3ff885a7b6607f436a215bfc49694'
+const FORMSUBMIT = `https://formsubmit.co/ajax/${FORM_ID}`
+
+function isLocalHost() {
+  if (typeof window === 'undefined') return false
+  const h = window.location.hostname
+  return h === 'localhost' || h === '127.0.0.1'
+}
 
 function isBad(type, value) {
   const v = value.trim()
@@ -11,8 +17,21 @@ function isBad(type, value) {
   return false
 }
 
+async function postJson(url, payload) {
+  const res = await fetch(url, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      Accept: 'application/json',
+    },
+    body: JSON.stringify(payload),
+  })
+  if (!res.ok) throw new Error('Request failed')
+  return res
+}
+
 export function LeadForm({ variant = 'card' }) {
-  const [fields, setFields] = useState({ name: '', email: '', phone: '', interest: '', message: '' })
+  const [fields, setFields] = useState({ name: '', email: '', phone: '', interest: '', message: '', website: '' })
   const [bad, setBad] = useState({})
   const [done, setDone] = useState(false)
   const [sending, setSending] = useState(false)
@@ -41,30 +60,33 @@ export function LeadForm({ variant = 'card' }) {
     setError('')
     setBtnLabel('Sending…')
 
-    try {
-      const res = await fetch(ENDPOINT, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          Accept: 'application/json',
-        },
-        body: JSON.stringify({
-          name: fields.name.trim(),
-          email: fields.email.trim(),
-          phone: fields.phone.trim(),
-          interest: fields.interest || 'Not specified',
-          message: fields.message.trim() || '—',
-          _subject: 'New inquiry — Majestic / The Hills',
-          _template: 'table',
-          _replyto: fields.email.trim(),
-        }),
-      })
+    const payload = {
+      name: fields.name.trim(),
+      email: fields.email.trim(),
+      phone: fields.phone.trim(),
+      interest: fields.interest || 'Not specified',
+      message: fields.message.trim() || '—',
+      website: fields.website,
+      _subject: 'New inquiry — Majestic / The Hills',
+      _template: 'table',
+      _replyto: fields.email.trim(),
+    }
 
-      if (!res.ok) throw new Error('Request failed')
+    try {
+      if (isLocalHost()) {
+        await postJson(FORMSUBMIT, payload)
+      } else {
+        try {
+          await postJson('/contact.php', payload)
+        } catch {
+          // Fallback if PHP mail is unavailable on the host
+          await postJson(FORMSUBMIT, payload)
+        }
+      }
       setDone(true)
     } catch {
       setSending(false)
-      setBtnLabel(isInquiry ? 'Try again' : 'Try again')
+      setBtnLabel('Try again')
       setError('Something went wrong. Please try again or email mashood@sourcingsquare.com.')
     }
   }
@@ -115,6 +137,16 @@ export function LeadForm({ variant = 'card' }) {
           <label htmlFor="m">Message</label>
           <textarea id="m" name="message" placeholder="Which unit type interests you?" value={fields.message} onChange={update} rows={3} />
         </div>
+        <input
+          type="text"
+          name="website"
+          value={fields.website}
+          onChange={update}
+          tabIndex={-1}
+          autoComplete="off"
+          aria-hidden="true"
+          style={{ position: 'absolute', left: '-9999px', height: 0, width: 0, opacity: 0 }}
+        />
         {error ? <p className="inquiry-form-error">{error}</p> : null}
         <button className="btn inquiry-submit" type="submit" disabled={sending}>
           {btnLabel}
@@ -146,6 +178,16 @@ export function LeadForm({ variant = 'card' }) {
           <label htmlFor="m">Message</label>
           <textarea id="m" name="message" placeholder="Which unit type interests you?" value={fields.message} onChange={update} />
         </div>
+        <input
+          type="text"
+          name="website"
+          value={fields.website}
+          onChange={update}
+          tabIndex={-1}
+          autoComplete="off"
+          aria-hidden="true"
+          style={{ position: 'absolute', left: '-9999px', height: 0, width: 0, opacity: 0 }}
+        />
         <p className="legal">
           By sending this form you agree to be contacted by Majestic about The Hills, Nungwi. Your details are not sold or shared.
         </p>
