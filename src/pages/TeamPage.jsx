@@ -18,9 +18,9 @@ export default function TeamPage() {
 
       <section className="team-hero">
         <img
-          src="/images/team/team-group.jpg"
-          alt="Majestic team group photo"
-          width="2306"
+          src="/images/vision-facade.jpg"
+          alt=""
+          width="2752"
           height="1536"
           decoding="async"
         />

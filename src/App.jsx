@@ -97,16 +97,16 @@ function Home() {
   </div>
   <dl className="glass hl hl5">
     <div><dt>Starting from</dt><dd>$148,800 <span style={{fontSize: '.5em', letterSpacing: '.1em'}}>USD</span></dd></div>
-    <div><dt>Titled units</dt><dd>96</dd></div>
-    <div><dt>Opening</dt><dd>Q4 2027</dd></div>
+    <div><dt>Total units</dt><dd>88</dd></div>
+    <div><dt>Opening</dt><dd>March 2028</dd></div>
     <div><dt>To the beach</dt><dd>1 min walk</dd></div>
   </dl>
 </section>
 
 <div className="mq" aria-hidden="true">
   <div className="mq-in">
-    <span>The first branded four-star condo-hotel in Zanzibar</span><span>96 titled units</span><span>60 owner usage days a year</span><span>The Hills, Nungwi</span><span>Opening Q4 2027</span>
-    <span>The first branded four-star condo-hotel in Zanzibar</span><span>96 titled units</span><span>60 owner usage days a year</span><span>The Hills, Nungwi</span><span>Opening Q4 2027</span>
+    <span>The first branded four-star condo-hotel in Zanzibar</span><span>88 total units</span><span>21 owner usage days a year</span><span>The Hills, Nungwi</span><span>Opening March 2028</span>
+    <span>The first branded four-star condo-hotel in Zanzibar</span><span>88 total units</span><span>21 owner usage days a year</span><span>The Hills, Nungwi</span><span>Opening March 2028</span>
   </div>
 </div>
 
@@ -357,7 +357,7 @@ function Home() {
     <div className="priv-b" style={{paddingLeft: '0', paddingRight: '0'}}>
       <span className="kick a a-up">Ownership privileges</span>
       <h2 className="a a-up" style={{'--d': '.08s'}}>Imagine your <em className="g">life here.</em></h2>
-      <p className="lead lead--hl a a-up" style={{'--d': '.16s', marginTop: '18px'}}>Wake to turquoise water, spend sixty days a year in your own titled residence, and let the hotel earn when you are away.</p>
+      <p className="lead lead--hl a a-up" style={{'--d': '.16s', marginTop: '18px'}}>Wake to turquoise water, spend 21 days a year in your own titled residence, and let the investment earn when you are away.</p>
     </div>
   </div>
 </section>
@@ -405,26 +405,26 @@ function Home() {
     <h2 className="head a a-up" style={{'--d': '.08s'}}>Two ways <em className="g">to pay.</em></h2>
     <div className="pay">
       <div className="a a-l">
-        <h4>Cash</h4>
-        <div className="sub">paid upfront</div>
+        <h4>Standard construction plan</h4>
         <ul>
-          <li><b>100%</b><div><em>at signing</em><small>Earn 5% annually through construction</small></div></li>
-          <li><b>50%</b><div><em>at signing</em><small>Earn 4% annually through construction</small></div></li>
+          <li><b>30%</b><div><em>initial payment</em></div></li>
+          <li><b>20%</b><div><em>second payment</em></div></li>
+          <li><b>30%</b><div><em>third payment</em></div></li>
+          <li><b>20%</b><div><em>final payment</em></div></li>
         </ul>
+        <p className="pay-note">Payment timing and milestones are governed by the SPA.</p>
       </div>
       <div className="a a-r" style={{'--d': '.12s'}}>
-        <h4>Deferred</h4>
-        <div className="sub">staged</div>
-        <ul>
-          <li><b>30%</b><div><em>at contract signing</em></div></li>
-          <li><b>20%</b><div><em>within 45 days of signing</em></div></li>
-          <li><b>50%</b><div><em>balance at closing &amp; delivery</em></div></li>
-        </ul>
+        <h4>Escrow option</h4>
+        <p className="pay-lead">Deposits protected through escrow</p>
+        <p className="pay-body">
+          Escrow is optional. The current fee is 1% per deposit, with funds released against agreed construction milestones.
+        </p>
       </div>
     </div>
     <div className="after a a-up" style={{'--d': '.2s'}}>
-      <strong style={{fontFamily: "'Jost', sans-serif", fontStyle: 'normal', fontSize: '.62rem', letterSpacing: '.2em', textTransform: 'uppercase', color: 'var(--gold)', display: 'block', marginBottom: '8px'}}>After delivery</strong>
-      Both options: 10% in Years 1–2, 12% in Years 3–5, 8–15% from Year 6, per contract.
+      <strong className="after-label">Prices are VAT exclusive.</strong>
+      VAT is 15% and may be paid with instalments or at the end, as agreed in the payment schedule.
     </div>
   </div>
 </section>
@@ -493,11 +493,11 @@ function Home() {
         </details>
         <details>
           <summary>How many days a year can I use it?</summary>
-          <div className="qa"><p>60 usage days per year, with no blackout dates, subject to availability. Friends and family get 30% off the published rate, also subject to availability, and beach club and golf access come from delivery.</p></div>
+          <div className="qa"><p>21 usage days per year, with no blackout dates, subject to availability. Friends and family get 30% off the published rate, also subject to availability, and beach club and golf access come from delivery.</p></div>
         </details>
         <details>
           <summary>When does it open?</summary>
-          <div className="qa"><p>Q4 2027. All remaining inventory is now in final pre-sale.</p></div>
+          <div className="qa"><p>March 2028. All remaining inventory is now in final pre-sale.</p></div>
         </details>
         <details>
           <summary>What does it cost?</summary>
