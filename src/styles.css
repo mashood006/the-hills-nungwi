@@ -240,7 +240,7 @@ img.ph{object-fit:cover;object-position:center;display:block;max-width:none}
 
 /* ═══ MARQUEE ═══ */
 .mq{overflow:hidden;background:var(--navy-3);color:#fff;padding:16px 0}
-.mq-in{display:flex;width:max-content;animation:slide 48s linear infinite}
+.mq-in{display:flex;width:max-content;animation:slide 80s linear infinite}
 .mq-track{display:flex;flex:none}
 .mq span{display:flex;align-items:center;gap:46px;padding-right:46px;font-family:'Jost',sans-serif;
   font-size:.67rem;font-weight:500;letter-spacing:.28em;text-transform:uppercase;white-space:nowrap;color:rgba(255,255,255,.8)}
