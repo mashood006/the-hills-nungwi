@@ -240,11 +240,13 @@ img.ph{object-fit:cover;object-position:center;display:block;max-width:none}
 
 /* ═══ MARQUEE ═══ */
 .mq{overflow:hidden;background:var(--navy-3);color:#fff;padding:16px 0}
-.mq-in{display:flex;width:max-content;animation:slide 40s linear infinite}
+.mq-in{display:flex;width:max-content;animation:slide 48s linear infinite}
+.mq-track{display:flex;flex:none}
 .mq span{display:flex;align-items:center;gap:46px;padding-right:46px;font-family:'Jost',sans-serif;
   font-size:.67rem;font-weight:500;letter-spacing:.28em;text-transform:uppercase;white-space:nowrap;color:rgba(255,255,255,.8)}
-.mq span::after{content:"";width:5px;height:5px;background:var(--gold)}
+.mq span::after{content:"";width:5px;height:5px;background:var(--gold);flex:none}
 @keyframes slide{to{transform:translateX(-50%)}}
+@media (prefers-reduced-motion: reduce){.mq-in{animation:none}}
 
 /* ═══ STAT ROW ═══ */
 .stats{display:grid;grid-template-columns:repeat(2,1fr);gap:1px;background:var(--line-d);

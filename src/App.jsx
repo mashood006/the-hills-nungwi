@@ -17,6 +17,20 @@ import TeamPage from './pages/TeamPage'
 const WA_URL =
   'https://wa.me/255670004400?text=Hello%2C%20I%20am%20interested%20in%20The%20Hills%2C%20Nungwi.'
 
+const MQ_ITEMS = ['88 total units', 'The Hills, Nungwi', 'Opening March 2028']
+
+function MarqueeTrack() {
+  // Repeat until the track is wider than any common viewport so -50% loops without a gap
+  const items = Array.from({ length: 8 }, () => MQ_ITEMS).flat()
+  return (
+    <div className="mq-track">
+      {items.map((label, i) => (
+        <span key={`${label}-${i}`}>{label}</span>
+      ))}
+    </div>
+  )
+}
+
 function Home() {
   useSiteEffects()
   const { hash } = useLocation()
@@ -105,8 +119,8 @@ function Home() {
 
 <div className="mq" aria-hidden="true">
   <div className="mq-in">
-    <span>88 total units</span><span>The Hills, Nungwi</span><span>Opening March 2028</span>
-    <span>88 total units</span><span>The Hills, Nungwi</span><span>Opening March 2028</span>
+    <MarqueeTrack />
+    <MarqueeTrack />
   </div>
 </div>
 
