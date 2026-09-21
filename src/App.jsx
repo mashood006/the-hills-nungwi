@@ -493,7 +493,7 @@ function Home() {
         </details>
         <details>
           <summary>How many days a year can I use it?</summary>
-          <div className="qa"><p>21 usage days per year, with no blackout dates, subject to availability. Friends and family get 30% off the published rate, also subject to availability, and beach club and golf access come from delivery.</p></div>
+          <div className="qa"><p>21 usage days per year, with no blackout dates, subject to availability.</p></div>
         </details>
         <details>
           <summary>When does it open?</summary>

@@ -14,7 +14,7 @@ export const BLOG_POSTS = [
     initials: 'MA',
     body: [
       'Buying titled beachfront property in Zanzibar is different from a standard property booking — and different again from buying a villa with no property operator behind it. At The Hills, Nungwi, you purchase a titled unit inside a branded four-star condo-property: you hold the deed, use the residence for part of the year, and participate in the property operation around it.',
-      'For international buyers, the first step is clarity on ownership structure. A titled unit means you own the apartment itself. The property operator runs lobby, F&B, housekeeping and the rental pool. Your purchase documents should spell out usage days, friends-and-family rates, and how net returns are calculated under the contract.',
+      'For international buyers, the first step is clarity on ownership structure. A titled unit means you own the apartment itself. The property operator runs lobby, F&B, housekeeping and the rental pool. Your purchase documents should spell out usage days and how net returns are calculated under the contract.',
       'Due diligence typically includes reviewing the developer’s disclosure pack, the draft purchase agreement, payment schedule, and any buyback or exit language. Independent legal advice in Tanzania is strongly recommended before you sign.',
       'At The Hills, remaining inventory is in final pre-sale with opening planned for Q4 2027. Speak with the Majestic sales team for live availability, the current price list, and a walkthrough of the ownership model tailored to your residency and tax situation.',
     ],
@@ -48,12 +48,11 @@ export const BLOG_POSTS = [
     readTime: '4 min read',
     title: 'Living sixty days a year in your own property',
     excerpt:
-      'How owner usage works with property operations — privacy, friends & family rates, and peak season.',
+      'How owner usage works with property operations — privacy, booking coordination, and peak season.',
     author: 'Owner Care',
     initials: 'OC',
     body: [
-      'Owners at The Hills receive sixty usage days a year, with no blackout dates subject to availability. That means you can plan stays around school holidays, remote-work stretches, or quiet shoulder seasons — while the unit earns in the rental pool when you are away.',
-      'Friends and family typically receive preferential rates off the published tariff, again subject to availability. Beach club and golf access from delivery round out the lifestyle side of ownership.',
+      'Owners at The Hills receive 21 usage days a year, with no blackout dates subject to availability. That means you can plan stays around school holidays, remote-work stretches, or quiet shoulder seasons — while the unit earns in the rental pool when you are away.',
       'The key is coordination: property systems manage bookings, so early notice for peak weeks helps you lock preferred dates. Your sales advisor can walk through how reservations interact with the rental pool in practice.',
     ],
   },

@@ -63,7 +63,7 @@ export const JOBS = [
       'Shape owner and guest journeys across Majestic’s hospitality assets, setting service standards that will scale into The Hills condo-property operation.',
     responsibilities: [
       'Define and train service standards for front-of-house, owner relations, and guest recovery.',
-      'Partner with sales and operations to support owner usage weeks, friends-and-family stays, and VIP arrivals.',
+      'Partner with sales and operations to support owner usage weeks and VIP arrivals.',
       'Monitor guest feedback, occupancy experience metrics, and continuous improvement actions.',
       'Recruit, coach, and schedule service teams in line with brand and labour requirements.',
       'Collaborate with F&B, housekeeping, and engineering to deliver seamless on-property experiences.',
