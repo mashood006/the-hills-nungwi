@@ -429,32 +429,6 @@ function Home() {
   </div>
 </section>
 
-{/* ══ FINANCE ══ */}
-<section className="sec finance" id="Finance">
-  <div className="wrap">
-    <div className="duo duo--top">
-      <div className="frame tall a a-clip"><img className="ph par" src="/images/finance.jpg" alt="The Hills, Nungwi — illuminated residences at twilight" width="764" height="1024" decoding="async" /></div>
-      <div>
-        <span className="kick a a-up">Finance</span>
-        <h2 className="a a-up" style={{'--d': '.08s'}}>Finance <em className="g">your unit.</em></h2>
-        <p className="lead a a-up" style={{'--d': '.16s', marginTop: '18px'}}>Developer-backed lending on the purchase of your unit, in USD.</p>
-        <ul className="tbl stg">
-          <li><em>Financing · LTV</em><span>50%</span></li>
-          <li><em>Rate</em><span>5% – 6.5% fixed</span></li>
-          <li><em>Term</em><span>15 years · principal + interest</span></li>
-          <li><em>Eligibility</em><span>Local &amp; international buyers</span></li>
-          <li><em>Approval</em><span>Pre-approval before purchase</span></li>
-        </ul>
-        <div className="steps stg">
-          <div className="step"><b>01</b><div><span>Reserve</span><em>Secure the unit of your choice.</em></div></div>
-          <div className="step"><b>02</b><div><span>Documents</span><em>Submit financial &amp; identification documents.</em></div></div>
-          <div className="step"><b>03</b><div><span>Approval</span><em>For local and international buyers.</em></div></div>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
 {/* ══ LOCATION ══ */}
 <section className="sec on-dark" id="Location">
   <div className="wrap">
@@ -504,16 +478,12 @@ function Home() {
           <div className="qa"><p>Units start at $148,800 USD. One-bedroom suites start from $148,800, two-bedroom apartments from $165,300, and three-bedroom penthouses from $499,000. Prices are confirmed at reservation — ask for the live availability list.</p></div>
         </details>
         <details>
-          <summary>Is finance available?</summary>
-          <div className="qa"><p>Yes — developer-backed lending in USD at 50% LTV, 5% to 6.5% fixed, over 15 years on a principal-and-interest basis. It's open to both local and international buyers, and you'll want pre-approval before purchase.</p></div>
-        </details>
-        <details>
           <summary>What returns are projected?</summary>
           <div className="qa"><p>The developer's programme sets out 10% net annually in Years 1–2, 12% in Years 3–5 and 8–15% from Year 6, on invested principal and per contract, with a contractual buyback option at the end of the term. These are projections rather than guarantees, and depend on how the property actually performs.</p></div>
         </details>
         <details>
           <summary>Can I buy from abroad?</summary>
-          <div className="qa"><p>Yes. Reservations can be completed remotely and the financing is open to international buyers. The ownership structure and any tax treatment are set out in the executed purchase documents — take independent legal and tax advice on those before you commit.</p></div>
+          <div className="qa"><p>Yes. Reservations can be completed remotely. The ownership structure and any tax treatment are set out in the executed purchase documents — take independent legal and tax advice on those before you commit.</p></div>
         </details>
       </div>
     </div>

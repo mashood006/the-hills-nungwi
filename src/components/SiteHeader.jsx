@@ -17,12 +17,11 @@ const SHEET_AFTER = [
   { href: '#Ownership', label: 'Ownership', num: '08' },
   { href: '#Residences', label: 'Residences', num: '09' },
   { href: '#Returns', label: 'Returns', num: '10' },
-  { href: '#Finance', label: 'Finance', num: '11' },
-  { href: '#Location', label: 'Location', num: '12' },
-  { href: '#Excellence', label: 'Excellence', num: '13' },
-  { href: '/team', label: 'Our Team', num: '14', route: true },
-  { href: '/careers', label: 'Careers', num: '15', route: true },
-  { href: '#Contact', label: 'Register interest', num: '16' },
+  { href: '#Location', label: 'Location', num: '11' },
+  { href: '#Excellence', label: 'Excellence', num: '12' },
+  { href: '/team', label: 'Our Team', num: '13', route: true },
+  { href: '/careers', label: 'Careers', num: '14', route: true },
+  { href: '#Contact', label: 'Register interest', num: '15' },
 ]
 
 const NAV_LINKS = [
