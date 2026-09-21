@@ -256,7 +256,7 @@ export function SiteHeader({ blog = false }) {
               <div className="mega-in wrap">
                 <div className="mega-intro">
                   <h3>The Collection</h3>
-                  <p>Branded residences, resorts and hotels across Zanzibar.</p>
+                  <p>Branded residences, resorts and properties across Zanzibar.</p>
                   <a className="btn btn--line mega-all" href={hashHref('#Gallery', blog)} onClick={closeMega}>
                     View all projects
                   </a>
@@ -302,7 +302,7 @@ export function SiteHeader({ blog = false }) {
           </button>
 
           <div className={`sheet-projects-panel${mobileProjectsOpen ? ' is-open' : ''}`}>
-            <p className="sheet-projects-lead">Branded residences, resorts and hotels across Zanzibar.</p>
+            <p className="sheet-projects-lead">Branded residences, resorts and properties across Zanzibar.</p>
             <div className="sheet-projects-grid">
               {PROJECTS.map((project) => (
                 <ProjectCard

@@ -105,8 +105,8 @@ function Home() {
 
 <div className="mq" aria-hidden="true">
   <div className="mq-in">
-    <span>The first branded four-star condo-hotel in Zanzibar</span><span>88 total units</span><span>21 owner usage days a year</span><span>The Hills, Nungwi</span><span>Opening March 2028</span>
-    <span>The first branded four-star condo-hotel in Zanzibar</span><span>88 total units</span><span>21 owner usage days a year</span><span>The Hills, Nungwi</span><span>Opening March 2028</span>
+    <span>The first branded four-star condo-property in Zanzibar</span><span>88 total units</span><span>21 owner usage days a year</span><span>The Hills, Nungwi</span><span>Opening March 2028</span>
+    <span>The first branded four-star condo-property in Zanzibar</span><span>88 total units</span><span>21 owner usage days a year</span><span>The Hills, Nungwi</span><span>Opening March 2028</span>
   </div>
 </div>
 
@@ -155,7 +155,7 @@ function Home() {
           </p>
           <p>
             Under his leadership, Majestic has built a distinctive hospitality portfolio that includes{" "}
-            <em>Ocean Breeze Hotel</em>, <em>Double A Hotel</em>, <em>The Roundabout Hotel</em>, and <em>Ocean Breeze BnB</em>, collectively representing more than <strong>100 rooms under management</strong>.
+            <em>Ocean Breeze Property</em>, <em>Double A Property</em>, <em>The Roundabout Property</em>, and <em>Ocean Breeze BnB</em>, collectively representing more than <strong>100 rooms under management</strong>.
           </p>
           <p>
             Today, Mohammed is guiding the Group into its next chapter through real estate development. At the forefront is{" "}
@@ -178,7 +178,7 @@ function Home() {
 <section className="znintro">
   <div className="wrap znintro-in">
     <h2 className="znintro-title a a-up">Redefining development in Zanzibar as a harmonious blend of place, design and permanence.</h2>
-    <p className="znintro-desc a a-up" style={{'--d': '.12s'}}>Majestic conceives and delivers branded residences and hospitality assets across Zanzibar. At The Hills, Nungwi, that means titled beachfront living above a full hotel operation — architecture, hospitality and long-term value working as one, for owners who want a home and a working asset on Africa’s leading island destination.</p>
+    <p className="znintro-desc a a-up" style={{'--d': '.12s'}}>Majestic conceives and delivers branded residences and hospitality assets across Zanzibar. At The Hills, Nungwi, that means titled beachfront living above a full property operation — architecture, hospitality and long-term value working as one, for owners who want a home and a working asset on Africa’s leading island destination.</p>
   </div>
 </section>
 
@@ -489,7 +489,7 @@ function Home() {
       <div className="faq stg">
         <details open>
           <summary>What exactly am I buying?</summary>
-          <div className="qa"><p>A titled unit inside the hotel. You hold the deed to the apartment; a professional hotel operator runs the hotel operation around it. You collect returns from that operation and you use the unit yourself.</p></div>
+          <div className="qa"><p>A titled unit inside the property. You hold the deed to the apartment; a professional property operator runs the property operation around it. You collect returns from that operation and you use the unit yourself.</p></div>
         </details>
         <details>
           <summary>How many days a year can I use it?</summary>
@@ -509,7 +509,7 @@ function Home() {
         </details>
         <details>
           <summary>What returns are projected?</summary>
-          <div className="qa"><p>The developer's programme sets out 10% net annually in Years 1–2, 12% in Years 3–5 and 8–15% from Year 6, on invested principal and per contract, with a contractual buyback option at the end of the term. These are projections rather than guarantees, and depend on how the hotel actually performs.</p></div>
+          <div className="qa"><p>The developer's programme sets out 10% net annually in Years 1–2, 12% in Years 3–5 and 8–15% from Year 6, on invested principal and per contract, with a contractual buyback option at the end of the term. These are projections rather than guarantees, and depend on how the property actually performs.</p></div>
         </details>
         <details>
           <summary>Can I buy from abroad?</summary>
@@ -526,7 +526,7 @@ function Home() {
     <div className="excellence-copy a a-up">
       <span className="pill pill--dark">Luxury property</span>
       <h2>A new standard of <em className="g">excellence</em></h2>
-      <p>The Hills Nungwi brings titled beachfront living to Zanzibar’s northern tip — contemporary residences, a full hotel operation, and the calm of a non-tidal shore, crafted by Majestic for owners who want both a home and a working asset.</p>
+      <p>The Hills Nungwi brings titled beachfront living to Zanzibar’s northern tip — contemporary residences, a full property operation, and the calm of a non-tidal shore, crafted by Majestic for owners who want both a home and a working asset.</p>
     </div>
   </div>
   <div className="excellence-media a a-up">
@@ -567,7 +567,7 @@ function Home() {
       <div className="contact-panel-copy">
         <h2>Let&apos;s shape the future of<br /><em className="g">Zanzibar&apos;s coastlines.</em></h2>
         <p>
-          Whether you are a developer, a luxury hotel operator, or a media representative, our team provides the insight, vision, and local expertise needed to turn high-value opportunities into iconic destinations.
+          Whether you are a developer, a luxury property operator, or a media representative, our team provides the insight, vision, and local expertise needed to turn high-value opportunities into iconic destinations.
         </p>
         <div className="contact-panel-meta">
           <div>

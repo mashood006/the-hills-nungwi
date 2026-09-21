@@ -13,8 +13,8 @@ export const BLOG_POSTS = [
     author: 'majestic_admin',
     initials: 'MA',
     body: [
-      'Buying titled beachfront property in Zanzibar is different from a standard hotel booking — and different again from buying a villa with no hotel operator behind it. At The Hills, Nungwi, you purchase a titled unit inside a branded four-star condo-hotel: you hold the deed, use the residence for part of the year, and participate in the hotel operation around it.',
-      'For international buyers, the first step is clarity on ownership structure. A titled unit means you own the apartment itself. The hotel operator runs lobby, F&B, housekeeping and the rental pool. Your purchase documents should spell out usage days, friends-and-family rates, and how net returns are calculated under the contract.',
+      'Buying titled beachfront property in Zanzibar is different from a standard property booking — and different again from buying a villa with no property operator behind it. At The Hills, Nungwi, you purchase a titled unit inside a branded four-star condo-property: you hold the deed, use the residence for part of the year, and participate in the property operation around it.',
+      'For international buyers, the first step is clarity on ownership structure. A titled unit means you own the apartment itself. The property operator runs lobby, F&B, housekeeping and the rental pool. Your purchase documents should spell out usage days, friends-and-family rates, and how net returns are calculated under the contract.',
       'Due diligence typically includes reviewing the developer’s disclosure pack, the draft purchase agreement, payment schedule, and any buyback or exit language. Independent legal advice in Tanzania is strongly recommended before you sign.',
       'At The Hills, remaining inventory is in final pre-sale with opening planned for Q4 2027. Speak with the Majestic sales team for live availability, the current price list, and a walkthrough of the ownership model tailored to your residency and tax situation.',
     ],
@@ -29,32 +29,32 @@ export const BLOG_POSTS = [
     readTime: '5 min read',
     title: 'Why Nungwi leads Zanzibar’s hospitality market',
     excerpt:
-      'Non-tidal beaches, year-round demand, and what branded condo-hotels change for owner returns.',
+      'Non-tidal beaches, year-round demand, and what branded condo-properties change for owner returns.',
     author: 'Market Desk',
     initials: 'MD',
     body: [
       'Nungwi sits on the northern tip of Zanzibar, where the shore stays swimmable through much of the day — a practical advantage for guests who want beach access without planning around extreme tides.',
-      'Tourism to the island has grown strongly over recent years, with high average occupancy reported across leading beach destinations. That demand supports hotel operations and, in a condo-hotel model, the rental performance that owners care about.',
-      'Branded four-star operations add distribution, standards and a professional management layer that pure holiday homes rarely match. For investors, that combination — titled ownership plus hotel operations — is what makes Nungwi’s new generation of condo-hotels distinctive.',
+      'Tourism to the island has grown strongly over recent years, with high average occupancy reported across leading beach destinations. That demand supports property operations and, in a condo-property model, the rental performance that owners care about.',
+      'Branded four-star operations add distribution, standards and a professional management layer that pure holiday homes rarely match. For investors, that combination — titled ownership plus property operations — is what makes Nungwi’s new generation of condo-properties distinctive.',
     ],
   },
   {
-    slug: 'living-sixty-days-a-year-in-your-own-hotel',
+    slug: 'living-sixty-days-a-year-in-your-own-property',
     img: '/images/blog/blog-04-boat-party.jpg',
     alt: 'Friends enjoying a boat trip on clear turquoise water in Zanzibar',
     cat: 'Lifestyle',
     date: '18 Mar, 2026',
     dateIso: '2026-03-18',
     readTime: '4 min read',
-    title: 'Living sixty days a year in your own hotel',
+    title: 'Living sixty days a year in your own property',
     excerpt:
-      'How owner usage works with hotel operations — privacy, friends & family rates, and peak season.',
+      'How owner usage works with property operations — privacy, friends & family rates, and peak season.',
     author: 'Owner Care',
     initials: 'OC',
     body: [
       'Owners at The Hills receive sixty usage days a year, with no blackout dates subject to availability. That means you can plan stays around school holidays, remote-work stretches, or quiet shoulder seasons — while the unit earns in the rental pool when you are away.',
       'Friends and family typically receive preferential rates off the published tariff, again subject to availability. Beach club and golf access from delivery round out the lifestyle side of ownership.',
-      'The key is coordination: hotel systems manage bookings, so early notice for peak weeks helps you lock preferred dates. Your sales advisor can walk through how reservations interact with the rental pool in practice.',
+      'The key is coordination: property systems manage bookings, so early notice for peak weeks helps you lock preferred dates. Your sales advisor can walk through how reservations interact with the rental pool in practice.',
     ],
   },
   {
@@ -67,13 +67,13 @@ export const BLOG_POSTS = [
     readTime: '5 min read',
     title: 'Inside the amenities that sell themselves',
     excerpt:
-      'Pool deck, rooftop bar, gym and coworking — the shared spaces that support hotel occupancy.',
+      'Pool deck, rooftop bar, gym and coworking — the shared spaces that support property occupancy.',
     author: 'Design Studio',
     initials: 'DS',
     body: [
       'Amenities are not decoration — they are what guests book and what owners enjoy on their sixty days. The Hills centres on a terraced pool wrapped by the residential blocks, with cabanas and daybeds at the water’s edge.',
       'Above that, a rooftop bar, restaurant, gym and coworking extend the day from sunrise swims to evening drinks. A double-height lounge and on-site supermarket keep the property self-contained for longer stays.',
-      'For operators, those spaces drive ancillary revenue and guest satisfaction. For owners, they turn a titled unit into a true home-from-home inside a working hotel.',
+      'For operators, those spaces drive ancillary revenue and guest satisfaction. For owners, they turn a titled unit into a true home-from-home inside a working property.',
     ],
   },
   {
