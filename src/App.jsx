@@ -100,9 +100,19 @@ function Home() {
     <div className="chips hl hl1">
       <span className="chip">Nungwi, Zanzibar</span>
     </div>
-    <h1 className="hl hl2">Crafting the spaces that will define <em className="g">Tanzania’s tomorrow.</em></h1>
+    <h1 className="hl hl2">
+      Leading Real Estate Developer in <em className="g">Zanzibar</em>
+    </h1>
     <div className="hero-row">
-      <p className="hl hl3">At Majestic, we design and construct landmark developments that elevate communities, spark economic growth, and shape the future of Tanzania. From iconic commercial hubs to destination-defining hospitality, we build enduring spaces that set a new standard for excellence across the region.</p>
+      <div className="hero-copy">
+        <p className="hero-campaign hl hl3">A sanctuary above the sea.</p>
+        <p className="hero-intro hl hl3">
+          Majestic is a Zanzibar real estate developer creating distinctive residential, hospitality
+          and investment properties across the island. Through thoughtful architecture, premium
+          locations and professional property management, we develop destinations designed for
+          modern living and long-term value.
+        </p>
+      </div>
       <div className="hero-btns hl hl4">
         <a className="btn btn--gold" href="#Contact">Register interest</a>
         <a className="btn btn--glass" href="/the-hills-brochure.pdf" target="_blank" rel="noopener noreferrer">Download brochure</a>
