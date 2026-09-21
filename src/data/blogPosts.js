@@ -13,7 +13,7 @@ export const BLOG_POSTS = [
     author: 'majestic_admin',
     initials: 'MA',
     body: [
-      'Buying titled beachfront property in Zanzibar is different from a standard property booking — and different again from buying a villa with no property operator behind it. At The Hills, Nungwi, you purchase a titled unit inside a branded four-star condo-property: you hold the deed, use the residence for part of the year, and participate in the property operation around it.',
+      'Buying titled beachfront property in Zanzibar is different from a standard property booking — and different again from buying a villa with no property operator behind it. At The Hills, Nungwi, you purchase a titled unit inside a branded four-star residence: you hold the deed, use the residence for part of the year, and participate in the property operation around it.',
       'For international buyers, the first step is clarity on ownership structure. A titled unit means you own the apartment itself. The property operator runs lobby, F&B, housekeeping and the rental pool. Your purchase documents should spell out usage days and how net returns are calculated under the contract.',
       'Due diligence typically includes reviewing the developer’s disclosure pack, the draft purchase agreement, payment schedule, and any buyback or exit language. Independent legal advice in Tanzania is strongly recommended before you sign.',
       'At The Hills, remaining inventory is in final pre-sale with opening planned for Q4 2027. Speak with the Majestic sales team for live availability, the current price list, and a walkthrough of the ownership model tailored to your residency and tax situation.',
@@ -29,13 +29,13 @@ export const BLOG_POSTS = [
     readTime: '5 min read',
     title: 'Why Nungwi leads Zanzibar’s hospitality market',
     excerpt:
-      'Non-tidal beaches, year-round demand, and what branded condo-properties change for owner returns.',
+      'Non-tidal beaches, year-round demand, and what branded residences change for owner returns.',
     author: 'Market Desk',
     initials: 'MD',
     body: [
       'Nungwi sits on the northern tip of Zanzibar, where the shore stays swimmable through much of the day — a practical advantage for guests who want beach access without planning around extreme tides.',
-      'Tourism to the island has grown strongly over recent years, with high average occupancy reported across leading beach destinations. That demand supports property operations and, in a condo-property model, the rental performance that owners care about.',
-      'Branded four-star operations add distribution, standards and a professional management layer that pure holiday homes rarely match. For investors, that combination — titled ownership plus property operations — is what makes Nungwi’s new generation of condo-properties distinctive.',
+      'Tourism to the island has grown strongly over recent years, with high average occupancy reported across leading beach destinations. That demand supports property operations and, in a residence model, the rental performance that owners care about.',
+      'Branded four-star operations add distribution, standards and a professional management layer that pure holiday homes rarely match. For investors, that combination — titled ownership plus property operations — is what makes Nungwi’s new generation of residences distinctive.',
     ],
   },
   {

@@ -10,7 +10,7 @@ export const JOBS = [
     summary:
       'Represent The Hills and Majestic’s residential portfolio to international and regional buyers, guiding prospects from first enquiry through reservation and closing.',
     responsibilities: [
-      'Qualify inbound enquiries and conduct consultative sales presentations for titled condo-property residences.',
+      'Qualify inbound enquiries and conduct consultative sales presentations for titled residences.',
       'Maintain an accurate CRM pipeline, follow-ups, and weekly forecasting for management review.',
       'Coordinate site visits, unit allocations, and handovers with operations and legal counterparts.',
       'Prepare proposals, payment schedules, and supporting materials in line with company disclosure standards.',
@@ -60,7 +60,7 @@ export const JOBS = [
     workplaceType: 'On-site',
     posted: '2026-08-05',
     summary:
-      'Shape owner and guest journeys across Majestic’s hospitality assets, setting service standards that will scale into The Hills condo-property operation.',
+      'Shape owner and guest journeys across Majestic’s hospitality assets, setting service standards that will scale into The Hills residence operation.',
     responsibilities: [
       'Define and train service standards for front-of-house, owner relations, and guest recovery.',
       'Partner with sales and operations to support owner usage weeks and VIP arrivals.',

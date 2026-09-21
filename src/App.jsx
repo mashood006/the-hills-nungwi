@@ -105,8 +105,8 @@ function Home() {
 
 <div className="mq" aria-hidden="true">
   <div className="mq-in">
-    <span>The first branded four-star condo-property in Zanzibar</span><span>88 total units</span><span>21 owner usage days a year</span><span>The Hills, Nungwi</span><span>Opening March 2028</span>
-    <span>The first branded four-star condo-property in Zanzibar</span><span>88 total units</span><span>21 owner usage days a year</span><span>The Hills, Nungwi</span><span>Opening March 2028</span>
+    <span>88 total units</span><span>21 owner usage days a year</span><span>The Hills, Nungwi</span><span>Opening March 2028</span>
+    <span>88 total units</span><span>21 owner usage days a year</span><span>The Hills, Nungwi</span><span>Opening March 2028</span>
   </div>
 </div>
 
