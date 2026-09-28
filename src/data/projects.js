@@ -5,7 +5,7 @@ export const PROJECTS = [
     name: 'The Hills',
     tagline: 'Branded four-star residences',
     img: '/images/vision-facade.jpg',
-    href: 'https://www.bakepixel.com/majestic/',
+    href: 'https://thehillsnungwi.majestic.tz/',
     external: true,
   },
 ]
