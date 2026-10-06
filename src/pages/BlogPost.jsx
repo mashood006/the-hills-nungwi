@@ -6,7 +6,7 @@ import { SiteHeader } from '../components/SiteHeader'
 import { getLenis } from '../hooks/useSmoothScroll'
 
 const WA_URL =
-  'https://wa.me/255670004400?text=Hello%2C%20I%20am%20interested%20in%20The%20Hills%2C%20Nungwi.'
+  'https://wa.me/255670004400?text=Hello%2C%20I%20am%20interested%20in%20The%20Hills%20Nungwi%20apartments.%20Please%20send%20me%20more%20information'
 
 export default function BlogPost() {
   const { slug } = useParams()
