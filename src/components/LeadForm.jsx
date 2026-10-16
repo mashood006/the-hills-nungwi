@@ -137,7 +137,7 @@ export function LeadForm({ variant = 'card' }) {
       setError(
         err instanceof Error && err.message
           ? err.message
-          : 'Something went wrong. Please try again or email mashood@sourcingsquare.com.',
+          : 'Something went wrong. Please try again or email sales@majestic.tz.',
       )
     }
   }
