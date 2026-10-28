@@ -3,6 +3,7 @@ import { BrowserRouter, Link, Route, Routes, useLocation } from 'react-router-do
 import { useSiteEffects } from './hooks/useSiteEffects'
 import { getLenis, smoothScrollTo, useSmoothScroll } from './hooks/useSmoothScroll'
 import { BlogSlider } from './components/BlogSlider'
+import { Canonical } from './components/Canonical'
 import { LeadForm } from './components/LeadForm'
 import { ResidenceUnits } from './components/ResidenceUnits'
 import { BackToTop } from './components/BackToTop'
@@ -615,6 +616,7 @@ export default function App() {
 
   return (
     <BrowserRouter>
+      <Canonical />
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/team" element={<TeamPage />} />
