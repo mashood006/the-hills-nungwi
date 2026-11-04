@@ -143,8 +143,8 @@ function Home() {
       <div>
         <span className="kick a a-up">Our Vision</span>
         <h2 className="a a-up" style={{'--d': '.08s'}}>Redefining <em className="g">PREMIUM</em> Real Estate</h2>
-        <p className="body a a-up" style={{'--d': '.16s', marginTop: '24px'}}>We envision a Zanzibar where world-class architecture meets timeless natural beauty, creating spaces that inspire, endure, and appreciate in value.</p>
-        <p className="body a a-up" style={{'--d': '.22s'}}>Our mission is to develop properties that serve as benchmarks for quality, sustainability, and investor confidence in the region. Each project reflects our commitment to excellence and our deep respect for Zanzibar&apos;s unique heritage.</p>
+        <p className="body a a-up" style={{'--d': '.16s', marginTop: '24px'}}>We envision an island where world-class architecture meets timeless natural beauty, creating properties in Zanzibar that inspire, endure, and appreciate in value.</p>
+        <p className="body a a-up" style={{'--d': '.22s'}}>Our mission is to develop properties for sale in Zanzibar that serve as benchmarks for quality, sustainability, and investor confidence. Each project reflects our commitment to excellence and deep respect for the island&apos;s unique heritage.</p>
         <a className="arrow a a-up" href="#Contact" style={{'--d': '.28s', marginTop: '16px'}}>Talk to an advisor →</a>
       </div>
       <div className="frame wide a a-clip" style={{'--d': '.1s'}}>
@@ -263,10 +263,10 @@ function Home() {
       <div>
         <span className="kick a a-up">About Us</span>
         <h2 className="a a-up" style={{'--d': '.08s'}}>Building Trust Through <em className="g">Excellence</em></h2>
-        <p className="body a a-up" style={{'--d': '.16s', marginTop: '24px'}}>Majestic Development stands as Zanzibar&apos;s premier PREMIUM real estate developer, committed to creating properties that define new standards of excellence in East Africa&apos;s most captivating destination.</p>
+        <p className="body a a-up" style={{'--d': '.16s', marginTop: '24px'}}>Majestic Development stands among the premier real estate developers in Tanzania, committed to creating exceptional real estate in Zanzibar that defines new standards of luxury in East Africa&apos;s most captivating destination.</p>
         <span className="kick about-subkick a a-up" style={{'--d': '.2s'}}>Committed to Zanzibar</span>
-        <p className="body a a-up" style={{'--d': '.24s'}}>We are not simply building properties; we are investing in Zanzibar&apos;s future. Our developments create employment opportunities, support local craftsmen, and contribute to the island&apos;s growing reputation as a world-class destination.</p>
-        <p className="body a a-up" style={{'--d': '.28s'}}>Through responsible development practices and community engagement, we ensure that our growth contributes positively to the economic and social fabric of this extraordinary island.</p>
+        <p className="body a a-up" style={{'--d': '.24s'}}>For investors looking to buy property in Zanzibar, we are not simply building residences; we are investing in the island&apos;s future. Our developments create employment opportunities, support local craftsmen, and contribute to the region&apos;s growing reputation as a world-class destination.</p>
+        <p className="body a a-up" style={{'--d': '.28s'}}>Through responsible development practices and community engagement, we ensure our growth contributes positively to the economic and social fabric of this extraordinary island.</p>
         <a className="arrow a a-up" href="#Contact" style={{'--d': '.34s', marginTop: '16px'}}>Talk to an advisor →</a>
       </div>
       <div className="frame tall a a-clip" style={{'--d': '.1s'}}><img className="ph par" src="/images/property-lagoon.jpg" alt="Boats in a turquoise mangrove lagoon near Zanzibar" width="2752" height="1536" decoding="async" /></div>
@@ -329,35 +329,35 @@ function Home() {
           <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5"><circle cx="12" cy="12" r="9"/><path d="M3 12h18"/><path d="M12 3a14 14 0 0 1 0 18"/><path d="M12 3a14 14 0 0 0 0 18"/></svg>
         </span>
         <h4>Global Connectivity</h4>
-        <p>Direct flights from major hubs in Europe, Middle East, and Africa.</p>
+        <p>Direct flights from major hubs in Europe, the Middle East, and Africa.</p>
       </div>
       <div>
         <span className="amen-ico" aria-hidden="true">
           <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5"><circle cx="12" cy="12" r="9"/><path d="M12 7v10"/><path d="M15.2 9.2A2.4 2.4 0 0 0 12 8.2c-1.5 0-2.6.8-2.6 2s1.1 1.8 2.6 2.2 2.6.8 2.6 2-1.1 2-2.6 2a2.5 2.5 0 0 1-3.1-1.2"/></svg>
         </span>
         <h4>Growing Economy</h4>
-        <p>Double-digit tourism growth and expanding premium real estate market.</p>
+        <p>Double-digit tourism growth and an expanding market for luxury apartments for sale in Tanzania.</p>
       </div>
       <div>
         <span className="amen-ico" aria-hidden="true">
           <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5"><path d="M12 4c1.8 2.2 3 4.2 3 6a3 3 0 1 1-6 0c0-1.8 1.2-3.8 3-6z"/><path d="M7.5 14c1.2 1.4 2 2.6 2 3.6a2.5 2.5 0 1 1-5 0c0-1 .8-2.2 2-3.6z"/><path d="M16.5 14c1.2 1.4 2 2.6 2 3.6a2.5 2.5 0 1 1-5 0c0-1 .8-2.2 2-3.6z"/></svg>
         </span>
         <h4>Natural Beauty</h4>
-        <p>UNESCO sites, marine reserves, and untouched natural landscapes.</p>
+        <p>UNESCO World Heritage sites, protected marine reserves, and untouched natural landscapes.</p>
       </div>
       <div>
         <span className="amen-ico" aria-hidden="true">
           <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5"><path d="M4 20V9l8-5 8 5v11"/><path d="M9 20v-6h6v6"/></svg>
         </span>
         <h4>Modern Infrastructure</h4>
-        <p>Rapidly developing facilities with world-class hospitality standards.</p>
+        <p>Rapidly developing infrastructure and facilities built to international hospitality standards.</p>
       </div>
       <div>
         <span className="amen-ico" aria-hidden="true">
           <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5"><path d="M8 7V5a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/><rect x="4" y="7" width="16" height="14"/><path d="M4 12h16"/></svg>
         </span>
         <h4>Investment Friendly</h4>
-        <p>Favorable policies for international investors and property ownership.</p>
+        <p>Highly favorable policies for global investors seeking to buy apartments in Zanzibar with secure foreign ownership rights.</p>
       </div>
     </div>
     <div className="bento bento--split stg" style={{marginTop: '14px'}}>
@@ -383,7 +383,7 @@ function Home() {
     <div className="priv-b" style={{paddingLeft: '0', paddingRight: '0'}}>
       <span className="kick a a-up">Ownership privileges</span>
       <h2 className="a a-up" style={{'--d': '.08s'}}>Imagine your <em className="g">life here.</em></h2>
-      <p className="lead lead--hl a a-up" style={{'--d': '.16s', marginTop: '18px'}}>Wake to turquoise water, spend 21 days a year in your own titled residence, and let the investment earn when you are away.</p>
+      <p className="lead lead--hl a a-up" style={{'--d': '.16s', marginTop: '18px'}}>Wake up to clear turquoise ocean views and spend 21 days every year relaxing in your own beachfront home. While you are away, your property in Zanzibar keeps earning you steady, hands-off rental income.</p>
     </div>
   </div>
 </section>
@@ -391,9 +391,12 @@ function Home() {
 {/* ══ RESIDENCES ══ */}
 <section className="sec cream2" id="Residences">
   <div className="wrap">
-    <span className="kick a a-up">Unit types</span>
-    <h2 className="head a a-up" style={{'--d': '.08s'}}>Three ways to <em className="g">own here.</em></h2>
-    <p className="lead a a-up" style={{'--d': '.16s', marginTop: '20px'}}>All remaining inventory is now in final pre-sale. Each floor runs 1,113.52 m².</p>
+    <span className="kick a a-up">Unit Types</span>
+    <h2 className="head a a-up" style={{'--d': '.08s'}}>Apartments for Sale in <em className="g">Tanzania</em></h2>
+    <p className="lead a a-up" style={{'--d': '.16s', marginTop: '20px'}}>
+      All remaining inventory is now in final pre-sale. Explore our selection of premier{' '}
+      <strong>properties for sale in Zanzibar</strong>, with each spacious residential floor spanning 1,113.52 m².
+    </p>
     <ResidenceUnits />
     <div className="a a-up" style={{marginTop: '30px'}}><a className="arrow" href="#Contact">Request full floor plans →</a></div>
   </div>

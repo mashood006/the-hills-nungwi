@@ -3,30 +3,30 @@ import { useEffect, useState } from 'react'
 const UNITS = [
   {
     id: '1bed',
-    title: 'One Bedroom',
+    title: 'Buy One Bedroom Apartment',
     area: '77 m²',
     img: '/images/plan-1bed.png',
     alt: 'One bedroom floor plan',
     feats: ['Open-plan living', 'Private balcony'],
-    price: 'From $148,800',
+    price: 'From $148,800 USD',
   },
   {
     id: '2bed',
-    title: 'Two Bedroom',
+    title: 'Buy Two Bed Apartment',
     area: '89 m²',
     img: '/images/plan-2bed.png',
     alt: 'Two bedroom floor plan',
-    feats: ['Premium family residence', 'Investment ready'],
-    price: 'From $165,300',
+    feats: ['Premium family residence', 'High-yield choice for buyers'],
+    price: 'From $165,300 USD',
   },
   {
     id: '3bed',
-    title: '3 Bedroom Penthouse',
+    title: '3 Bedroom Penthouse Residences',
     area: '328 m²',
     img: '/images/plan-3bed.png',
     alt: 'Three bedroom penthouse floor plan',
-    feats: ['Limited top-floor residences', 'A43–A44 and B43–B44'],
-    price: 'From $499,000',
+    feats: ['Limited top-floor residences', '(A43–A44 and B43–B44)'],
+    price: 'From $499,000 USD',
   },
 ]
 
