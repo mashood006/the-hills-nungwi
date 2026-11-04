@@ -102,16 +102,17 @@ function Home() {
       <span className="chip">Nungwi, Zanzibar</span>
     </div>
     <h1 className="hl hl2">
-      Leading Real Estate Developer in <em className="g">Zanzibar</em>
+      Premier Real Estate Developers in <em className="g">Tanzania</em>
     </h1>
     <div className="hero-row">
       <div className="hero-copy">
         <p className="hero-campaign hl hl3">A sanctuary above the sea.</p>
         <p className="hero-intro hl hl3">
-          Majestic is a Zanzibar real estate developer creating distinctive residential, hospitality
-          and investment properties across the island. Through thoughtful architecture, premium
-          locations and professional property management, we develop destinations designed for
-          modern living and long-term value.
+          Majestic is an acclaimed developer delivering world-class real estate in Zanzibar, creating
+          distinctive residential, hospitality, and investment destinations across the island. Through
+          thoughtful architecture, premium beachfront locations, and professional property management,
+          we develop properties for sale in Zanzibar designed for modern living and enduring long-term
+          value.
         </p>
       </div>
       <div className="hero-btns hl hl4">
