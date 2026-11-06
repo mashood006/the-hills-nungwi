@@ -1,3 +1,6 @@
+export const IMDB_MULLER = 'https://www.imdb.com/name/nm4092329/'
+export const IMDB_BROLO = 'https://www.imdb.com/name/nm5421826/'
+
 export const MEDIA_VIDEOS = [
   {
     id: 'hills-film',
@@ -8,6 +11,7 @@ export const MEDIA_VIDEOS = [
     description:
       'An introduction to The Hills — branded residences on Zanzibar’s northern tip, shaped by light, shore and lasting design.',
     thumb: 'https://img.youtube.com/vi/iZl-CoRuCnQ/maxresdefault.jpg',
+    showCredit: true,
   },
 ]
 

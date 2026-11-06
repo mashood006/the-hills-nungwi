@@ -1081,3 +1081,13 @@ a.contact-meta-line:hover{color:var(--gold-lt)}
 .media-card-body h3 button:hover{color:var(--gold)}
 .media-card.is-active{outline:none}
 .media-card.is-active .media-card-media{box-shadow:inset 0 0 0 2px var(--gold)}
+
+.media-credit-caption{margin:8px 0 0;font-family:'Jost',sans-serif;font-size:.72rem;font-weight:400;letter-spacing:.02em;line-height:1.45;color:rgba(23,38,63,.48);text-transform:none}
+.media-active-copy .media-credit-caption{margin:0 0 12px}
+.media-credit-caption a{color:inherit;text-decoration:underline;text-underline-offset:2px;text-decoration-thickness:from-font}
+.media-credit-caption a:hover{color:var(--gold)}
+
+.media-credits{margin-top:clamp(36px,5vw,56px);padding-top:clamp(20px,3vw,28px);border-top:1px solid var(--line-l)}
+.media-credits p{margin:0;max-width:68ch;font-family:'Jost',sans-serif;font-size:.62rem;font-weight:400;letter-spacing:.04em;line-height:1.7;color:rgba(23,38,63,.42)}
+.media-credits a{color:inherit;text-decoration:underline;text-underline-offset:2px;text-decoration-thickness:from-font}
+.media-credits a:hover{color:var(--gold)}

@@ -2,14 +2,31 @@ import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { SiteHeader } from '../components/SiteHeader'
 import { SiteFooter } from '../components/SiteFooter'
-import { MEDIA_VIDEOS, youtubeEmbedUrl } from '../data/media'
+import { IMDB_BROLO, IMDB_MULLER, MEDIA_VIDEOS, youtubeEmbedUrl } from '../data/media'
 import { getLenis } from '../hooks/useSmoothScroll'
+
+function CreditCaption() {
+  return (
+    <p className="media-credit-caption">
+      Directed by{' '}
+      <a href={IMDB_MULLER} target="_blank" rel="noopener noreferrer">
+        Kenneth Müller
+      </a>
+      {' · '}
+      Interview by{' '}
+      <a href={IMDB_BROLO} target="_blank" rel="noopener noreferrer">
+        Maria Andrea Brolo
+      </a>
+    </p>
+  )
+}
 
 export default function MediaPage() {
   const [activeId, setActiveId] = useState(MEDIA_VIDEOS[0]?.id ?? null)
   const [playing, setPlaying] = useState(false)
 
   const active = MEDIA_VIDEOS.find((v) => v.id === activeId) || MEDIA_VIDEOS[0]
+  const showFilmCredit = MEDIA_VIDEOS.some((v) => v.showCredit)
 
   useEffect(() => {
     const lenis = getLenis()
@@ -94,6 +111,7 @@ export default function MediaPage() {
           <div className="media-active-copy">
             <span className="media-cat">{active.category}</span>
             <h2>{active.title}</h2>
+            {active.showCredit && <CreditCaption />}
             <p>{active.description}</p>
           </div>
         )}
@@ -135,10 +153,28 @@ export default function MediaPage() {
                     {video.title}
                   </button>
                 </h3>
+                {video.showCredit && <CreditCaption />}
               </div>
             </article>
           ))}
         </div>
+
+        {showFilmCredit && (
+          <aside className="media-credits" aria-label="Film credits">
+            <p>
+              The Hills, Nungwi was brought to the screen by{' '}
+              <a href={IMDB_MULLER} target="_blank" rel="noopener noreferrer">
+                Kenneth Müller
+              </a>
+              , the award-winning Guatemalan writer-director, alongside{' '}
+              <a href={IMDB_BROLO} target="_blank" rel="noopener noreferrer">
+                Maria Andrea Brolo
+              </a>
+              , production designer and art director, who led the interview. We are grateful to both
+              for lending their craft to telling the story of The Hills.
+            </p>
+          </aside>
+        )}
       </section>
 
       <SiteFooter />
